@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Discussao>
+	<discussao>
+		<id>1</id>
+		<idUsuarioCriador>1</idUsuarioCriador>
+		<titulo>FAQ</titulo>
+		<dataCriacao>19/05/2018</dataCriacao>
+		<descricao>Perguntas e respostas frequentes dos usuários
+		1. Posso convidar alguém de outra universidade?
+		R: Sim, pode.
+		
+		2. Que tipo de arquivos posso colocar nas comunidades?
+		R: Temos suporte atualmente para arquivos de vídeo, aúdio, documentos (artigos, dissertações ou teses), imagens e livros.
+		</descricao>
+		<ativa>true</ativa>
+		<fixa>true</fixa>
+		<dataUltimaEdicao>19/05/2018</dataUltimaEdicao>
+		<publica>true</publica>
+	</discussao>
+	<discussao>
+		<id>2</id>
+		<idUsuarioCriador>1</idUsuarioCriador>
+		<titulo>Regras de uso das comunidades</titulo>
+		<dataCriacao>19/05/2018</dataCriacao>
+		<descricao>Veja no arquivo abaixo nossas regras de uso mais atualizadas.</descricao>
+		<ativa>true</ativa>
+		<fixa>true</fixa>
+		<dataUltimaEdicao></dataUltimaEdicao>
+		<publica>true</publica>
+	</discussao>
+	<discussao>
+		<id>3</id>
+		<idUsuarioCriador>3</idUsuarioCriador>
+		<titulo>Como você conheceu o site?</titulo>
+		<dataCriacao>19/05/2018</dataCriacao>
+		<descricao>Fale um pouco sobre sua pesquisa.</descricao>
+		<ativa>true</ativa>
+		<fixa>false</fixa>
+		<dataUltimaEdicao></dataUltimaEdicao>
+		<publica>true</publica>
+	</discussao>
+	<discussao>
+		<id>4</id>
+		<idUsuarioCriador>8</idUsuarioCriador>
+		<titulo>Dúvida</titulo>
+		<dataCriacao>19/05/2018</dataCriacao>
+		<descricao>Como convido alguém do meu departamento?</descricao>
+		<ativa>false</ativa>
+		<fixa>false</fixa>
+		<dataUltimaEdicao></dataUltimaEdicao>
+		<publica>true</publica>
+	</discussao>
+</Discussao>

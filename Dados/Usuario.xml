@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Usuario>
+	<usuario>
+		<id>1</id>
+		<username>benedito.freitas</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>UFRJ</instituicaoOrigem>
+		<titulo>pesquisador</titulo>
+		<cpf>63534510089</cpf>
+		<nome>Benedito Kaique Freitas</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>0</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>2</id>
+		<username>eduardo.fogaca</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>USP</instituicaoOrigem>
+		<titulo>pesquisador</titulo>
+		<cpf>51558161066</cpf>
+		<nome>Eduardo Nelson Kevin Fogaça</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>1</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>3</id>
+		<username>marcio.monteiro</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>PUC</instituicaoOrigem>
+		<titulo>professor</titulo>
+		<cpf>53818649065</cpf>
+		<nome>Márcio Emanuel Monteiro</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>2</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>4</id>
+		<username></username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>UERJ</instituicaoOrigem>
+		<titulo>professor</titulo>
+		<cpf>37373105050</cpf>
+		<nome>Benício Diego Caio Pereira</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>3</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>5</id>
+		<username>kaue.cunha</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>UFMG</instituicaoOrigem>
+		<titulo>pesquisador</titulo>
+		<cpf>56675373030</cpf>
+		<nome>Kauê Caleb da Cunha</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>4</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>6</id>
+		<username>alice.nunes</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>INFNET</instituicaoOrigem>
+		<titulo>pesquisador</titulo>
+		<cpf>40099715090</cpf>
+		<nome>Alice Marlene Nunes</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>5</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>7</id>
+		<username>valentina.campos</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>UNIRIO</instituicaoOrigem>
+		<titulo>professor</titulo>
+		<cpf>65671540046</cpf>
+		<nome>Valentina Mirella Campos</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>6</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>8</id>
+		<username>jaqueline.farias</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>UNIRIO</instituicaoOrigem>
+		<titulo>professor</titulo>
+		<cpf>02221078047</cpf>
+		<nome>Jaqueline Valentina Giovanna Farias</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>7</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>9</id>
+		<username>gabriela.ramos</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>UFRJ</instituicaoOrigem>
+		<titulo>professor</titulo>
+		<cpf>85832300050</cpf>
+		<nome>Gabriela Esther Alessandra Ramos</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>8</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>10</id>
+		<username>gabrielly.cruz</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>ESTACIO</instituicaoOrigem>
+		<titulo>pesquisador</titulo>
+		<cpf>60877878013</cpf>
+		<nome>Gabrielly Betina Renata da Cruz</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>9</idComunidadePertence>
+	</usuario>
+	<usuario>
+		<id>11</id>
+		<username>mariah.carvalho</username>
+		<email>teste@teste.com</email>
+		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
+		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
+		<ativo>true</ativo>
+		<instituicaoOrigem>PUC</instituicaoOrigem>
+		<titulo>pesquisador</titulo>
+		<cpf>33220718043</cpf>
+		<nome>Mariah Stella Carvalho</nome>
+		<banidoSistema>false</banidoSistema>
+		<idComunidadePertence>10</idComunidadePertence>
+	</usuario>
+</Usuario>

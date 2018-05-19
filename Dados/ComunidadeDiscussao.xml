@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ComunidadeDiscussao>
+	<comunidadeDiscussao>
+		<idComunidade>0</idComunidade>
+		<idDiscussao>1</idDiscussao>
+	</comunidadeDiscussao>
+	<comunidadeDiscussao>
+		<idComunidade>0</idComunidade>
+		<idDiscussao>2</idDiscussao>
+	</comunidadeDiscussao>
+	<comunidadeDiscussao>
+		<idComunidade>0</idComunidade>
+		<idDiscussao>3</idDiscussao>
+	</comunidadeDiscussao>
+	<comunidadeDiscussao>
+		<idComunidade>0</idComunidade>
+		<idDiscussao>4</idDiscussao>
+	</comunidadeDiscussao>
+</ComunidadeDiscussao>

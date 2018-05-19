@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Texto>
+	<texto>
+		<id>1</id>
+		<idRecurso>3</idRecurso>
+		<quantCaracteres>30000</quantCaracteres>
+		<quantPalavras>4000</quantPalavras>
+	</texto>
+	<texto>
+		<id>2</id>
+		<idRecurso>4</idRecurso>
+		<quantCaracteres></quantCaracteres>
+		<quantPalavras></quantPalavras>
+	</texto>
+	<texto>
+		<id>3</id>
+		<idRecurso>5</idRecurso>
+		<quantCaracteres></quantCaracteres>
+		<quantPalavras></quantPalavras>
+	</texto>
+</Texto>
