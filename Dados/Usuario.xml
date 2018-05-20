@@ -3,7 +3,7 @@
 	<usuario>
 		<id>1</id>
 		<username>benedito.freitas</username>
-		<email>teste@teste.com</email>
+		<email>teste1@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -17,7 +17,7 @@
 	<usuario>
 		<id>2</id>
 		<username>eduardo.fogaca</username>
-		<email>teste@teste.com</email>
+		<email>teste2@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -31,7 +31,7 @@
 	<usuario>
 		<id>3</id>
 		<username>marcio.monteiro</username>
-		<email>teste@teste.com</email>
+		<email>teste3@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -45,7 +45,7 @@
 	<usuario>
 		<id>4</id>
 		<username></username>
-		<email>teste@teste.com</email>
+		<email>teste4@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -59,7 +59,7 @@
 	<usuario>
 		<id>5</id>
 		<username>kaue.cunha</username>
-		<email>teste@teste.com</email>
+		<email>teste5@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -73,7 +73,7 @@
 	<usuario>
 		<id>6</id>
 		<username>alice.nunes</username>
-		<email>teste@teste.com</email>
+		<email>teste6@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -87,7 +87,7 @@
 	<usuario>
 		<id>7</id>
 		<username>valentina.campos</username>
-		<email>teste@teste.com</email>
+		<email>teste7@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -101,7 +101,7 @@
 	<usuario>
 		<id>8</id>
 		<username>jaqueline.farias</username>
-		<email>teste@teste.com</email>
+		<email>teste8@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -115,7 +115,7 @@
 	<usuario>
 		<id>9</id>
 		<username>gabriela.ramos</username>
-		<email>teste@teste.com</email>
+		<email>teste9@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -129,7 +129,7 @@
 	<usuario>
 		<id>10</id>
 		<username>gabrielly.cruz</username>
-		<email>teste@teste.com</email>
+		<email>teste10@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
@@ -143,7 +143,7 @@
 	<usuario>
 		<id>11</id>
 		<username>mariah.carvalho</username>
-		<email>teste@teste.com</email>
+		<email>teste11@teste.com</email>
 		<senha>46070D4BF934FB0D4B06D9E2C46E346944E322444900A435D7D9A95E6D7435F5</senha>
 		<urlImagemPerfil>../Imagens/PerfilPadrao.png</urlImagemPerfil>
 		<ativo>true</ativo>
