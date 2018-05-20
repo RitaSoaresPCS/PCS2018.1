@@ -1,34 +1,69 @@
 var Comunidade = new function() {
+	$.ajaxSetup({ cache: false });
     this.filePath = "../Dados/Comunidade.xml";
+	this.tagName = "comunidade";
 
-    this.listarComunidades = function () {
-		var xml = $.ajax(
-		{
-			type: 'GET',
-			async: false,
-			url: this.filePath,
-		});
-		return xml.responseXML.getElementsByTagName("comunidade");
+    this.listar = function () {
+		return Base.listar(this.filePath, this.tagName);
     }
 	
 	
-	this.getComunidadeById = function (id) {
-		var xml = $.ajax(
-		{
-			type: 'GET',
-			async: false,
-			url: this.filePath,
-		});
-		var comunidades = xml.responseXML.getElementsByTagName("comunidade");
-		for (var i = 0; i < comunidades.length; ++i) {
-			if (comunidades[i].children[0].innerHTML == String(id)) {
-				return comunidades[i];
-			}
-		}
+	this.getById = function (id) {
+		return Base.getById(id, this.filePath, this.tagName);
     }
 	
-	this.getComunidadeByNome = function () {}
-	this.adicionarComunidade = function () {}
-	this.removerComunidade = function () {}
+	
+	this.getByNome = function (pesquisa) {
+		return Base.getByNome(pesquisa, this.filePath, this.tagName);
+	}
+	
+	
+	this.adicionar = function (nome, descricao, tema, idUsuarioAdministrador) {
+		var comunidades = this.listar();
+		
+		// Último id existente:
+		var ultimoId = parseInt(comunidades[comunidades.length - 1].children[0].innerHTML);
+		
+		var id = String(ultimoId + 1);
+		var dataCriacao = moment(new Date()).format('DD/MM/YYYY');
+		
+		$.post( "ControleDados/Comunidade.php", { 
+			func: "adicionar",
+			id: id, 
+			nome: nome,
+			descricao: descricao,
+			dataCriacao: dataCriacao,
+			dataUltimaEdicao: "",
+			tema: tema,
+			ativa: "true",
+			idUsuarioAdministrador: idUsuarioAdministrador
+		} );
+	}
+	
+	
+	
+	this.editar = function (id, nome, descricao, tema, idUsuarioAdministrador) {
+		var dataUltimaEdicao = moment(new Date()).format('DD/MM/YYYY');
+		
+		$.post( "ControleDados/Comunidade.php", { 
+			func: "editar",
+			id: id, 
+			nome: nome,
+			descricao: descricao,
+			dataUltimaEdicao: dataUltimaEdicao,
+			tema: tema,
+			idUsuarioAdministrador: idUsuarioAdministrador
+		} );
+	}
+	
+	
+	// Inativar.
+	this.remover = function (id) {
+		$.post( "ControleDados/Comunidade.php", { 
+			func: "remover",
+			id: id
+		} );
+		
+	}
 	
 }

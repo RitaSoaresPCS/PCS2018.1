@@ -1,0 +1,54 @@
+var Base = new function() {
+	$.ajaxSetup({ cache: false });
+
+    this.listar = function (filePath, tagName) {
+		var xml = $.ajax(
+		{
+			type: 'GET',
+			async: false,
+			url: filePath,
+			dataType: "xml"
+		});
+		return xml.responseXML.getElementsByTagName(tagName);
+    }
+	
+	
+	this.getById = function (id, filePath, tagName) {
+		var xml = $.ajax(
+		{
+			type: 'GET',
+			async: false,
+			url: filePath,
+			dataType: "xml"
+		});
+		var nos = xml.responseXML.getElementsByTagName(tagName);
+		for (var i = 0; i < nos.length; ++i) {
+			if (nos[i].children[0].innerHTML == String(id)) {
+				return nos[i];
+			}
+		}
+    }
+	
+	
+	this.getByNome = function (pesquisa, filePath, tagName) {
+		var xml = $.ajax(
+		{
+			type: 'GET',
+			async: false,
+			url: filePath,
+			dataType: "xml"
+		});
+		pesquisa = pesquisa.toLowerCase();
+		var nos = xml.responseXML.getElementsByTagName(tagName);
+		var resultado = [];
+		for (var i = 0; i < nos.length; ++i) {
+			if (nos[i].children[1].innerHTML.toLowerCase().includes(pesquisa) == true) {
+				resultado.push(nos[i]);
+			}
+		}
+		return resultado;
+		
+	}
+	
+	
+}
