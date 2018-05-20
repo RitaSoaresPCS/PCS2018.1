@@ -2,6 +2,7 @@ var Comunidade = new function() {
 	$.ajaxSetup({ cache: false });
     this.filePath = "../Dados/Comunidade.xml";
 	this.tagName = "comunidade";
+	this.controladorURL = "ControleDados/Comunidade.php";
 
     this.listar = function () {
 		return Base.listar(this.filePath, this.tagName);
@@ -27,7 +28,7 @@ var Comunidade = new function() {
 		var id = String(ultimoId + 1);
 		var dataCriacao = moment(new Date()).format('DD/MM/YYYY');
 		
-		$.post( "ControleDados/Comunidade.php", { 
+		$.post(this.controladorURL, { 
 			func: "adicionar",
 			id: id, 
 			nome: nome,
@@ -45,7 +46,7 @@ var Comunidade = new function() {
 	this.editar = function (id, nome, descricao, tema, idUsuarioAdministrador) {
 		var dataUltimaEdicao = moment(new Date()).format('DD/MM/YYYY');
 		
-		$.post( "ControleDados/Comunidade.php", { 
+		$.post(this.controladorURL, { 
 			func: "editar",
 			id: id, 
 			nome: nome,
@@ -59,11 +60,7 @@ var Comunidade = new function() {
 	
 	// Inativar.
 	this.remover = function (id) {
-		$.post( "ControleDados/Comunidade.php", { 
-			func: "remover",
-			id: id
-		} );
-		
+		Base.inativar(id, this.controladorURL);
 	}
 	
 }
