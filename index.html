@@ -4,14 +4,51 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="http://momentjs.com/downloads/moment.js"></script>
-		
+
 		<script src="AcessoDados/Base.js"></script>
-		
+
 		<!-- Carregar apenas se necessário na página: -->
 		<script src="AcessoDados/Comunidade.js"></script>
 		<script src="AcessoDados/Usuario.js"></script>
-		
+
+		<script type= 'text/javascript'>
+			$(document).ready(function(){
+				$('#btn-login').click(function(){
+					var email= $('#email').val();
+					var pass= $('#pass').val();
+					if ((email!= null)||(pass!= null))
+					{
+						$.ajax({
+  						type: 'POST',
+  						url: 'ControleDados/Login.php',
+							contentType: 'application/x-www-form-urlencoded',
+							dataType: 'json',
+  						data: 'function=login&email='+email+'&pass='+pass,
+  						success: function (result){
+								localStorage.setItem('userId', result);
+								window.location.assign('perfil.html');
+							}
+
+						});
+					}
+				});
+		});
+		</script>
 	</head>
 
-	<body></body>
+	<body>
+		<header><!-- logo do academiq --></header>
+		<main>
+			<form id= 'form-login' action= 'ControleDados/Login.php' method= 'POST'>
+				<p>Login</p>
+				<input id= 'email' type= 'text'>
+				<p>Senha</p>
+				<input id= 'pass' type= 'password'>
+				<button id= 'btn-login' type= 'button' value= 'entrar'>
+			</form>
+
+
+		</main>
+		<footer></footer>
+	</body>
 </html>

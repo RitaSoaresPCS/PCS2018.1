@@ -1,0 +1,38 @@
+<!DOCKTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="http://momentjs.com/downloads/moment.js"></script>
+
+		<script src="AcessoDados/Base.js"></script>
+
+		<!-- Carregar apenas se necessário na página: -->
+		<script src="AcessoDados/Comunidade.js"></script>
+		<script src="AcessoDados/Usuario.js"></script>
+    <script type= 'text/javascript'>
+      $(document).ready(function(){
+        $.ajax({
+          type: 'POST',
+          url: 'ControleDados/Login.php',
+          contentType: 'application/x-www-form-urlencoded',
+          dataType: 'json',
+          data: 'function=getData&userId='+localStorage.getItem('userId'),
+          success: function (result){
+            alert(result);
+          }
+
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header></header>
+    <main>
+    </main>
+    <aside>
+    </aside>
+    <footer>
+    </footer>
+  </body>
+</html>
