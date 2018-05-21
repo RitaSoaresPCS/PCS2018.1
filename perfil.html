@@ -1,0 +1,63 @@
+<!DOCKTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset= 'utf-8'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="http://momentjs.com/downloads/moment.js"></script>
+
+		<script src="AcessoDados/Base.js"></script>
+
+		<!-- Carregar apenas se necessário na página: -->
+		<script src="AcessoDados/Comunidade.js"></script>
+		<script src="AcessoDados/Usuario.js"></script>
+    <script type= 'text/javascript'>
+      $(document).ready(function(){
+        $('#logout').click(function(){
+          localStorage.setItem('userId', '-1');
+          window.location.assign('index.html');
+        });
+        $.ajax({
+          type: 'POST',
+          url: 'ControleDados/Login.php',
+          contentType: 'application/x-www-form-urlencoded',
+          dataType: 'json',
+          data: 'function=getData&userId='+localStorage.getItem('userId'),
+          success: function (User){
+            var divUserPicture= $('#user-picture');
+            var divUserName= $('#user-name');
+            $('<p />')
+              .text(User.name)
+              .appendTo(divUserName);
+            $('<img />')
+              .attr('src', User.picture)
+              .attr('alt', 'Profile picture')
+              .appendTo(divUserPicture);
+          }
+
+        });
+        alert(userObject.id);
+      });
+    </script>
+  </head>
+  <body>
+    <header></header>
+    <main>
+    </main>
+    <aside>
+      <div id= 'user-picture'></div>
+      <div id= 'user-name'></div>
+      <div id= 'search'></div>
+      <ul id= 'navigation'>
+        <li>Meu Perfil</li>
+        <li>Minhas Discussões</li>
+        <li>Meu Laboratório</li>
+        <li>Meu Repositório</li>
+        <li>Mensagens</li>
+        <li id='logout'>Sair</li>
+      </ul>
+    </aside>
+    <footer>
+    </footer>
+  </body>
+</html>
