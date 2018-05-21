@@ -42,7 +42,7 @@
     {
       $idUser= $_POST['userId'];
       $xml = simplexml_load_file( '..\Dados\Usuario.xml');
-      
+
       foreach($xml->usuario as $userSearch)
       {
         $userId= ((String)($userSearch->id));
@@ -57,17 +57,6 @@
         }
       }
 
-      /*$xmlCD= simplexml_load_file( '..\Dados\ComunidadeDiscussao.xml');
-      $iterator= 0;
-      var $discussoes;
-      foreach($xmlCD->comunidadeDiscussao as $cd)
-      {
-        $comunidadeId= $cd->idComunidade;
-        if ($comunidadeId=== '0')
-        {
-
-        }
-      }*/
     }
   }
 
