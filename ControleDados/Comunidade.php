@@ -100,7 +100,7 @@ switch ($func) {
 		$xml->asXml('..\Dados\Comunidade.xml'); // Salva.
 		break;
 		
-	case "remover":
+	case "inativar":
 		$id = $_POST['id'];
 	
 		$xml = simplexml_load_file( '..\Dados\Comunidade.xml');

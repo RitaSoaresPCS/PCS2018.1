@@ -31,7 +31,7 @@
       if ($email === $userEmail)
       {
           $userPass= (String)($user->senha);
-          if ($pass === $userPass){
+          if (hash('sha256', $pass) == $userPass){
             $userId= (String)($user->id);
             echo json_encode($userId);
           }

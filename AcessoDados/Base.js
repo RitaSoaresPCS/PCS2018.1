@@ -51,4 +51,11 @@ var Base = new function() {
 	}
 	
 	
+	this.inativar = function (id, serverURL) {
+		$.post(serverURL, { 
+			func: "inativar",
+			id: id
+		} );
+	}
+	
 }
