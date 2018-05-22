@@ -13,6 +13,7 @@
 		<nome>Benedito Kaique Freitas</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>0</idComunidadePertence>
+		<idComunidadeAdministra>0</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>2</id>
@@ -27,6 +28,7 @@
 		<nome>Eduardo Nelson Kevin Fogaça</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>1</idComunidadePertence>
+		<idComunidadeAdministra>1</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>3</id>
@@ -41,6 +43,7 @@
 		<nome>Márcio Emanuel Monteiro</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>2</idComunidadePertence>
+		<idComunidadeAdministra>2</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>4</id>
@@ -55,6 +58,7 @@
 		<nome>Benício Diego Caio Pereira</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>3</idComunidadePertence>
+		<idComunidadeAdministra>3</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>5</id>
@@ -69,6 +73,7 @@
 		<nome>Kauê Caleb da Cunha</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>4</idComunidadePertence>
+		<idComunidadeAdministra>4</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>6</id>
@@ -83,6 +88,7 @@
 		<nome>Alice Marlene Nunes</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>5</idComunidadePertence>
+		<idComunidadeAdministra>5</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>7</id>
@@ -97,6 +103,7 @@
 		<nome>Valentina Mirella Campos</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>6</idComunidadePertence>
+		<idComunidadeAdministra>6</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>8</id>
@@ -111,6 +118,7 @@
 		<nome>Jaqueline Valentina Giovanna Farias</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>7</idComunidadePertence>
+		<idComunidadeAdministra>7</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>9</id>
@@ -125,6 +133,7 @@
 		<nome>Gabriela Esther Alessandra Ramos</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>8</idComunidadePertence>
+		<idComunidadeAdministra>8</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>10</id>
@@ -139,6 +148,7 @@
 		<nome>Gabrielly Betina Renata da Cruz</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>9</idComunidadePertence>
+		<idComunidadeAdministra>9</idComunidadeAdministra>
 	</usuario>
 	<usuario>
 		<id>11</id>
@@ -153,5 +163,6 @@
 		<nome>Mariah Stella Carvalho</nome>
 		<banidoSistema>false</banidoSistema>
 		<idComunidadePertence>10</idComunidadePertence>
+		<idComunidadeAdministra>10</idComunidadeAdministra>
 	</usuario>
 </Usuario>
