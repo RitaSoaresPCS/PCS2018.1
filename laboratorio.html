@@ -24,7 +24,7 @@
               url: 'ControleDados/Parceiro.php',
               contentType: 'application/x-www-form-urlencoded',
               dataType: 'json',
-              data: 'function=adicionarParceiro&username='+username,
+              data: 'function=adicionarParceiro&username='+username+'&idCom=1',
               success: function () {
                 alert('Solicitação Enviada');
               }
@@ -38,7 +38,7 @@
    $(document).ready(function(){
      $('#btn-remover').click(function(){
 
-       var idParceria= $(#idParceria).val();
+       var idParceria= $('#idParceria').val();
        if (idParceria!= null)
        {
          $.ajax({
@@ -50,10 +50,9 @@
            success: function () {
              alert('Parceiro Removido');
            }
-         })
+         });
        }
      });
-   }
  });
  </script>
 
