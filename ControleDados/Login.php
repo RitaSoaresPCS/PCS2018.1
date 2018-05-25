@@ -2,7 +2,7 @@
 
 
   class User {
-    function __construct($id, $username, $email, $picture, $active, $instit, $title, $cpf, $name, $ban, $idLab){
+    function __construct($id, $username, $email, $picture, $active, $instit, $title, $cpf, $name, $ban, $idLab, $idComuAdm){
       $this->id= $id;
       $this->username= $username;
       $this->email= $email;
@@ -14,6 +14,7 @@
       $this->name= $name;
       $this->ban= $ban;
       $this->idLab= $idLab;
+      $this->idComuAdm= $idComuAdm;
     }
   }
 
@@ -51,7 +52,7 @@
           ((String)($userSearch->email)), ((String)($userSearch->urlImagemPerfil)), ((String)($userSearch->ativo)),
           ((String)($userSearch->instituicaoOrigem)), ((String)($userSearch->titulo)),
           ((String)($userSearch->cpf)), ((String)($userSearch->nome)),((String)($userSearch->banidoSistema)),
-          ((String)($userSearch->idComunidadePertence)));
+          ((String)($userSearch->idComunidadePertence)), ((String)($userSearch->idComunidadeAdministra)));
           echo json_encode($userFound);
           break;
         }
