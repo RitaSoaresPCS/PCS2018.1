@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset= 'utf-8'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://momentjs.com/downloads/moment.js"></script>
+
+    <script src="AcessoDados/Base.js"></script>
+
+    <!-- Carregar apenas se necessário na página: -->
+    <script src="AcessoDados/Comunidade.js"></script>
+    <script src="AcessoDados/Usuario.js"></script>
+    <!-- <script src="AcessoDados/Parceria.js"></script> -->
+
+    <script type= 'text/javascript'>
+      $(document).ready(function(){
+        $('#btn-addParc').click(function(){
+          var username= $('#username').val();
+          if (username!= null)
+          {
+            $.ajax({
+              type: 'POST',
+              url: 'ControleDados/Parceiro.php',
+              contentType: 'application/x-www-form-urlencoded',
+              dataType: 'json',
+              data: 'function=adicionarParceiro&username='+username,
+              success: function () {
+                alert('Solicitação Enviada');
+              }
+            });
+          }
+        });
+      });
+   </script>
+
+   <script type= 'text/javascript'>
+   $(document).ready(function(){
+     $('#btn-remover').click(function(){
+
+       var idParceria= $(#idParceria).val();
+       if (idParceria!= null)
+       {
+         $.ajax({
+           type: 'POST',
+           url: 'ControleDados/Parceiro.php',
+           contentType: 'application/x-www-form-urlencoded',
+           dataType: 'json',
+           data: 'function=removerParceiro&idParceria='+idParceria,
+           success: function () {
+             alert('Parceiro Removido');
+           }
+         })
+       }
+     });
+   }
+ });
+ </script>
+
+  </head>
+  <body>
+
+    <header><!-- logo do academiq --></header>
+		<main>
+			<form id= 'form-addParc'>
+				<p>Nome do Convidado</p>
+				<input id= 'username' type= 'text'>
+				<button id= 'btn-addParc' type= 'button'>Enviar</button>
+			</form>
+      <hr></hr>
+    <button id= 'btn-remover' type= 'button'>Remover Parceiro</button>
+
+  </body>
+</html>
