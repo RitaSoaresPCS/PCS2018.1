@@ -1,8 +1,11 @@
 $(document).ready(function(){
   var userInfo= null;
   $('#logout').click(function(){
-    localStorage.setItem('userId', '-1');
-    window.location.assign('index.html');
+	  var confirmou = confirm("Deseja realmente sair?");
+	  if (confirmou) { // Usuário confirmou que deseja sair.
+		localStorage.setItem('userId', '-1');
+		window.location.assign('index.html');
+	  } 
   });
 
   $.ajax({
