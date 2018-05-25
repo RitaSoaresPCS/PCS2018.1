@@ -81,7 +81,7 @@ switch ($func) {
 		$xml->asXml('..\Dados\Discussao.xml'); // Salva.
 		break;
 
-	case "inativor":
+	case "inativar":
 		$id = $_POST['id'];
 
 		$xml = simplexml_load_file( '..\Dados\Discussao.xml');

@@ -20,6 +20,7 @@ if ($func=== 'adicionarParceiro')
 
 
     $xml = simplexml_load_file( '..\Dados\Usuario.xml');
+    $username= $_POST['username'];
     foreach($xml->usuario as $us) {
       $usernameUs = (string)($us->username);
 
@@ -39,31 +40,32 @@ if ($func=== 'adicionarParceiro')
     $idUsuarioText = $xmldoc->createTextNode($idUs);
     $parceriaElement->appendChild($idUsuarioText);
 
-
+    $idComunidade= $_POST['idCom'];
     $parceriaElement = $xmldoc->createElement('idComunidade');
     $parceria->appendChild($parceriaElement);
     $idComunidadeText = $xmldoc->createTextNode($idComunidade);
-    $parceriaElement->appendChild($idComunidade);
+    $parceriaElement->appendChild($idComunidadeText);
 
     $xmldoc->save('..\Dados\Parceria.xml');
 
     die(json_encode($return));
 
   }
-  break;
-
 }else{
   if ($func=== 'removerParceiro')
-  foreach($xml->parceria) {
-    $idParceria = (string)($parceria->id);
+  {
+    foreach($xml->parceria as $parceria) {
+      $idParceria = (string)($parceria->id);
 
-    if ($idParceria == $id) {
-      $parceria->id = '';
-      $parceria->idUsuario = '';
-      $parceria->idComunidade = '';
-      break;
+      if ($idParceria == $id) {
+        $parceria->id = '';
+        $parceria->idUsuario = '';
+        $parceria->idComunidade = '';
+        break;
+      }
     }
   }
+
 }
 
 ?>
