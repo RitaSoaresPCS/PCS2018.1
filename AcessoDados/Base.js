@@ -11,8 +11,8 @@ var Base = new function() {
 		});
 		return xml.responseXML.getElementsByTagName(tagName);
     }
-	
-	
+
+
 	this.getById = function (id, filePath, tagName) {
 		var xml = $.ajax(
 		{
@@ -28,8 +28,8 @@ var Base = new function() {
 			}
 		}
     }
-	
-	
+
+
 	this.getByNome = function (pesquisa, filePath, tagName) {
 		var xml = $.ajax(
 		{
@@ -47,15 +47,35 @@ var Base = new function() {
 			}
 		}
 		return resultado;
-		
+
 	}
-	
-	
+
+	this.getByNomeVerdadeiro = function (pesquisa, filePath, tagName) {
+		var xml = $.ajax(
+		{
+			type: 'GET',
+			async: false,
+			url: filePath,
+			dataType: "xml"
+		});
+		pesquisa = pesquisa.toLowerCase();
+		var nos = xml.responseXML.getElementsByTagName(tagName);
+		var resultado= null;
+		for (var i = 0; i < nos.length; ++i) {
+			if (nos[i].children[1].innerHTML.toLowerCase()== pesquisa) {
+				resultado= nos[i];
+			}
+		}
+		return resultado;
+
+	}
+
+
 	this.inativar = function (id, serverURL) {
-		$.post(serverURL, { 
+		$.post(serverURL, {
 			func: "inativar",
 			id: id
 		} );
 	}
-	
+
 }
