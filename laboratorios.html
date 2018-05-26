@@ -22,7 +22,7 @@
 		for (i = 0; i < comunidades.length; i++) { 
 			// [id, nome, descricao, datacriacao, dataultimaedicao, tema, ativa, idusuarioadministrador]
 			if (comunidades[i].children[6].innerHTML == "true") {
-				conteudo += "<div class='comunidade'><h3><a href=laboratorio?id=" + comunidades[i].children[0].innerHTML + ">" + comunidades[i].children[1].innerHTML + "</a></h3>";
+				conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + comunidades[i].children[0].innerHTML + ">" + comunidades[i].children[1].innerHTML + "</a></h3>";
 				conteudo += "Criada em: " + comunidades[i].children[3].innerHTML + "<br>";
 				conteudo += "Tema: " + comunidades[i].children[5].innerHTML + "<br>";
 				conteudo += comunidades[i].children[2].innerHTML + "<br>";
