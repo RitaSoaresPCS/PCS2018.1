@@ -54,7 +54,7 @@
 
       <style>
         body {font-family: Arial, Helvetica, sans-serif;}
-
+        
         /* The Modal (background) */
         .modal {
           display: none; /* Hidden by default */
@@ -93,7 +93,48 @@
           text-decoration: none;
           cursor: pointer;
         }
-    </style>
+      </style>
+
+   <script type= 'text/javascript'>
+   $(document).ready(function(){
+		
+		var comunidade = Comunidade.getById(Base.getUrlParameter("id"));
+		conteudo = "";
+		
+		var nome = comunidade.children[1].innerHTML;
+		var descricao = comunidade.children[2].innerHTML;
+		var tema = comunidade.children[5].innerHTML;
+		var usuarioAdmin = Usuario.getById(comunidade.children[7].innerHTML).children[1].innerHTML;
+		
+		conteudo += "<form>"
+		conteudo += "<input type='hidden' name='id' id='id' value='" + comunidade.children[0].innerHTML + "'>";
+		conteudo += "Nome:<br><input type='text' name='nome' id='nome' value='" + nome + "' width='100'><br>";
+		conteudo += "Descrição:<br><input type='text' name='descricao' id='descricao' value='" + descricao + "' width='100'><br>";
+		conteudo += "Tema:<br><input type='text' name='tema' id='tema' value='" + tema + "' width='100'><br>";
+		conteudo += "Administrador:<br><input type='text' name='usuarioAdmin' id='usuarioAdmin' value='" + usuarioAdmin + "' width='100'><br><br>";
+		conteudo += "<button id= 'btn-editar-lab' type= 'button'>Editar</button><br>";
+		conteudo += "</form>"
+		
+		
+		document.getElementById("conteudo").innerHTML = conteudo;
+		
+
+	  $('#btn-editar-lab').click(function(){
+		var id = $('#id').val();
+		var nome = $('#nome').val();
+		var descricao = $('#descricao').val();
+		var tema = $('#tema').val();
+		var userAdmin = $('#usuarioAdmin').val();
+		
+		var idUsuarioAdministrador = Usuario.getByNome(userAdmin)[0].children[0].innerHTML;
+		
+		Comunidade.editar(id, nome, descricao, tema, idUsuarioAdministrador);
+		window.location.assign('laboratorio.html?id=' + id);
+
+	  });
+	});
+	
+ </script>
   </head>
   <body>
     <h2>Laboratório</h2>
@@ -189,5 +230,19 @@
       }
 </script>
 
-</body>
+<header><!-- logo do academiq --></header>
+	
+	<div id="conteudo"></div>
+	
+	
+		<main>
+			<form id= 'form-addParc'>
+				<p>Nome do Convidado</p>
+				<input id= 'username' type= 'text'>
+				<button id= 'btn-addParc' type= 'button'>Enviar</button>
+			</form>
+      <hr></hr>
+    <button id= 'btn-remover' type= 'button'>Remover Parceiro</button>
+
+  </body>
 </html>
