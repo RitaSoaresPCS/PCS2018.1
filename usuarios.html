@@ -1,0 +1,182 @@
+<!DOCKTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset= 'utf-8'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="http://momentjs.com/downloads/moment.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<script src="AcessoDados/Base.js"></script>
+    <script src="AcessoDados/Usuario.js"></script>
+    <script src="AcessoDados/Comunidade.js"></script>
+    <script type= 'text/javascript'>
+      $(document).ready(function(){
+        var bool= 0;
+        function acao(userUsername, userMail, userInstit, userTtl, userCpf, userName){
+          if (bool== 0)
+          {
+            Usuario.adicionar(userUsername, userMail, userInstit, userTtl, userCpf, userName, '-1');
+          }else{
+            var usuario= Usuario.getByNomeVerdadeiro(userUsername);
+            Usuario.editar(usuario.children[0].innerHTML,userUsername, userMail, userInstit, userTtl, userCpf, userName, '-1');
+          }
+        }
+        $('#btn-save-user').click(function(){
+          //username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence
+          var userUsername= $('#user-username').val();
+          var userMail= $('#user-email').val();
+          var userInstit= $('#user-instit').val();
+          var userTtl= $('#selected-title').val();
+          var userCpf= $('#user-cpf').val();
+          var userName= $('#user-name').val();
+          acao(userUsername, userMail, userInstit, userTtl, userCpf, userName);
+        });
+        $('body').on('click', 'button[id^="btn-edit-"]', function () {
+          bool= 1;
+          var userUsername= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
+          var usuario= Usuario.getByNomeVerdadeiro(userUsername);
+          $('#user-username').val(userUsername);
+          $('#user-email').val(usuario.children[2].innerHTML);
+          $('#user-instit').val(usuario.children[6].innerHTML);
+          $('#selected-title').val(usuario.children[7].innerHTML);
+          $('#user-cpf').val(usuario.children[8].innerHTML);
+          $('#user-name').val(usuario.children[9].innerHTML);
+          $('#user-lab').val(Comunidade.getById(usuario.children[11].innerHTML).children[1].innerHTML);
+        });
+        $('#btn-delete-user').click(function(){
+          var userUsername= $('#user-username').val();
+          var usuario= Usuario.getByNomeVerdadeiro(userUsername);
+          Usuario.remover(usuario.children[0].innerHTML);
+          alert('Usuário deletado');
+          $('#user-username').val('');
+          $('#user-email').val('');
+          $('#selected-title').val('Professor');
+          $('#user-instit').val('');
+          $('#user-cpf').val('');
+          $('#user-name').val('');
+          $('#user-lab').val('');
+        });
+        $('#btn-create-user').click(function(){
+          bool= 0;
+          $('#user-username').val('');
+          $('#user-email').val('');
+          $('#selected-title').val('Professor');
+          $('#user-instit').val('');
+          $('#user-cpf').val('');
+          $('#user-name').val('');
+          $('#user-lab').val('');
+        });
+
+        var usuarios= Usuario.listar();
+        var divUsuarios= $('#usuarios');
+        usuariosSize= usuarios.length;
+        for (var iterator= 1; iterator< usuariosSize; iterator++)
+        {
+          var currentUser= usuarios[iterator];
+          if(currentUser.children[5].innerHTML== 'true')
+          {
+            var divUserInfo= $('<div />').appendTo(divUsuarios);
+            var userUsername= currentUser.children[1].innerHTML;
+            var userPicture= currentUser.children[4].innerHTML;
+            var userInstit= currentUser.children[6].innerHTML;
+            var userTtl= currentUser.children[7].innerHTML;
+            var userName= currentUser.children[9].innerHTML;
+            var userLab= Comunidade.getById(currentUser.children[11].innerHTML).children[1].innerHTML;
+            var divUserPicnName= $('<div />').appendTo(divUserInfo);
+            $('<img />')
+              .attr('src', userPicture)
+              .attr('alt', 'Photo of '+userName)
+              .appendTo(divUserPicnName);
+            $('<p />')
+              .text(userUsername)
+              .appendTo(divUserPicnName);
+            var divUserMainInfo= $('<div />').appendTo(divUserInfo);
+             $('<p />')
+              .text(userName)
+              .appendTo(divUserMainInfo);
+            $('<p />')
+              .text('Laboratório de '+userLab)
+              .appendTo(divUserMainInfo);
+            $('<p />')
+              .text('Título: '+userTtl)
+              .appendTo(divUserMainInfo);
+            $('<p />')
+              .text('Instituição: '+userInstit)
+              .appendTo(divUserMainInfo);
+            var divUserDetails= $('<div />').attr('id', 'div-user-details').appendTo(divUserInfo);
+            $('<button />')
+              .attr('type', 'button')
+              .attr('id', 'btn-edit-'+userUsername)
+              .attr('data-toggle', 'modal')
+              .attr('data-target', '#my-modal')
+              .text('detalhes')
+              .appendTo(divUserDetails);
+
+            $('<hr>').appendTo(divUsuarios);
+          }
+
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+    </header>
+    <main>
+      <h1>Usuários</h1>
+      <div class="container">
+        <!-- Trigger the modal with a button -->
+        <button id='btn-create-user' type= 'button' data-toggle= 'modal' data-target= '#my-modal'>Criar novo usuário</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="my-modal" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">fechar</button>
+                <h4 class="modal-title">Preencha as informações do novo usuários</h4>
+              </div>
+              <div class="modal-body">
+                <form id= 'form-new-user'>
+          				<p>Nome completo:</p>
+                  <input id='user-name' type= 'text'>
+                  <p>Laboratório:</p>
+                  <input id='user-lab' type= 'text'>
+                  <p>Título:</p>
+                  <select id= 'selected-title'>
+                    <option value="professor">Professor</option>
+                    <option value="pesquisador">Pesquisador</option>
+                    <option value="aluno">Aluno</option>
+                  </select>
+                  <p>Usuário:</p>
+                  <input id='user-username' type= 'text'>
+                  <p>CPF:</p>
+                  <input id='user-cpf' type= 'text'>
+                  <p>Instituição:</p>
+                  <input id='user-instit' type= 'text'>
+                  <p>E-mail:</p>
+                  <input id='user-email' type= 'text'>
+          			</form>
+              </div>
+              <div class="modal-footer">
+                <button id= 'btn-delete-user' type= 'button' class= 'btn btn-default'>Excluir</button>
+                <button id='btn-save-user' type="button" class="btn btn-default" data-dismiss="modal">Salvar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div id= 'usuarios'>
+      </div>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>
