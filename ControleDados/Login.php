@@ -21,11 +21,12 @@
 
 
   $func= $_POST['function'];
-  if ($func=== 'login')
+  if ($func === 'login')
   {
     $email= $_POST['email'];
     $pass= $_POST['pass'];
     $xml = simplexml_load_file( '..\Dados\Usuario.xml');
+	$result = "";
     foreach($xml->usuario as $user)
     {
       $userEmail= (String)($user->email);
@@ -33,13 +34,14 @@
       {
           $userPass= (String)($user->senha);
           if (hash('sha256', $pass) == $userPass){
-            $userId= (String)($user->id);
-            echo json_encode($userId);
+            $userId = (String)($user->id);
+            $result = $userId;
           }
       }
     }
-  }else{
-    if ($func=== 'getData')
+	echo json_encode($result);
+  } else{
+    if ($func === 'getData')
     {
       $idUser= $_POST['userId'];
       $xml = simplexml_load_file( '..\Dados\Usuario.xml');

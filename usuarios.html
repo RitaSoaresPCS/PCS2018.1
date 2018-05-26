@@ -118,6 +118,16 @@
           }
 
         }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="http://momentjs.com/downloads/moment.js"></script>
+
+		<script src="AcessoDados/Base.js"></script>
+    <script src="AcessoDados/Usuario.js"></script>
+    <script type= 'text/javascript'>
+      $(document).ready(function(){
+        var usuarios= Usuario.getById('0');
+        alert(usuarios);
       });
     </script>
   </head>
@@ -175,6 +185,7 @@
 
       <div id= 'usuarios'>
       </div>
+
     </main>
     <footer>
     </footer>

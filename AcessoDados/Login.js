@@ -11,10 +11,14 @@ $(document).ready(function(){
         dataType: 'json',
         data: 'function=login&email='+email+'&pass='+pass,
         success: function (result){
-          localStorage.setItem('userId', result);
-          window.location.assign('perfil.html');
+			if (result == "") {
+				alert("Senha ou e-mail incorretos.")
+			} else {
+				localStorage.setItem('userId', result);
+				window.location.assign('perfil.html');
+			}	
         }
-
+		
       });
     }
   });

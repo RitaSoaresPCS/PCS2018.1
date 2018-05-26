@@ -63,4 +63,12 @@ var Comunidade = new function() {
 		Base.inativar(id, this.controladorURL);
 	}
 
+	
+	this.desativarLaboratorio = function (id) {
+		var confirmou = confirm("Deseja realmente desativar a comunidade?");
+		if (confirmou) {
+			this.remover(id);
+			window.location.assign('laboratorios.html');
+		} 
+	}
 }
