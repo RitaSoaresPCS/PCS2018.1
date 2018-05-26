@@ -1,36 +1,41 @@
 var Usuario = new function() {
 	$.ajaxSetup({ cache: false });
-    this.filePath = "../Dados/Usuario.xml";
+  this.filePath = "Dados/Usuario.xml";
 	this.tagName = "usuario";
 	this.controladorURL = "ControleDados/Usuario.php";
 
     this.listar = function () {
 		return Base.listar(this.filePath, this.tagName);
     }
-	
-	
+
+
 	this.getById = function (id) {
 		return Base.getById(id, this.filePath, this.tagName);
     }
-	
-	
+
+
 	this.getByNome = function (pesquisa) {
 		return Base.getByNome(pesquisa, this.filePath, this.tagName);
 	}
-	
-	
-	
+
+	this.getByNomeVerdadeiro= function(username)
+	{
+		return Base.getByNomeVerdadeiro(username, this.filePath, this.tagName);
+	}
+
+
+
 	this.adicionar = function (username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence) {
 		var usuarios = this.listar();
-		
+
 		// Último id existente:
 		var ultimoId = parseInt(usuarios[usuarios.length - 1].children[0].innerHTML);
-		
+
 		var id = String(ultimoId + 1);
-		
-		$.post(this.controladorURL, { 
+
+		$.post(this.controladorURL, {
 			func: "adicionar",
-			id: id, 
+			id: id,
 			username: username,
 			email: email,
 			senha: "",
@@ -49,14 +54,14 @@ var Usuario = new function() {
 			}
 		} );
 	}
-	
-	
+
+
 	this.editar = function (id, username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence) {
 		var dataUltimaEdicao = moment(new Date()).format('DD/MM/YYYY');
-		
-		$.post(this.controladorURL, { 
+
+		$.post(this.controladorURL, {
 			func: "editar",
-			id: id, 
+			id: id,
 			username: username,
 			email: email,
 			instituicaoOrigem: instituicaoOrigem,
@@ -71,11 +76,11 @@ var Usuario = new function() {
 			}
 		} );
 	}
-	
-	
+
+
 	// Inativar.
 	this.remover = function (id) {
 		Base.inativar(id, this.controladorURL);
 	}
-	
+
 }
