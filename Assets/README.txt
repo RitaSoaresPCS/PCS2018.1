@@ -1,0 +1,1 @@
+Pasta dedicada aos arquivos de CSS, imagens, vídeos, etc utilizados no design da página.
