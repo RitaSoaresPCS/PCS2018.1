@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<Parceria>
-  <parceria>
-		<id>1</id>
-		<idUsuario>1</idUsuario>
-    <idComunidade>0</idComunidade>
-	</parceria>
-</Parceria>
+  <Parceria>
+    <parceria>
+      <id>1</id>
+      <idUsuario>1</idUsuario>
+      <idComunidade>0</idComunidade>
+    </parceria>
+    <parceria>
+      <id>2</id>
+      <idUsuario></idUsuario>
+      <idComunidade>1</idComunidade>
+    </parceria>
+  </Parceria>
