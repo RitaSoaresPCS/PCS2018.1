@@ -5,21 +5,21 @@
     <meta charset= 'utf-8'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="http://momentjs.com/downloads/moment.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-		<script src="AcessoDados/Base.js"></script>
+	<link rel="stylesheet" type="text/css" href="Estilos/geral.css">
+	
+	<script src="AcessoDados/Base.js"></script>
     <script src="AcessoDados/Usuario.js"></script>
     <script src="AcessoDados/Comunidade.js"></script>
     <script type= 'text/javascript'>
       $(document).ready(function(){
-        var bool= 0;
+        var bool = 0;
         function acao(userUsername, userMail, userInstit, userTtl, userCpf, userName){
-          if (bool== 0)
+          if (bool == 0)
           {
             Usuario.adicionar(userUsername, userMail, userInstit, userTtl, userCpf, userName, '-1');
-          }else{
-            var usuario= Usuario.getByNomeVerdadeiro(userUsername);
+          } else{
+            var usuario = Usuario.getByNomeVerdadeiro(userUsername);
             Usuario.editar(usuario.children[0].innerHTML,userUsername, userMail, userInstit, userTtl, userCpf, userName, '-1');
           }
         }
@@ -119,11 +119,7 @@
 
         }
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="http://momentjs.com/downloads/moment.js"></script>
 
-		<script src="AcessoDados/Base.js"></script>
-    <script src="AcessoDados/Usuario.js"></script>
     <script type= 'text/javascript'>
       $(document).ready(function(){
         var usuarios= Usuario.getById('0');

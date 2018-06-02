@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<Parceria>
-  <parceria>
-		<id>1</id>
-		<idUsuario>1</idUsuario>
-    <idComunidade>0</idComunidade>
-	</parceria>
-</Parceria>

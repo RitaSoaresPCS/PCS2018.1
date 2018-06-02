@@ -4,35 +4,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset= 'utf-8'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="http://momentjs.com/downloads/moment.js"></script>
+	<link rel="stylesheet" type="text/css" href="Estilos/geral.css">
 
     <script src="AcessoDados/Base.js"></script>
 
     <!-- Carregar apenas se necessário na página: -->
     <script src="AcessoDados/Comunidade.js"></script>
     <script src="AcessoDados/Usuario.js"></script>
-    <!-- <script src="AcessoDados/Parceria.js"></script> -->
-
    
 
    <script type= 'text/javascript'>
    $(document).ready(function(){
-		var comunidades = Comunidade.listar();
-		conteudo = "";
-		for (i = 0; i < comunidades.length; i++) { 
-			// [id, nome, descricao, datacriacao, dataultimaedicao, tema, ativa, idusuarioadministrador]
-			if (comunidades[i].children[6].innerHTML == "true") {
-				conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + comunidades[i].children[0].innerHTML + ">" + comunidades[i].children[1].innerHTML + "</a></h3>";
-				conteudo += "Criada em: " + comunidades[i].children[3].innerHTML + "<br>";
-				conteudo += "Tema: " + comunidades[i].children[5].innerHTML + "<br>";
-				conteudo += comunidades[i].children[2].innerHTML + "<br>";
-				conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + comunidades[i].children[0].innerHTML + ")'>Desativar</button>";
+		Comunidade.listar(function(data) {
+			conteudo = "";
+						
+			for (i = 0; i < data.length; i++) { 
+				// [dataCriacao, descricao, id, nome, tema]
+				conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
+				conteudo += "Criada em: " + data[i]["dataCriacao"].substring(0,10) + "<br>";
+				conteudo += "Tema: " + data[i]["tema"] + "<br>";
+				conteudo += data[i]["descricao"] + "<br>";
+				conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'>Desativar</button>";
 				
 				conteudo += "</div>";
 			}
-		}
 		
-		document.getElementById("conteudo").innerHTML = conteudo;
+			document.getElementById("conteudo").innerHTML = conteudo;
+		
+		});
+		
      
  });
  </script>

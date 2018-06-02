@@ -4,24 +4,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset= 'utf-8'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="http://momentjs.com/downloads/moment.js"></script>
+	<link rel="stylesheet" type="text/css" href="Estilos/geral.css">
+	
     <script src="AcessoDados/Base.js"></script>
     <!-- Carregar apenas se necessário na página: -->
     <script src="AcessoDados/Comunidade.js"></script>
     <script src="AcessoDados/Usuario.js"></script>
-    <!-- <script src="AcessoDados/Parceria.js"></script> -->
+	
     <script type= 'text/javascript'>
       $(document).ready(function(){
         $('#btn-addParc').click(function(){
           var username= $('#username').val();
+		  var comunidadeAtual = Base.getUrlParameter("id");
           if (username!= null)
           {
             $.ajax({
               type: 'POST',
-              url: 'ControleDados/Parceiro.php',
+              url: 'ControleDados/UsuarioParceriaComunidade.php',
               contentType: 'application/x-www-form-urlencoded',
               dataType: 'json',
-              data: 'function=adicionarParceiro&username='+username+'&idCom=1',
+              data: 'func=adicionar&username='+username+'&idCom='+comunidadeAtual,
               success: function () {
                 alert('Solicitação Enviada');
               }
@@ -34,15 +36,17 @@
       $(document).ready(function(){
         $('#btn-remover').click(function(){
 
-          var idParceria= $('#idParceria').val();
-          if (idParceria!= null)
+          var username = $('#select-remove-parc').val();
+		  var comunidadeAtual = Base.getUrlParameter("id");
+		  
+          if (username != null)
           {
             $.ajax({
               type: 'POST',
-              url: 'ControleDados/Parceiro.php',
+              url: 'ControleDados/UsuarioParceriaComunidade.php',
               contentType: 'application/x-www-form-urlencoded',
               dataType: 'json',
-              data: 'function=removerParceiro&idParceria='+idParceria,
+              data: 'func=remover&username='+username+'&idCom='+comunidadeAtual,
               success: function () {
                 alert('Parceiro Removido');
               }
@@ -51,49 +55,6 @@
         });
       });
     </script>
-
-      <style>
-        body {font-family: Arial, Helvetica, sans-serif;}
-        
-        /* The Modal (background) */
-        .modal {
-          display: none; /* Hidden by default */
-          position: fixed; /* Stay in place */
-          z-index: 1; /* Sit on top */
-          padding-top: 100px; /* Location of the box */
-          left: 0;
-          top: 0;
-          width: 100%; /* Full width */
-          height: 100%; /* Full height */
-          overflow: auto; /* Enable scroll if needed */
-          background-color: rgb(0,0,0); /* Fallback color */
-          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-          background-color: #fefefe;
-          margin: auto;
-          padding: 20px;
-          border: 1px solid #888;
-          width: 80%;
-        }
-
-        /* The Close Button */
-        .close {
-          color: #aaaaaa;
-          float: right;
-          font-size: 28px;
-          font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-          color: #000;
-          text-decoration: none;
-          cursor: pointer;
-        }
-      </style>
 
    <script type= 'text/javascript'>
    $(document).ready(function(){
@@ -233,16 +194,14 @@
 <header><!-- logo do academiq --></header>
 	
 	<div id="conteudo"></div>
-	
-	
 		<main>
-			<form id= 'form-addParc'>
+			<form id = 'form-addParc'>
 				<p>Nome do Convidado</p>
-				<input id= 'username' type= 'text'>
-				<button id= 'btn-addParc' type= 'button'>Enviar</button>
+				<input id = 'username' type = 'text'>
+				<button id = 'btn-addParc' type = 'button'>Enviar</button>
 			</form>
       <hr></hr>
-    <button id= 'btn-remover' type= 'button'>Remover Parceiro</button>
+    <button id = 'btn-remover' type = 'button'>Remover Parceiro</button>
 
   </body>
 </html>
