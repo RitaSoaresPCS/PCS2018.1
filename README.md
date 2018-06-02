@@ -3,4 +3,4 @@ Projeto da disciplina.
 
 
 ## Requisitos
-- Servidor rodando PHP.
+- Servidor rodando PHP e MySQL.
