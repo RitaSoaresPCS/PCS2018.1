@@ -1,4 +1,5 @@
 <?php
+	header('Content-Type: text/html; charset=utf-8');
 	include_once 'Base.php';
 
 	
@@ -41,7 +42,7 @@
 				$publica = $row["publica"];
 				
 				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 	
 		echo json_encode("[" . implode(",", $return) . "]");
@@ -69,7 +70,7 @@
 				$publica = $row["publica"];
 				
 				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		
@@ -98,7 +99,7 @@
 				$publica = $row["publica"];
 				
 				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		echo json_encode($return);
@@ -126,7 +127,7 @@
 				$publica = $row["publica"];
 				
 				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		echo "[" . implode(",", $return) . "]";

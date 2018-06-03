@@ -45,3 +45,8 @@ li#logout:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
+
+.modal-backdrop.fade.in {
+	z-index: 0;
+}

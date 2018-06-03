@@ -1,4 +1,5 @@
-<?php
+<?php 
+	header('Content-Type: text/html; charset=utf-8');
 	include_once 'Base.php';	
 	
 	function adicionarComunidade() {
@@ -37,7 +38,7 @@
 				$tema = $row["tema"];
 				
 				$s = "{'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema': '$tema'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		
@@ -60,9 +61,10 @@
 				$descricao = $row["descricao"];
 				$dataCriacao = $row["dataCriacao"];
 				$tema = $row["tema"];
+				$idUsuarioAdministrador = $row["idUsuarioAdministrador"];
 				
-				$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema':'$tema'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema': '$tema', 'idUsuarioAdministrador': '$idUsuarioAdministrador'}";
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		echo json_encode($return);
@@ -101,7 +103,7 @@
 				$tema = $row["tema"];
 				
 				$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema':'$tema'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		echo "[" . implode(",", $return) . "]";

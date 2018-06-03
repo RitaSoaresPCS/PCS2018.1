@@ -3,50 +3,61 @@ var Discussao = new function() {
 	
 	this.controladorURL = "ControleDados/Discussao.php";
 
-    this.listar = function () {
-		return Base.listar(this.controladorURL);
+    this.listar = function (callback = function(data) {}) {
+		return Base.listar(this.controladorURL, callback);
     }
 
-	this.getById = function (id) {
-		return Base.getById(id, this.controladorURL);
+	this.getById = function (id, callback = function(data) {}) {
+		return Base.getById(id, this.controladorURL, callback);
     }
 
-	this.getByTitulo = function (pesquisa) {
+	// Inativar.
+	this.remover = function (id, callback = function(data) {}) {
+		return Base.inativar(id, this.controladorURL, callback);
+	}
+	
+	
+	this.getByTitulo = function (pesquisa, callback = function(data) {}) {
 		$.post(
 			this.controladorURL, 
 			{ func: "getByTitulo", titulo: pesquisa }, 
 			function(data) {
-				alert(data);
+				callback(data);
 			},
 			"json"
 		);
 	}
 
-	// Inativar.
-	this.remover = function (id) {
-		return Base.inativar(id, this.controladorURL);
-	}
 
-
-	this.adicionar = function (idComunidadePertence, titulo, descricao, publica) {
+	this.adicionar = function (idComunidadePertence, titulo, descricao, publica, callback = function(data) {}) {
 		$.post(this.controladorURL, {
 			func: "criar",
 			idComunidadePertence: idComunidadePertence,
 			titulo: titulo,
 			descricao: descricao,
 			publica: publica
-		} );
+			}, 
+			function(data) {
+				callback(data);
+			},
+			"json" 
+		);
 	}
 
 
-	this.editar = function (id, titulo, descricao, publica) {
+	this.editar = function (id, titulo, descricao, publica, callback = function(data) {}) {
 		$.post(this.controladorURL, {
 			func: "editar",
 			id: id,
 			titulo: titulo,
 			descricao: descricao,
 			publica: publica
-		} );
+			}, 
+			function(data) {
+				callback(data);
+			},
+			"json" 
+		);
 	}
-
+	
 }

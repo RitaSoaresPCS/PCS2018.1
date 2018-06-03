@@ -1,4 +1,5 @@
 <?php
+	header('Content-Type: text/html; charset=utf-8');
 	include_once 'Base.php';
 	include_once 'Usuario.php';
 	include_once 'Comunidade.php';

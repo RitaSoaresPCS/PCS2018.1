@@ -7,8 +7,10 @@ $(document).ready(function(){
 		$.post(
 			'ControleDados/Logout.php',
 			{ func: "logout" }
+			, function() {
+				window.location.assign('index.html');
+			}
 		);
-		window.location.assign('index.html');
 	  } 
   });
 

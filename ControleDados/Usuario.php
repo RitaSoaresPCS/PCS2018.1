@@ -1,4 +1,5 @@
 <?php
+	header('Content-Type: text/html; charset=utf-8');
 	include_once 'Base.php';
 
 	
@@ -30,7 +31,7 @@
 		//$return['mensagem'] = "E-mail inválido."; ou $return['mensagem'] = "Não foi possível enviar e-mail, usuário não criado";
 		// Somente salva o arquivo se o e-mail for enviado com sucesso.
 
-		$sql = "INSERT INTO Usuario VALUES (default, '$username', '$email', '$senhaHash', '', 1, '$instituicaoOrigem', $titulo, $cpf, $nome, 0, $idComunidadePertence)";
+		$sql = "INSERT INTO Usuario VALUES (default, '$username', '$email', '$senhaHash', '', 1, '$instituicaoOrigem', '$titulo', '$cpf', '$nome', 0, $idComunidadePertence)";
 		
 		// Retorna um json com o resultado.
 		echo query_no_result($sql);
@@ -39,7 +40,7 @@
 	
 	function listarUsuario() {
 		// ativo é se já entrou no sistema.
-		$sql = "SELECT * FROM Usuario WHERE ativo = 1 and banidoSistema = 0";
+		$sql = "select usuario.id, username, urlImagemPerfil, instituicaoOrigem, usuario.nome, idComunidadePertence, titulo, comunidade.nome as nomeComunidade from usuario, comunidade where usuario.idComunidadePertence = comunidade.id and Usuario.ativo = 1 and Usuario.banidoSistema = 0";
 		
 		$result = query_result($sql);
 		$return = array();
@@ -54,9 +55,11 @@
 				$instituicaoOrigem = $row["instituicaoOrigem"];
 				$nome = $row["nome"];
 				$idComunidadePertence = $row["idComunidadePertence"];
+				$titulo = $row["titulo"];
+				$nomeComunidade = $row["nomeComunidade"];
 				
-				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'nomeComunidade': '$nomeComunidade' }";
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 				
@@ -67,7 +70,7 @@
 
 	function getByIdUsuario() {
 		$id = $_POST['id'];
-		$sql = "SELECT * FROM usuario WHERE id = $id";
+		$sql = "select usuario.id, username, urlImagemPerfil, instituicaoOrigem, usuario.nome, idComunidadePertence, titulo, comunidade.nome as nomeComunidade, email, cpf FROM usuario, comunidade where usuario.idComunidadePertence = comunidade.id and usuario.id = $id";
 		
 		$result = query_result($sql);
 		$return = array();
@@ -80,9 +83,14 @@
 				$instituicaoOrigem = $row["instituicaoOrigem"];
 				$nome = $row["nome"];
 				$idComunidadePertence = $row["idComunidadePertence"];
+				$titulo = $row["titulo"];
+				$nomeComunidade = $row["nomeComunidade"];
+				$email = $row["email"];
+				$cpf = $row["cpf"];
 				
-				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'nomeComunidade': '$nomeComunidade', 'email': '$email', 'cpf': '$cpf' }";
+				
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		echo json_encode($return);
@@ -107,7 +115,7 @@
 				$idComunidadePertence = $row["idComunidadePertence"];
 				
 				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		echo "[" . implode(",", $return) . "]";
@@ -132,7 +140,7 @@
 				$idComunidadePertence = $row["idComunidadePertence"];
 				
 				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		echo "[" . implode(",", $return) . "]";
@@ -157,7 +165,7 @@
 				$idComunidadePertence = $row["idComunidadePertence"];
 				
 				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence'}";
-				array_push($return, str_replace("'", "\"", utf8_encode($s)));
+				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
 		echo json_encode($return);
@@ -179,6 +187,7 @@
 	
 	
 	function editarUsuario() {
+		$id = $_POST['id'];
 		$username = $_POST['username'];
 		$email = $_POST['email'];
 		$instituicaoOrigem = $_POST['instituicaoOrigem'];
@@ -194,6 +203,7 @@
 			$return['erro'] = true;
 			$return['mensagem'] = "Já existe usuário com este e-mail ou username.";
 			echo json_encode($return);
+			return;
 		}
 		
 		$sql = "UPDATE Usuario SET username = '$username', email = '$email', instituicaoOrigem = '$instituicaoOrigem', titulo = '$titulo', cpf = '$cpf', nome = '$nome', idComunidadePertence = '$idComunidadePertence' WHERE id = $id";
@@ -205,16 +215,16 @@
 	function inativarUsuario() {
 		$id = $_POST['id'];
 		// colocar ativo = 0 ?
-		$sql = "UPDATE Usuario SET banidoSistema = 'true' WHERE id = $id";
+		$sql = "UPDATE Usuario SET banidoSistema = 1 WHERE id = $id";
 		echo query_no_result($sql);
 	}
 	
 	
 	function existeUsernameOuEmail($username, $email, $id = -1) {
-		$sql = "SELECT * FROM Usuario WHERE (username=$username or email=$email) and id != $id";
+		$sql = "SELECT * FROM Usuario WHERE (username='$username' or email='$email') and id != $id";
 		
 		$result = query_result($sql);
-		
+				
 		if (mysqli_num_rows($result) > 0) {
 			return true;
 		} 

@@ -1,4 +1,6 @@
 
+create database redesocial DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+
 create table Usuario (
 	id int primary key auto_increment,
 	username VARCHAR(100) not null unique,

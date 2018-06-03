@@ -19,8 +19,14 @@
 		var tema = $('#tema').val();
 		var userAdmin = $('#userAdmin').val();
 				
-		Comunidade.adicionar(nome, descricao, tema, userAdmin);
-		//window.location.assign('laboratorios.html');
+		Comunidade.adicionar(nome, descricao, tema, userAdmin, function(data) {
+			if (data.erro == true) {
+				alert(data.mensagem);	
+			} else {
+				alert("Adicionado com sucesso.");
+				window.location.assign('laboratorios.html');
+			}
+		});
 	  });
 	});
 

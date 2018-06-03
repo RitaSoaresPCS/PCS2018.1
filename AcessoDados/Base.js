@@ -16,42 +16,42 @@ var Base = new function() {
     }
 
 
-	this.getById = function (id, controladorURL) {
+	this.getById = function (id, controladorURL, callback = function(data) {}) {
 		$.post(
 			controladorURL, 
 			{ func: "getById", id: id }, 
 			function(data) {
-				alert(data);
+				callback(data);
 			},
 			"json"
 		);
     }
 
 
-	this.getByNome = function (nome, controladorURL) {
+	this.getByNome = function (nome, controladorURL, callback = function(data) {}) {
 		$.post(
 			controladorURL, 
 			{ func: "getByNome", nome: nome }, 
 			function(data) {
-				alert(data);
+				callback(data);
 			},
 			"json"
 		);
 	}
 
-	this.getByNomeIgual = function (nome, controladorURL) {
+	this.getByNomeIgual = function (nome, controladorURL, callback = function(data) {}) {
 		$.post(
 			controladorURL, 
 			{ func: "getByNomeIgual", nome: nome }, 
 			function(data) {
-				alert(data);
+				callback(data);
 			},
 			"json"
 		);
 	}
 
 
-	this.inativar = function (id, controladorURL, callback = function() {}) {
+	this.inativar = function (id, controladorURL, callback = function(data) {}) {
 		$.post(
 			controladorURL, 
 			{ func: "inativar", id: id }, 

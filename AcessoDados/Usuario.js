@@ -3,30 +3,29 @@ var Usuario = new function() {
 	
 	this.controladorURL = "ControleDados/Usuario.php";
 
-    this.listar = function () {
-		return Base.listar(this.controladorURL);
+    this.listar = function (callback = function(data) {}) {
+		return Base.listar(this.controladorURL, callback);
     }
 
-	this.getById = function (id) {
-		return Base.getById(id, this.controladorURL);
+	this.getById = function (id, callback = function(data) {}) {
+		return Base.getById(id, this.controladorURL, callback);
     }
 
-	this.getByNome = function (pesquisa) {
-		return Base.getByNome(pesquisa, this.controladorURL);
+	this.getByNome = function (pesquisa, callback = function(data) {}) {
+		return Base.getByNome(pesquisa, this.controladorURL, callback);
 	}
 
-	this.getByNomeIgual = function(pesquisa)
+	this.getByNomeIgual = function(pesquisa, callback = function(data) {})
 	{
-		return Base.getByNomeIgual(pesquisa, this.controladorURL);
+		return Base.getByNomeIgual(pesquisa, this.controladorURL, callback);
 	}
-	
 	
 	// Inativar.
-	this.remover = function (id) {
-		return Base.inativar(id, this.controladorURL);
+	this.remover = function (id, callback = function(data) {}) {
+		return Base.inativar(id, this.controladorURL, callback);
 	}
 
-	this.adicionar = function (username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence) {
+	this.adicionar = function (username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence, callback = function(data) {}) {
 		$.post(
 			this.controladorURL, 
 			{ 
@@ -40,16 +39,14 @@ var Usuario = new function() {
 				idComunidadePertence: idComunidadePertence
 			}, 
 			function(data) {
-				if (data.erro) {
-					alert(data.mensagem);
-				}
+				callback(data);
 			}, 
 			"json" 
 		);
 	}
 
 
-	this.editar = function (id, username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence) {
+	this.editar = function (id, username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence, callback = function(data) {}) {
 		$.post(
 			this.controladorURL, 
 			{ 
@@ -64,9 +61,7 @@ var Usuario = new function() {
 				idComunidadePertence: idComunidadePertence
 			}, 
 			function(data) {
-				if (data.erro) {
-					alert(data.mensagem);
-				}
+				callback(data);
 			}, 
 			"json" 
 		);

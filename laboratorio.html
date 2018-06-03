@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset= 'utf-8'>
+	<meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="Estilos/geral.css">
 	
@@ -23,7 +23,7 @@
               url: 'ControleDados/UsuarioParceriaComunidade.php',
               contentType: 'application/x-www-form-urlencoded',
               dataType: 'json',
-              data: 'func=adicionar&username='+username+'&idCom='+comunidadeAtual,
+              data: 'func=adicionar&username='+username+'&idComunidade='+comunidadeAtual,
               success: function () {
                 alert('Solicitação Enviada');
               }
@@ -33,75 +33,119 @@
       });
     </script>
     <script type= 'text/javascript'>
-      $(document).ready(function(){
-        $('#btn-remover').click(function(){
+		$(document).ready(function(){
+			$('#btn-remover').click(function(){
 
-          var username = $('#select-remove-parc').val();
-		  var comunidadeAtual = Base.getUrlParameter("id");
-		  
-          if (username != null)
-          {
-            $.ajax({
-              type: 'POST',
-              url: 'ControleDados/UsuarioParceriaComunidade.php',
-              contentType: 'application/x-www-form-urlencoded',
-              dataType: 'json',
-              data: 'func=remover&username='+username+'&idCom='+comunidadeAtual,
-              success: function () {
-                alert('Parceiro Removido');
-              }
-            });
-          }
-        });
-      });
+			  var username = $('#select-remove-parc').val();
+			  var comunidadeAtual = Base.getUrlParameter("id");
+			  
+			  if (username != null)
+			  {
+				$.ajax({
+				  type: 'POST',
+				  url: 'ControleDados/UsuarioParceriaComunidade.php',
+				  contentType: 'application/x-www-form-urlencoded',
+				  dataType: 'json',
+				  data: 'func=remover&username='+username+'&idComunidade='+comunidadeAtual,
+				  success: function () {
+					alert('Parceiro Removido');
+				  }
+				});
+			  }
+			});
+		});
     </script>
 
-   <script type= 'text/javascript'>
-   $(document).ready(function(){
-		
-		var comunidade = Comunidade.getById(Base.getUrlParameter("id"));
-		conteudo = "";
-		
-		var nome = comunidade.children[1].innerHTML;
-		var descricao = comunidade.children[2].innerHTML;
-		var tema = comunidade.children[5].innerHTML;
-		var usuarioAdmin = Usuario.getById(comunidade.children[7].innerHTML).children[1].innerHTML;
-		
-		conteudo += "<form>"
-		conteudo += "<input type='hidden' name='id' id='id' value='" + comunidade.children[0].innerHTML + "'>";
-		conteudo += "Nome:<br><input type='text' name='nome' id='nome' value='" + nome + "' width='100'><br>";
-		conteudo += "Descrição:<br><input type='text' name='descricao' id='descricao' value='" + descricao + "' width='100'><br>";
-		conteudo += "Tema:<br><input type='text' name='tema' id='tema' value='" + tema + "' width='100'><br>";
-		conteudo += "Administrador:<br><input type='text' name='usuarioAdmin' id='usuarioAdmin' value='" + usuarioAdmin + "' width='100'><br><br>";
-		conteudo += "<button id= 'btn-editar-lab' type= 'button'>Editar</button><br>";
-		conteudo += "</form>"
-		
-		
-		document.getElementById("conteudo").innerHTML = conteudo;
-		
+	<script type= 'text/javascript'>
+		// Preenche os dados do laboratório.
+		$(document).ready(function(){
 
-	  $('#btn-editar-lab').click(function(){
-		var id = $('#id').val();
-		var nome = $('#nome').val();
-		var descricao = $('#descricao').val();
-		var tema = $('#tema').val();
-		var userAdmin = $('#usuarioAdmin').val();
-		
-		var idUsuarioAdministrador = Usuario.getByNome(userAdmin)[0].children[0].innerHTML;
-		
-		Comunidade.editar(id, nome, descricao, tema, idUsuarioAdministrador);
-		window.location.assign('laboratorio.html?id=' + id);
+			Comunidade.getById(Base.getUrlParameter("id"), function(data) {
+				data = JSON.parse(data);
+				conteudo = "";
 
-	  });
-	});
-	
- </script>
+				var nome = data.nome;
+				var descricao = data.descricao;
+				var tema = data.tema;
+				Usuario.getById(data.idUsuarioAdministrador, function(dataUs) {
+					var usuarioAdmin = JSON.parse(dataUs).username;
+				
+					conteudo += "<form>"
+					conteudo += "<input type='hidden' name='id' id='id' value='" + data.id + "'>";
+					conteudo += "Nome:<br><input type='text' name='nome' id='nome' value='" + nome + "' width='100'><br>";
+					conteudo += "Descrição:<br><input type='text' name='descricao' id='descricao' value='" + descricao + "' width='100'><br>";
+					conteudo += "Tema:<br><input type='text' name='tema' id='tema' value='" + tema + "' width='100'><br>";
+					conteudo += "Administrador:<br><input type='text' name='usuarioAdmin' id='usuarioAdmin' value='" + usuarioAdmin + "' width='100'><br><br>";
+					conteudo += "<button id= 'btn-editar-lab' type= 'button'>Editar</button><br>";
+					conteudo += "</form>"
+
+
+					document.getElementById("conteudo").innerHTML = conteudo;
+
+
+					$('#btn-editar-lab').click(function(){
+						var id = $('#id').val();
+						var nome = $('#nome').val();
+						var descricao = $('#descricao').val();
+						var tema = $('#tema').val();
+						var userAdmin = $('#usuarioAdmin').val();
+
+						Comunidade.editar(id, nome, descricao, tema, userAdmin, function(resposta) {
+							if (resposta.erro == false) {
+								window.location.assign('laboratorio.html?id=' + id);
+							}
+						});
+					});			
+				});
+			});
+		});
+	</script>
+ 
+ 
+	<script type= 'text/javascript'>
+		// Adiciona os parceiros atuais do laboratório.
+		$(document).ready(function(){
+			var comunidadeAtual = Base.getUrlParameter("id");
+		
+			$.ajax({
+				type: 'POST',
+				url: 'ControleDados/UsuarioParceriaComunidade.php',
+				dataType: 'json',
+				data: 'func=getUsuarioByIdComunidade&idComunidade='+comunidadeAtual,
+				success: function (data) {
+				
+					conteudo = "";
+					conteudo2 = "";
+							
+					for (i = 0; i < data.length; i++) { 
+						conteudo += "<option value='" + data[i]["username"] + "'>" + data[i]["nome"] + "</option>";
+						conteudo2 += "<p>" + data[i]["username"] + "</p>";
+					}
+			
+					document.getElementById("select-remove-parc").innerHTML = document.getElementById("select-remove-parc").innerHTML + conteudo;
+			
+					
+					if (conteudo2 != "") {
+						document.getElementById("lista-parceiros").innerHTML = conteudo2;
+					} else {
+						document.getElementById("lista-parceiros").innerHTML = "Não há parceiros."
+					}
+				}
+            });
+		});
+	</script>
+ 
+ 
+ 
+ 
+ 
   </head>
   <body>
     <h2>Laboratório</h2>
     <h3>Discussões</h3>
     <br><br>
     <h3>Parceiros</h3>
+	<div id="lista-parceiros"></div>
 
     <!-- Trigger/Open The Modal -->
     <button id="addParcBtn">Adicionar Parceiro</button>
@@ -127,10 +171,7 @@
         <span id="closeRemove" class="close">&times;</span>
         <select id= 'select-remove-parc'>
     			<p>Selecione um Parceiro que deseja remover</p>
-          <option value="benedito.freitas">Benedito Kaique Freitas</option>
-          <option value="eduardo.fogaca">Eduardo Nelson Kevin Fogaça</option>
-          <option value="marcio.monteiro">Márcio Emanuel Monteiro</option>
-    		</select>
+    	</select>
         <button id= 'btn-remover' type= 'button'>Confirmar</button>
       </div>
     </div>

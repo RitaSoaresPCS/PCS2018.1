@@ -13,29 +13,27 @@
     <script src="AcessoDados/Usuario.js"></script>
    
 
-   <script type= 'text/javascript'>
-   $(document).ready(function(){
-		Comunidade.listar(function(data) {
-			conteudo = "";
-						
-			for (i = 0; i < data.length; i++) { 
-				// [dataCriacao, descricao, id, nome, tema]
-				conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
-				conteudo += "Criada em: " + data[i]["dataCriacao"].substring(0,10) + "<br>";
-				conteudo += "Tema: " + data[i]["tema"] + "<br>";
-				conteudo += data[i]["descricao"] + "<br>";
-				conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'>Desativar</button>";
-				
-				conteudo += "</div>";
-			}
-		
-			document.getElementById("conteudo").innerHTML = conteudo;
-		
+	<script type= 'text/javascript'>
+		$(document).ready(function(){
+			Comunidade.listar(function(data) {
+				conteudo = "";
+							
+				for (i = 0; i < data.length; i++) { 
+					// [dataCriacao, descricao, id, nome, tema]
+					conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
+					conteudo += "Criada em: " + data[i]["dataCriacao"].substring(0,10) + "<br>";
+					conteudo += "Tema: " + data[i]["tema"] + "<br>";
+					conteudo += data[i]["descricao"] + "<br>";
+					conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'>Desativar</button>";
+					
+					conteudo += "</div>";
+				}
+			
+				document.getElementById("conteudo").innerHTML = conteudo;
+			
+			});
 		});
-		
-     
- });
- </script>
+	</script>
 
   </head>
   <body>
