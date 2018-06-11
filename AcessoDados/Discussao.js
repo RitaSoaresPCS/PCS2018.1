@@ -27,6 +27,11 @@ var Discussao = new function() {
 			"json"
 		);
 	}
+	
+	
+	this.getByDescricao = function (pesquisa, callback = function(data) {}) {
+		return Base.getByDescricao(pesquisa, this.controladorURL, callback);
+	}
 
 
 	this.adicionar = function (idComunidadePertence, titulo, descricao, publica, callback = function(data) {}) {

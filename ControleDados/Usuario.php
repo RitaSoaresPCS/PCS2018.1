@@ -220,6 +220,18 @@
 	}
 	
 	
+	function existeEmail($email) {
+		$sql = "SELECT * FROM Usuario WHERE email='$email'";
+		
+		$result = query_result($sql);
+				
+		if (mysqli_num_rows($result) > 0) {
+			return true;
+		} 
+		return false;
+	}
+	
+	
 	function existeUsernameOuEmail($username, $email, $id = -1) {
 		$sql = "SELECT * FROM Usuario WHERE (username='$username' or email='$email') and id != $id";
 		

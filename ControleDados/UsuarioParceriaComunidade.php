@@ -34,10 +34,10 @@
 	}
 	
 	
-	function getUsuarioByIdComunidade() {
+	function getParceiroByIdComunidade() {
 		$idComunidade = $_POST['idComunidade'];
 		
-		$sql = "select * from usuario join usuarioparceriacomunidade on Usuario.id = idUsuario and usuarioparceriacomunidade.idComunidade = $idComunidade";
+		$sql = "SELECT * FROM Usuario JOIN UsuarioParceriaComunidade ON Usuario.id = UsuarioParceriaComunidade.idUsuario AND UsuarioParceriaComunidade.idComunidade = $idComunidade";
 		
 		$result = query_result($sql);
 		$return = array();
@@ -63,6 +63,33 @@
 		
 	}
 	
+	
+	function getByNomeParceiroComunidade() {
+		$idComunidade = $_POST['idComunidade'];
+		$nome = $_POST['nome'];
+		
+		$sql = "SELECT * FROM Usuario JOIN UsuarioParceriaComunidade ON Usuario.id = UsuarioParceriaComunidade.idUsuario AND UsuarioParceriaComunidade.idComunidade = $idComunidade AND LOWER(Usuario.nome) LIKE LOWER('%$nome%')";
+		
+		$result = query_result($sql);
+		$return = array();
+		
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$username = $row["username"];
+				$urlImagemPerfil = $row["urlImagemPerfil"];
+				$instituicaoOrigem = $row["instituicaoOrigem"];
+				$nome = $row["nome"];
+				$idComunidadePertence = $row["idComunidadePertence"];
+				
+				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		} 
+		echo "[" . implode(",", $return) . "]";
+	}
+	
+	
 
 	$func= $_POST['func'];
 
@@ -73,8 +100,11 @@
 		case "remover":
 			removerUsuarioParceriaComunidade();
 			break;
-		case "getUsuarioByIdComunidade":
-			getUsuarioByIdComunidade();
+		case "getParceiroByIdComunidade":
+			getParceiroByIdComunidade();
+			break;
+		case "getByNome":
+			getByNomeParceiroComunidade();
 			break;
 	}
 

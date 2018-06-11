@@ -130,14 +130,13 @@ create table UsuarioVisualizaComunidade (
 create table Solicitacao (
 	id int primary key auto_increment,
 	idUsuarioCriador int not null,
-	idUsuarioReceptor int not null,
+	idReceptor int not null, -- pode ser id de uma comunidade ou usuário.
 	tipo text not null,
 	descricao text not null,
 	dataCriacao datetime not null,
 	aceita boolean,
 	justificativa text,
-	FOREIGN KEY (idUsuarioCriador) REFERENCES Usuario(id),
-	FOREIGN KEY (idUsuarioReceptor) REFERENCES Usuario(id)
+	FOREIGN KEY (idUsuarioCriador) REFERENCES Usuario(id)
 );
 
 
@@ -295,6 +294,8 @@ insert into UsuarioVisualizaComunidade values(3,7);
 insert into UsuarioVisualizaComunidade values(4,7);
 
 insert into Solicitacao values (default, 3, 4, 'amizade', 'O usuário marcio.monteiro, da PUC, gostaria de ser seu amigo.', '2018-05-25', 0, '');
+insert into Solicitacao values (default, 3, 2, 'visualizacaoComunidade', 'O usuário marcio.monteiro, da PUC, deseja visualizar a comunidade.', '2018-05-25', 0, '');
+insert into Solicitacao values (default, 3, 3, 'parceriaComunidade', 'O usuário marcio.monteiro, da PUC, deseja ser parceiro da comunidade.', '2018-05-25', 0, '');
 
 insert into UsuarioParceriaComunidade values (1,1);
 
@@ -313,3 +314,4 @@ insert into MensagemDiscussao values(default,1,4,'Hoje mesmo irei adicionar essa
 insert into MensagemPrivada values (default,1,8,'Se a pessoa do seu departamento tiver cadastro no site, basta ir no seu laboratório e adicionar pelo username.','2018-05-25',null,0);
 
 insert into mensagemPublica values (default,5,7,'Parabéns pela sua publicação na Science!','2018-05-25',null,'publica');
+

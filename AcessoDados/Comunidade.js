@@ -15,6 +15,11 @@ var Comunidade = new function() {
 		return Base.getByNome(pesquisa, this.controladorURL, callback);
 	}
 	
+	this.getByDescricao = function (pesquisa, callback = function(data) {}) {
+		return Base.getByDescricao(pesquisa, this.controladorURL, callback);
+	}
+	
+	
 	// Inativar.
 	this.remover = function (id, callback = function(data) {}) {
 		return Base.inativar(id, this.controladorURL, callback);

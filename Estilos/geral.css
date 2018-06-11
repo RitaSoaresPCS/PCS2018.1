@@ -1,5 +1,25 @@
 body {font-family: Arial, Helvetica, sans-serif;}
 
+.header {
+	background-color:#6259C6;
+	height:auto;
+	padding:50px;
+	text-align:center;
+}
+
+.header img {
+	display:inline;
+}
+
+.header p {
+	color: white;
+	display:inline;
+}
+
+.titulo-header {
+	font-size:300%;
+}
+
 
 li#logout:hover {
 	text-decoration: underline;

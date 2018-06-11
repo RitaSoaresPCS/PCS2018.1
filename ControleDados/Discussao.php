@@ -3,7 +3,7 @@
 	include_once 'Base.php';
 
 	
-	function criar() {
+	function criarDiscussao() {
 		if ($GLOBALS['userId'] != null) { // usuário logado, mas ainda não verifica se pode criar na comunidade.
 			$idUsuarioCriador = $GLOBALS['userId'];
 			$idComunidadePertence = $_POST['idComunidadePertence'];
@@ -49,7 +49,7 @@
 	}
 	
 	
-	function listar() {		
+	function listarDiscussao() {		
 		$sql = "SELECT * FROM Discussao WHERE ativa = 1";
 		
 		$result = query_result($sql);
@@ -79,7 +79,7 @@
 	}
 
 	
-	function getById() {
+	function getByIdDiscussao() {
 		$id = $_POST['id'];
 		$sql = "SELECT * FROM Discussao WHERE id = $id";
 		
@@ -106,7 +106,7 @@
 	}
 	
 	
-	function getByTitulo() {
+	function getByTituloDiscussao() {
 		$titulo = $_POST['titulo'];
 				
 		$sql = "SELECT * FROM Discussao WHERE LOWER(titulo) LIKE LOWER('%$titulo%')";
@@ -134,7 +134,35 @@
 	}
 	
 	
-	function editar() {
+	function getByDescricaoDiscussao() {
+		$descricao = $_POST['descricao'];
+				
+		$sql = "SELECT * FROM Discussao WHERE LOWER(descricao) LIKE LOWER('%$descricao%')";
+		
+		$result = query_result($sql);
+		$return = array();
+		
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$idUsuarioCriador = $row["idUsuarioCriador"];
+				$idComunidadePertence = $row["idComunidadePertence"];
+				$titulo = $row["titulo"];
+				$dataCriacao = $row["dataCriacao"];
+				$descricao = $row["descricao"];
+				$fixa = $row["fixa"];
+				$dataUltimaEdicao = $row["dataUltimaEdicao"];
+				$publica = $row["publica"];
+				
+				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		} 
+		echo "[" . implode(",", $return) . "]";
+	}
+	
+	
+	function editarDiscussao() {
 		$id = $_POST['id'];
 		$titulo = $_POST['titulo'];
 		$descricao = $_POST['descricao'];
@@ -147,7 +175,7 @@
 	}
 	
 	
-	function inativar() {
+	function inativarDiscussao() {
 		$id = $_POST['id'];
 		$sql = "UPDATE Discussao SET ativa = 0 WHERE id = $id";
 		echo query_no_result($sql);
@@ -158,22 +186,25 @@
 
 	switch ($func) {
 		case "criar":
-			criar();
+			criarDiscussao();
 			break;
 		case "listar":
-			listar();
+			listarDiscussao();
 			break;
 		case "getById":
-			getById();
+			getByIdDiscussao();
 			break;
 		case "getByTitulo":
-			getByTitulo();
+			getByTituloDiscussao();
+			break;
+		case "getByDescricao":
+			getByDescricaoDiscussao();
 			break;
 		case "editar":
-			editar();
+			editarDiscussao();
 			break;
 		case "inativar":
-			inativar();
+			inativarDiscussao();
 			break;
 		case "exibirDiscussoesGlobal":
 			exibirDiscussoesGlobal();

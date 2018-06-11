@@ -27,6 +27,18 @@ var Base = new function() {
 		);
     }
 
+	
+	this.getByDescricao = function (descricao, controladorURL, callback = function(data) {}) {
+		$.post(
+			controladorURL, 
+			{ func: "getByDescricao", descricao: descricao }, 
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
+	}
+	
 
 	this.getByNome = function (nome, controladorURL, callback = function(data) {}) {
 		$.post(
@@ -39,6 +51,7 @@ var Base = new function() {
 		);
 	}
 
+	
 	this.getByNomeIgual = function (nome, controladorURL, callback = function(data) {}) {
 		$.post(
 			controladorURL, 

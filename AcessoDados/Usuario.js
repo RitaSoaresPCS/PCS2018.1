@@ -15,8 +15,7 @@ var Usuario = new function() {
 		return Base.getByNome(pesquisa, this.controladorURL, callback);
 	}
 
-	this.getByNomeIgual = function(pesquisa, callback = function(data) {})
-	{
+	this.getByNomeIgual = function(pesquisa, callback = function(data) {}) {
 		return Base.getByNomeIgual(pesquisa, this.controladorURL, callback);
 	}
 	

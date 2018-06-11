@@ -110,6 +110,30 @@
 	}
 	
 	
+	function getByDescricao() {
+		$descricao = $_POST['descricao'];
+				
+		$sql = "SELECT * FROM Comunidade WHERE LOWER(descricao) LIKE LOWER('%$descricao%')";
+		
+		$result = query_result($sql);
+		$return = array();
+		
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$nome = $row["nome"];
+				$descricao = $row["descricao"];
+				$dataCriacao = $row["dataCriacao"];
+				$tema = $row["tema"];
+				
+				$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema':'$tema'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		} 
+		echo "[" . implode(",", $return) . "]";
+	}
+	
+	
 	function editarComunidade() {
 		$id = $_POST['id'];
 		$nome = $_POST['nome'];
@@ -150,6 +174,9 @@
 			break;
 		case "getByNome":
 			getByNomeComunidade();
+			break;
+		case "getByDescricao":
+			getByDescricaoComunidade();
 			break;
 		case "editar":
 			editarComunidade();
