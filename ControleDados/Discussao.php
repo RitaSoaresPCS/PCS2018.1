@@ -1,101 +1,276 @@
 <?php
-$func = $_POST['func'];
+	header('Content-Type: text/html; charset=utf-8');
+	include_once 'Base.php';
 
-switch ($func) {
-    case "criar":
+	function mudarFixo(){
+		$discussaoId= $_POST['discussaoId'];
+		$bool= $_POST['bool'];
+		$sql= "UPDATE discussao SET fixa= $bool WHERE id= $discussaoId";
+		echo query_no_result($sql);
+	}
+
+	function getDiscussaoDoLab(){
+		$labId= $_POST['labId'];
+		//primeiro pega as dicussões fixas.
+		$sql= "SELECT * FROM discussao WHERE idComunidadePertence= $labId AND fixa= 1" ;
+		$result = query_result($sql);
+		$return = array();
+		if (mysqli_num_rows($result) > 0) {
+
+			// Para cada linha de resultado:
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$idCreator = $row["idUsuarioCriador"];
+				$ttl = $row["titulo"];
+				$crDate = $row["dataCriacao"];
+				$descriptn = $row["descricao"];
+				$active = $row["ativa"];
+				$fix = $row["fixa"];
+				$lastEdit= $row["dataUltimaEdicao"];
+				$publc= $row["publica"];
+
+				$s = "{'id': '$id', 'idCreator': '$idCreator', 'ttl': '$ttl', 'crDate': '$crDate', 'descriptn': '$descriptn', 'active': '$active', 'fix': '$fix', 'lastEdit':'$lastEdit', 'publc':'$publc' }";
+				array_push($return, str_replace("'", "\"", $s));
+
+			}
+			//agora pega as outras
+			$sql= "SELECT * FROM discussao WHERE idComunidadePertence= $labId AND fixa= 0" ;
+			$result = query_result($sql);
+			if (mysqli_num_rows($result) > 0) {
+
+				// Para cada linha de resultado:
+				while($row = mysqli_fetch_assoc($result)) {
+					$id = $row["id"];
+					$idCreator = $row["idUsuarioCriador"];
+					$ttl = $row["titulo"];
+					$crDate = $row["dataCriacao"];
+					$descriptn = $row["descricao"];
+					$active = $row["ativa"];
+					$fix = $row["fixa"];
+					$lastEdit= $row["dataUltimaEdicao"];
+					$publc= $row["publica"];
+
+					$s = "{'id': '$id', 'idCreator': '$idCreator', 'ttl': '$ttl', 'crDate': '$crDate', 'descriptn': '$descriptn', 'active': '$active', 'fix': '$fix', 'lastEdit':'$lastEdit', 'publc':'$publc' }";
+					array_push($return, str_replace("'", "\"", $s));
+
+				}
+				echo "[" . implode(",", $return) . "]";
+			}
+		}
+	}
+
+	function criarDiscussao() {
+		if ($GLOBALS['userId'] != null) { // usuário logado, mas ainda não verifica se pode criar na comunidade.
+			$idUsuarioCriador = $GLOBALS['userId'];
+			$idComunidadePertence = $_POST['idComunidadePertence'];
+			$titulo = $_POST['titulo'];
+			$dataCriacao = date('Y-m-d');
+			$descricao = $_POST['descricao'];
+			$publica = $_POST['publica'];
+
+			$sql = "INSERT INTO Discussao VALUES (default, $idUsuarioCriador, $idComunidadePertence, '$titulo', '$dataCriacao', '$descricao', 1, 0, null, '$publica')";
+
+			// Retorna um json com o resultado.
+			echo query_no_result($sql);
+			return;
+		}
+		echo "[]";
+	}
+
+
+	function exibirDiscussoesGlobal() {
+		// Apenas da comunidade global:
+		$sql = "SELECT * FROM Discussao WHERE ativa = 1 AND idComunidadePertence = 1";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$idUsuarioCriador = $row["idUsuarioCriador"];
+				$idComunidadePertence = $row["idComunidadePertence"];
+				$titulo = $row["titulo"];
+				$dataCriacao = $row["dataCriacao"];
+				$descricao = $row["descricao"];
+				$fixa = $row["fixa"];
+				$dataUltimaEdicao = $row["dataUltimaEdicao"];
+				$publica = $row["publica"];
+
+				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+		echo json_encode("[" . implode(",", $return) . "]");
+	}
+
+
+	function listarDiscussao() {
+		$sql = "SELECT * FROM Discussao WHERE ativa = 1";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+
+			// Para cada linha de resultado:
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$idUsuarioCriador = $row["idUsuarioCriador"];
+				$idComunidadePertence = $row["idComunidadePertence"];
+				$titulo = $row["titulo"];
+				$dataCriacao = $row["dataCriacao"];
+				$descricao = $row["descricao"];
+				$fixa = $row["fixa"];
+				$dataUltimaEdicao = $row["dataUltimaEdicao"];
+				$publica = $row["publica"];
+
+				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+
+		// Retorna o array concatenado.
+		echo "[" . implode(",", $return) . "]";
+	}
+
+
+	function getByIdDiscussao() {
+		$id = $_POST['id'];
+		$sql = "SELECT * FROM Discussao WHERE id = $id";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$idUsuarioCriador = $row["idUsuarioCriador"];
+				$idComunidadePertence = $row["idComunidadePertence"];
+				$titulo = $row["titulo"];
+				$dataCriacao = $row["dataCriacao"];
+				$descricao = $row["descricao"];
+				$fixa = $row["fixa"];
+				$dataUltimaEdicao = $row["dataUltimaEdicao"];
+				$publica = $row["publica"];
+
+				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+		echo json_encode($return);
+	}
+
+
+	function getByTituloDiscussao() {
+		$titulo = $_POST['titulo'];
+
+		$sql = "SELECT * FROM Discussao WHERE LOWER(titulo) LIKE LOWER('%$titulo%')";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$idUsuarioCriador = $row["idUsuarioCriador"];
+				$idComunidadePertence = $row["idComunidadePertence"];
+				$titulo = $row["titulo"];
+				$dataCriacao = $row["dataCriacao"];
+				$descricao = $row["descricao"];
+				$fixa = $row["fixa"];
+				$dataUltimaEdicao = $row["dataUltimaEdicao"];
+				$publica = $row["publica"];
+
+				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+		echo "[" . implode(",", $return) . "]";
+	}
+
+
+	function getByDescricaoDiscussao() {
+		$descricao = $_POST['descricao'];
+
+		$sql = "SELECT * FROM Discussao WHERE LOWER(descricao) LIKE LOWER('%$descricao%')";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$idUsuarioCriador = $row["idUsuarioCriador"];
+				$idComunidadePertence = $row["idComunidadePertence"];
+				$titulo = $row["titulo"];
+				$dataCriacao = $row["dataCriacao"];
+				$descricao = $row["descricao"];
+				$fixa = $row["fixa"];
+				$dataUltimaEdicao = $row["dataUltimaEdicao"];
+				$publica = $row["publica"];
+
+				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+		echo "[" . implode(",", $return) . "]";
+	}
+
+
+	function editarDiscussao() {
 		$id = $_POST['id'];
 		$titulo = $_POST['titulo'];
 		$descricao = $_POST['descricao'];
-		$dataCriacao = $_POST['dataCriacao'];
-		$dataUltimaEdicao = $_POST['dataUltimaEdicao'];
-		$ativo = $_POST['ativo'];
+		$publica = $_POST['publica'];
+		$dataUltimaEdicao = date('Y-m-d');
 
-		if( $xml = file_get_contents( '..\Dados\Discussao.xml') ) {
-			$xmldoc = new DomDocument( '1.0' );
-			$xmldoc->preserveWhiteSpace = false;
-			$xmldoc->formatOutput = true;
+		$sql = "UPDATE Discussao SET titulo = '$titulo', descricao = '$descricao', dataUltimaEdicao = '$dataUltimaEdicao', publica = '$publica' WHERE id = $id";
 
-			$xmldoc->loadXML( $xml, LIBXML_NOBLANKS );
-
-			$root = $xmldoc->getElementsByTagName('Discussao')->item(0);
-
-			$discussao = $xmldoc->createElement('discussao');
-			$root->appendChild($discussao);
+		echo query_no_result($sql);
+	}
 
 
-			$idElement = $xmldoc->createElement('id');
-			$discussao->appendChild($idElement);
-			$idText = $xmldoc->createTextNode($id);
-			$idElement->appendChild($idText);
-
-
-			$tituloElement = $xmldoc->createElement('titulo');
-			$discussao->appendChild($tituloElement);
-			$tituloText = $xmldoc->createTextNode($titulo);
-			$tituloElement->appendChild($tituloText);
-
-
-			$descricaoElement = $xmldoc->createElement('descricao');
-			$discussao->appendChild($descricaoElement);
-			$descricaoText = $xmldoc->createTextNode($descricao);
-			$descricaoElement->appendChild($descricaoText);
-
-
-			$dataCriacaoElement = $xmldoc->createElement('dataCriacao');
-			$discussao->appendChild($dataCriacaoElement);
-			$dataCriacaoText = $xmldoc->createTextNode($dataCriacao);
-			$dataCriacaoElement->appendChild($dataCriacaoText);
-
-
-			$dataUltimaEdicaoElement = $xmldoc->createElement('dataUltimaEdicao');
-			$discussao->appendChild($dataUltimaEdicaoElement);
-			$dataUltimaEdicaoText = $xmldoc->createTextNode($dataUltimaEdicao);
-			$dataUltimaEdicaoElement->appendChild($dataUltimaEdicaoText);
-
-			$ativoElement = $xmldoc->createElement('ativo');
-			$discussao->appendChild($ativoElement);
-			$ativoText = $xmldoc->createTextNode($ativo);
-			$ativoElement->appendChild($ativoText);
-
-			$xmldoc->save('..\Dados\Discussao.xml');
-		}
-		break;
-
-	case "editar":
+	function inativarDiscussao() {
 		$id = $_POST['id'];
-		$titulo = $_POST['titulo'];
-		$descricao = $_POST['descricao'];
-		$dataUltimaEdicao = $_POST['dataUltimaEdicao'];
+		$sql = "UPDATE Discussao SET ativa = 0 WHERE id = $id";
+		echo query_no_result($sql);
+	}
 
-		$xml = simplexml_load_file( '..\Dados\Discussao.xml');
-		foreach($xml->discussao as $com) {
-			$idCom = (string)($com->id);
 
-			if ($idCom == $id) {
-				$com->titulo = $titulo;
-				$com->descricao = $descricao;
-				$com->dataUltimaEdicao = $dataUltimaEdicao;
-				break;
-			}
-		}
-		$xml->asXml('..\Dados\Discussao.xml'); // Salva.
-		break;
+	$func = $_POST['func'];
 
-	case "inativar":
-		$id = $_POST['id'];
-
-		$xml = simplexml_load_file( '..\Dados\Discussao.xml');
-		foreach($xml->discussao as $com) {
-			$idCom = (string)($com->id);
-
-			if ($idCom == $id) {
-				$com->ativo = "false";
-				break;
-			}
-		}
-		$xml->asXml('..\Dados\Discussao.xml'); // Salva.
-
-		break;
-}
+	switch ($func) {
+		case "criar":
+			criarDiscussao();
+			break;
+		case "listar":
+			listarDiscussao();
+			break;
+		case "getById":
+			getByIdDiscussao();
+			break;
+		case "getByTitulo":
+			getByTituloDiscussao();
+			break;
+		case "getByDescricao":
+			getByDescricaoDiscussao();
+			break;
+		case "editar":
+			editarDiscussao();
+			break;
+		case "inativar":
+			inativarDiscussao();
+			break;
+		case "exibirDiscussoesGlobal":
+			exibirDiscussoesGlobal();
+			break;
+		case "getDiscussaoDoLab":
+		 	getDiscussaoDoLab();
+			break;
+		case "mudarFixo":
+			mudarFixo();
+			break;
+	}
 
 ?>

@@ -4,16 +4,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset= 'utf-8'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="http://momentjs.com/downloads/moment.js"></script>
-
+	<link rel="stylesheet" type="text/css" href="Estilos/geral.css">
+	
     <script src="AcessoDados/Base.js"></script>
 
     <!-- Carregar apenas se necessário na página: -->
     <script src="AcessoDados/Comunidade.js"></script>
-    <script src="AcessoDados/Usuario.js"></script>
-    <!-- <script src="AcessoDados/Parceria.js"></script> -->
-
-   
 
    <script type= 'text/javascript'>
    $(document).ready(function(){
@@ -22,11 +18,15 @@
 		var descricao = $('#descricao').val();
 		var tema = $('#tema').val();
 		var userAdmin = $('#userAdmin').val();
-		
-		var idUsuarioAdministrador = Usuario.getByNome(userAdmin)[0].children[0].innerHTML;
-		
-		Comunidade.adicionar(nome, descricao, tema, idUsuarioAdministrador);
-		window.location.assign('laboratorios.html');
+				
+		Comunidade.adicionar(nome, descricao, tema, userAdmin, function(data) {
+			if (data.erro == true) {
+				alert(data.mensagem);	
+			} else {
+				alert("Adicionado com sucesso.");
+				window.location.assign('laboratorios.html');
+			}
+		});
 	  });
 	});
 
