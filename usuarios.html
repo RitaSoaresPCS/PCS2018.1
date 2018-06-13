@@ -7,37 +7,88 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="Estilos/geral.css">
-	
+
 	<script src="AcessoDados/Base.js"></script>
-    <script src="AcessoDados/Usuario.js"></script>
-    <script src="AcessoDados/Comunidade.js"></script>
+  <script src="AcessoDados/Usuario.js"></script>
+  <script src="AcessoDados/Comunidade.js"></script>
     <script type= 'text/javascript'>
       $(document).ready(function(){
         var bool = 0;
         function acao(userUsername, userMail, userInstit, userTtl, userCpf, userName){
           if (bool == 0)
           {
-            Usuario.adicionar(userUsername, userMail, userInstit, userTtl, userCpf, userName, 1, function(data) {
-				if (data.erro == true) {
-					alert(data.mensagem);	
-				} else {
-					alert("Adicionado com sucesso.");
-					window.location.assign('usuarios.html');
-				}
-			});
+            Usuario.adicionar(userUsername, userMail, userInstit, userTtl, userCpf, userName, 1, function(data)
+            {
+              if (data.erro == true) {
+                alert(data.mensagem);
+              } else {
+                alert("Adicionado com sucesso.");
+                window.location.assign('usuarios.html');
+              }
+            }
+            );
           } else{
-			var userId = $('#user-id').val();
-			var userIdComunidadePertence = $('#user-idComunidade').val();
+            var userId = $('#user-id').val();
+            var userIdComunidadePertence = $('#user-idComunidade').val();
             Usuario.editar(userId, userUsername, userMail, userInstit, userTtl, userCpf, userName, userIdComunidadePertence, function(data) {
-				if (data.erro == true) {
-					alert(data.mensagem);	
-				} else {
-					alert("Editado com sucesso.");
-					window.location.assign('usuarios.html');
-				}
-			});
+              if (data.erro == true) {
+                alert(data.mensagem);
+              } else {
+                alert("Editado com sucesso.");
+                window.location.assign('usuarios.html');
+              }
+            });
           }
         }
+        $('#confirm-adm').click(function(){
+          var selectedLab= $('#select-lab').val();
+          var idUsuario= localStorage.getItem('userIdAdm');
+          Comunidade.setAdm(selectedLab, idUsuario, function(data){
+            if (data.erro== true)
+            {
+              alert(data.mensagem);
+            }else{
+              alert('Administrador adicionado com sucesso.');
+              window.location.assign('usuarios.html');
+            }
+          });
+        });
+        $('body').on('click', 'p[id^="remove-adm-"]', function(){
+          var idUsuario= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
+          var confirmar= confirm('deseja remover a permissão do usuário?');
+          if (confirmar){
+            Comunidade.removeAdm(idUsuario, function(result){
+              if(result.erro== true)
+              {
+                alert(result.mensagem);
+              }else{
+                alert('Permissão removida.');
+                window.location.assign('usuarios.html');
+              }
+            });
+          }
+        });
+        $('body').on('click', 'p[id^="new-adm-"]', function(){
+          var idUsuario= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
+          localStorage.setItem('userIdAdm', idUsuario);
+          Comunidade.getLabsDisponiveis(function(labs){
+            if (labs.erro== true)
+            {
+              alert(data.mensagem);
+            }else{
+              var labsSize= labs.length;
+              var selectLab= $('#select-lab');
+              for (var iterador= 0; iterador< labsSize; iterador++)
+              {
+                var currentLab= labs[iterador];
+                $('<option>'+ currentLab['name'] + '</option>')
+                  .attr('value', currentLab['name'])
+                  .appendTo(selectLab);
+              }
+            }
+          });
+        });
+
         $('#btn-save-user').click(function(){
           //username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence
           var userUsername= $('#user-username').val();
@@ -50,41 +101,42 @@
         });
         $('body').on('click', 'button[id^="btn-edit-"]', function () {
           bool= 1;
+          $('#btn-delete-user').removeAttr('style');
           var idUsuario= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
           Usuario.getById(idUsuario, function(data) {
-				data = JSON.parse(data);
-				$('#user-id').val(data.id);
-				$('#user-idComunidade').val(data.idComunidadePertence);
-				$('#user-username').val(data.username);
-				$('#user-email').val(data.email);
-				$('#user-instit').val(data.instituicaoOrigem);
-				$('#selected-title').val(data.titulo);
-				$('#user-cpf').val(data.cpf);
-				$('#user-name').val(data.nome);
-				$('#user-lab').val(data.nomeComunidade);
-		  });
+            data = JSON.parse(data);
+            $('#user-id').val(data.id);
+            $('#user-idComunidade').val(data.idComunidadePertence);
+            $('#user-username').val(data.username);
+            $('#user-email').val(data.email);
+            $('#user-instit').val(data.instituicaoOrigem);
+            $('#selected-title').val(data.titulo);
+            $('#user-cpf').val(data.cpf);
+            $('#user-name').val(data.nome);
+            $('#user-lab').val(data.nomeComunidade);
+          });
         });
         $('#btn-delete-user').click(function(){
           var userId= $('#user-id').val();
           Usuario.remover(userId, function(data) {
-			if (data.erro != true) {
-				alert('Usuário deletado');
-				$('#user-username').val('');
-				$('#user-email').val('');
-				$('#selected-title').val('Professor');
-				$('#user-instit').val('');
-				$('#user-cpf').val('');
-				$('#user-name').val('');
-				$('#user-lab').val('');
-				window.location.assign('usuarios.html');
-			} else {
-				alert(data.mensagem);
-			} 
-		  });
-          
+            if (data.erro != true) {
+              alert('Usuário deletado');
+              $('#user-username').val('');
+              $('#user-email').val('');
+              $('#selected-title').val('Professor');
+              $('#user-instit').val('');
+              $('#user-cpf').val('');
+              $('#user-name').val('');
+              $('#user-lab').val('');
+              window.location.assign('usuarios.html');
+            } else {
+              alert(data.mensagem);
+            }
+          });
         });
         $('#btn-create-user').click(function(){
           bool= 0;
+          $('#btn-delete-user').attr('style','display:none;');
           $('#user-username').val('');
           $('#user-email').val('');
           $('#selected-title').val('Professor');
@@ -94,22 +146,22 @@
           $('#user-lab').val('');
         });
 
-		Usuario.listar(function(usuarios){
+		Usuario.listarUsuariosPermissao(function(usuarios){
 			var divUsuarios = $('#usuarios');
 			usuariosSize = usuarios.length;
 			for (var iterator = 0; iterator < usuariosSize; iterator++)
-			{	
+			{
 				var currentUser = usuarios[iterator];
-				
+
 				var divUserInfo = $('<div />').appendTo(divUsuarios);
 				var userUsername = currentUser["username"];
 				var userPicture = currentUser["urlImagemPerfil"];
 				var userInstit = currentUser["instituicaoOrigem"];
 				var userTtl = currentUser["titulo"];
 				var userName = currentUser["nome"];
-			
+
 				var userLab = currentUser["nomeComunidade"];
-				
+        var userPermission= currentUser['isAdm'];
 				var divUserPicnName = $('<div />').appendTo(divUserInfo);
 				$('<img />')
 				  .attr('src', userPicture)
@@ -131,6 +183,25 @@
 				$('<p />')
 				  .text('Instituição: '+userInstit)
 				  .appendTo(divUserMainInfo);
+        if(userPermission != -1){
+          var divPermission= $('<div />').attr('id', 'div-permission').appendTo(divUserInfo);
+          if(userPermission == 1)
+          {
+            $('<p />')
+              .text('retirar permissão de administrador')
+              .attr('id', 'remove-adm-'+currentUser["id"])
+              .appendTo(divPermission);
+          }else{
+            $('<p />')
+              .text('tornar administrador de laboratório')
+              .attr('id', 'new-adm-'+currentUser["id"])
+              .attr('data-toggle', 'modal')
+    				  .attr('data-target', '#modalAddAdm')
+              .appendTo(divPermission);
+          }
+        }
+
+
 				var divUserDetails= $('<div />').attr('id', 'div-user-details').appendTo(divUserInfo);
 				$('<button />')
 				  .attr('type', 'button')
@@ -139,11 +210,12 @@
 				  .attr('data-target', '#my-modal')
 				  .text('detalhes')
 				  .appendTo(divUserDetails);
-
 				$('<hr>').appendTo(divUsuarios);
 			}
-		});		
-	});
+		});
+
+
+  });
     </script>
 
   </head>
@@ -153,6 +225,29 @@
     <main>
       <h1>Usuários</h1>
       <div class="container">
+
+        <!-- Modal -->
+      <div class="modal fade" id="modalAddAdm" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <p>Selecione um laboratório</p>
+            </div>
+            <div id= 'modal-body' class="modal-body">
+              <select id= 'select-lab'>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button id= 'confirm-adm' type="button" class="btn btn-default" data-dismiss="modal">Confirmar</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
         <!-- Trigger the modal with a button -->
         <button id='btn-create-user' type= 'button' data-toggle= 'modal' data-target= '#my-modal'>Criar usuário</button>
 
@@ -173,7 +268,7 @@
                   <input id='user-name' type= 'text'>
                   <p>Laboratório:</p>
 				  <input id='user-idComunidade' type= 'hidden'>
-                  <input id='user-lab' type= 'text' disabled>
+                  <input id='user-lab' type= 'text'>
                   <p>Título:</p>
                   <select id= 'selected-title'>
                     <option value="professor">Professor</option>
@@ -188,7 +283,7 @@
                   <input id='user-instit' type= 'text'>
                   <p>E-mail:</p>
                   <input id='user-email' type= 'text'>
-				  
+
           			</form>
               </div>
               <div class="modal-footer">
@@ -203,6 +298,7 @@
       </div>
 
       <div id= 'usuarios'>
+
       </div>
 
     </main>
