@@ -1,6 +1,6 @@
 var Comunidade = new function() {
 	$.ajaxSetup({ cache: false });
-	
+
 	this.controladorURL = "ControleDados/Comunidade.php";
 
     this.listar = function (callback = function(data) {}) {
@@ -14,17 +14,20 @@ var Comunidade = new function() {
 	this.getByNome = function (pesquisa, callback = function(data) {}) {
 		return Base.getByNome(pesquisa, this.controladorURL, callback);
 	}
-	
+
+	this.getByNomeIgual = function(pesquisa, callback = function(data) {}) {
+		return Base.getByNomeIgual(pesquisa, this.controladorURL, callback);
+	}
+
 	this.getByDescricao = function (pesquisa, callback = function(data) {}) {
 		return Base.getByDescricao(pesquisa, this.controladorURL, callback);
 	}
-	
-	
+
 	// Inativar.
 	this.remover = function (id, callback = function(data) {}) {
 		return Base.inativar(id, this.controladorURL, callback);
 	}
-	
+
 	this.desativarLaboratorio = function (id) {
 		var confirmou = confirm("Deseja realmente desativar a comunidade?");
 		if (confirmou) {
@@ -33,9 +36,9 @@ var Comunidade = new function() {
 					window.location.assign('laboratorios.html');
 				}
 			});
-		} 
+		}
 	}
-	
+
 
 	this.adicionar = function (nome, descricao, tema, usernameAdmin, callback = function(data) {} ) {
 		$.post(this.controladorURL, {
@@ -48,13 +51,13 @@ var Comunidade = new function() {
 			function(data) {
 				callback(data);
 			},
-			"json" 
+			"json"
 		);
 	}
 
 
 
-	this.editar = function (id, nome, descricao, tema, usernameAdmin, callback = function(data) {} ) {		
+	this.editar = function (id, nome, descricao, tema, usernameAdmin, callback = function(data) {} ) {
 		$.post(this.controladorURL, {
 			func: "editar",
 			id: id,
@@ -69,5 +72,43 @@ var Comunidade = new function() {
 			"json"
 		);
 	}
+
+	this.getLabsDisponiveis= function(callback= function(data){}){
+		$.post(
+			this.controladorURL,
+			{func: 'getLabsDisponiveis'},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
+	this.setAdm= function(labName, admId, callback= function(data){}){
+		$.post(
+			this.controladorURL, {
+				func: 'setAdm',
+				labName: labName,
+				admId: admId
+			 },
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
+	this.removeAdm= function(admId, callback= function(data){}){
+		$.post(
+			this.controladorURL,
+			{
+				func: 'removeAdm',
+				admId: admId
+			},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
+
 
 }

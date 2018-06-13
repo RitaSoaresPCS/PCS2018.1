@@ -1,6 +1,6 @@
 var Discussao = new function() {
 	$.ajaxSetup({ cache: false });
-	
+
 	this.controladorURL = "ControleDados/Discussao.php";
 
     this.listar = function (callback = function(data) {}) {
@@ -15,20 +15,20 @@ var Discussao = new function() {
 	this.remover = function (id, callback = function(data) {}) {
 		return Base.inativar(id, this.controladorURL, callback);
 	}
-	
-	
+
+
 	this.getByTitulo = function (pesquisa, callback = function(data) {}) {
 		$.post(
-			this.controladorURL, 
-			{ func: "getByTitulo", titulo: pesquisa }, 
+			this.controladorURL,
+			{ func: "getByTitulo", titulo: pesquisa },
 			function(data) {
 				callback(data);
 			},
 			"json"
 		);
 	}
-	
-	
+
+
 	this.getByDescricao = function (pesquisa, callback = function(data) {}) {
 		return Base.getByDescricao(pesquisa, this.controladorURL, callback);
 	}
@@ -41,11 +41,11 @@ var Discussao = new function() {
 			titulo: titulo,
 			descricao: descricao,
 			publica: publica
-			}, 
+			},
 			function(data) {
 				callback(data);
 			},
-			"json" 
+			"json"
 		);
 	}
 
@@ -57,12 +57,39 @@ var Discussao = new function() {
 			titulo: titulo,
 			descricao: descricao,
 			publica: publica
-			}, 
+			},
 			function(data) {
 				callback(data);
 			},
-			"json" 
+			"json"
 		);
 	}
-	
+	this.getDiscussaoDoLab= function(labId, callback= function(data){}){
+		$.post(
+			this.controladorURL,
+			{
+				func: 'getDiscussaoDoLab',
+				labId: labId
+			},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
+	this.mudarFixo= function(discussaoId, bool, callback= function(data){}){
+		$.post(
+			this.controladorURL,
+			{
+				func: 'mudarFixo',
+				discussaoId: discussaoId,
+				bool: bool
+			},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
+
 }
