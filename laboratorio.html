@@ -5,12 +5,13 @@
 	<meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="Estilos/geral.css">
-	
+
     <script src="AcessoDados/Base.js"></script>
     <!-- Carregar apenas se necessário na página: -->
+    <script src="AcessoDados/Discussao.js"></script>
     <script src="AcessoDados/Comunidade.js"></script>
     <script src="AcessoDados/Usuario.js"></script>
-	
+
     <script type= 'text/javascript'>
       $(document).ready(function(){
         $('#btn-addParc').click(function(){
@@ -38,7 +39,7 @@
 
 			  var username = $('#select-remove-parc').val();
 			  var comunidadeAtual = Base.getUrlParameter("id");
-			  
+
 			  if (username != null)
 			  {
 				$.ajax({
@@ -59,7 +60,6 @@
 	<script type= 'text/javascript'>
 		// Preenche os dados do laboratório.
 		$(document).ready(function(){
-
 			Comunidade.getById(Base.getUrlParameter("id"), function(data) {
 				data = JSON.parse(data);
 				conteudo = "";
@@ -69,7 +69,7 @@
 				var tema = data.tema;
 				Usuario.getById(data.idUsuarioAdministrador, function(dataUs) {
 					var usuarioAdmin = JSON.parse(dataUs).username;
-				
+
 					conteudo += "<form>"
 					conteudo += "<input type='hidden' name='id' id='id' value='" + data.id + "'>";
 					conteudo += "Nome:<br><input type='text' name='nome' id='nome' value='" + nome + "' width='100'><br>";
@@ -95,36 +95,123 @@
 								window.location.assign('laboratorio.html?id=' + id);
 							}
 						});
-					});			
+					});
 				});
 			});
+
 		});
 	</script>
- 
- 
+  <script type= 'text/javascript'>
+  $(document).ready(function(){
+    $('body').on('click', 'button[id^="btn-fixar-"]', function(){
+      var idDiscussao= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
+      Discussao.mudarFixo(idDiscussao, 1, function(result){
+        if (result.erro== true)
+        {
+          alert(result.mensagem);
+        }else{
+          alert('Discussao fixada.');
+        }
+      });
+    });
+
+    $('body').on('click', 'button[id^="btn-desfixar-"]', function(){
+      var idDiscussao= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
+      Discussao.mudarFixo(idDiscussao, 0, function(result){
+        if (result.erro== true)
+        {
+          alert(result.mensagem);
+        }else{
+          alert('Discussao desfixada.');
+        }
+      });
+    });
+
+    Discussao.getDiscussaoDoLab(Base.getUrlParameter("id"), function(discussoes){
+      if (discussoes.erro== true)
+      {
+        alert(data.mensagem);
+      }else{
+        discussoesSize= discussoes.length;
+        for(var iterador= 0; iterador< discussoesSize; iterador++)
+        {
+          currentDiscuss= discussoes[iterador];
+          var dId= currentDiscuss['id'];
+          var dIdCreator= currentDiscuss['idCreator'];
+          var dTtl= currentDiscuss['ttl'];
+          var dCrDate= currentDiscuss['crDate'];
+          var dDescriptn= currentDiscuss['descriptn'];
+          var dActive= currentDiscuss['active'];
+          var dFix= currentDiscuss['fix'];
+          var dLastEdit= currentDiscuss['lastEdit'];
+          var dPublic= currentDiscuss['public'];
+
+          var divDiscussaoInfo= $('<div />').appendTo('#discussoes');
+          var divDiscussaoOuter= $('<div />').appendTo(divDiscussaoInfo);
+          var divDiscusssaoInner= $('<div />').appendTo(divDiscussaoInfo);
+          var divDiscussaoHeader= $('<div />').appendTo(divDiscussaoOuter);
+          var divDiscussaoActions= $('<div />').appendTo(divDiscussaoOuter);
+          $('<p />')
+            .text(dTtl)
+            .appendTo(divDiscussaoHeader);
+          $('<br>').appendTo(divDiscussaoHeader);
+          $('<p />')
+            .text('criada por '+ dIdCreator)//futuramente virará o nome da pessoa.
+            .appendTo(divDiscussaoHeader);
+          $('<br>').appendTo(divDiscussaoHeader);
+          if (dFix== '0')
+          {
+            $('<button />')
+              .attr('type', 'button')
+              .attr('id', 'btn-fixar-'+dId)
+              .text('fixar')
+              .appendTo(divDiscussaoActions);
+          }else{
+            $('<button />')
+              .attr('type', 'button')
+              .attr('id', 'btn-desfixar-'+dId)
+              .text('desfixar')
+              .appendTo(divDiscussaoActions);
+          }
+          $('<button />')
+            .attr('type', 'button')
+            .attr('id', 'btn-responder')
+            .text('responder')
+            .appendTo(divDiscussaoActions);
+
+          $('<p />')
+            .text(dDescriptn)
+            .appendTo(divDiscusssaoInner);
+          $('<hr>').appendTo(divDiscussaoInfo);
+        }
+      }
+    });
+  });
+  </script>
+
 	<script type= 'text/javascript'>
 		// Adiciona os parceiros atuais do laboratório.
 		$(document).ready(function(){
 			var comunidadeAtual = Base.getUrlParameter("id");
-		
+
 			$.ajax({
 				type: 'POST',
 				url: 'ControleDados/UsuarioParceriaComunidade.php',
 				dataType: 'json',
 				data: 'func=getParceiroByIdComunidade&idComunidade='+comunidadeAtual,
 				success: function (data) {
-				
+
 					conteudo = "";
 					conteudo2 = "";
-							
-					for (i = 0; i < data.length; i++) { 
+
+					for (i = 0; i < data.length; i++) {
 						conteudo += "<option value='" + data[i]["username"] + "'>" + data[i]["nome"] + "</option>";
 						conteudo2 += "<p>" + data[i]["username"] + "</p>";
 					}
-			
+
 					document.getElementById("select-remove-parc").innerHTML = document.getElementById("select-remove-parc").innerHTML + conteudo;
-			
-					
+
+
 					if (conteudo2 != "") {
 						document.getElementById("lista-parceiros").innerHTML = conteudo2;
 					} else {
@@ -134,15 +221,17 @@
             });
 		});
 	</script>
- 
- 
- 
- 
- 
+
+
+
+
+
   </head>
   <body>
     <h2>Laboratório</h2>
     <h3>Discussões</h3>
+    <div id= 'discussoes'>
+    </div>
     <br><br>
     <h3>Parceiros</h3>
 	<div id="lista-parceiros"></div>
@@ -233,7 +322,7 @@
 </script>
 
 <header><!-- logo do academiq --></header>
-	
+
 	<div id="conteudo"></div>
 		<main>
 			<form id = 'form-addParc'>
