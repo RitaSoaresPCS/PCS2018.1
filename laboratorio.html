@@ -74,7 +74,7 @@
         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
       }
 
-<<<<<<< HEAD
+
       /* Modal Content */
       .modal-content {
         background-color: #fefefe;
@@ -99,43 +99,7 @@
         cursor: pointer;
       }
     </style>
-  <script type= 'text/javascript'>
-     $(document).ready(function(){
 
-  		var comunidade = Comunidade.getById(Base.getUrlParameter("id"));
-  		conteudo = "";
-
-  		var nome = comunidade.children[1].innerHTML;
-  		var descricao = comunidade.children[2].innerHTML;
-  		var tema = comunidade.children[5].innerHTML;
-  		var usuarioAdmin = Usuario.getById(comunidade.children[7].innerHTML).children[1].innerHTML;
-
-  		conteudo += "<form>"
-  		conteudo += "<input type='hidden' name='id' id='id' value='" + comunidade.children[0].innerHTML + "'>";
-  		conteudo += "Nome:<br><input type='text' name='nome' id='nome' value='" + nome + "' width='100'><br>";
-  		conteudo += "Descrição:<br><input type='text' name='descricao' id='descricao' value='" + descricao + "' width='100'><br>";
-  		conteudo += "Tema:<br><input type='text' name='tema' id='tema' value='" + tema + "' width='100'><br>";
-  		conteudo += "Administrador:<br><input type='text' name='usuarioAdmin' id='usuarioAdmin' value='" + usuarioAdmin + "' width='100'><br><br>";
-  		conteudo += "<button id= 'btn-editar-lab' type= 'button'>Editar</button><br>";
-  		conteudo += "</form>"
-
-  		document.getElementById("conteudo").innerHTML = conteudo;
-
-  	  $('#btn-editar-lab').click(function(){
-  		var id = $('#id').val();
-  		var nome = $('#nome').val();
-  		var descricao = $('#descricao').val();
-  		var tema = $('#tema').val();
-  		var userAdmin = $('#usuarioAdmin').val();
-
-  		var idUsuarioAdministrador = Usuario.getByNome(userAdmin)[0].children[0].innerHTML;
-
-  		Comunidade.editar(id, nome, descricao, tema, idUsuarioAdministrador);
-  		window.location.assign('laboratorio.html?id=' + id);
-  	  });
-  	});
-  </script>
-=======
 	<script type= 'text/javascript'>
 		// Preenche os dados do laboratório.
 		$(document).ready(function(){
@@ -301,18 +265,13 @@
 		});
 	</script>
 
-
-
-
-
->>>>>>> master
   </head>
   <body>
     <header><!-- logo do academiq --></header>
 
     <h2>Laboratório</h2>
-<<<<<<< HEAD
 
+	<div id="conteudo"></div>  
     <main>
       <h3>Discussões</h3>
       <br><br>
@@ -348,7 +307,7 @@
       		</select>
           <button id= 'btn-remover' type= 'button'>Confirmar</button>
         </div>
-=======
+	      
     <h3>Discussões</h3>
     <div id= 'discussoes'>
     </div>
@@ -382,7 +341,6 @@
     			<p>Selecione um Parceiro que deseja remover</p>
     	</select>
         <button id= 'btn-remover' type= 'button'>Confirmar</button>
->>>>>>> master
       </div>
     </main>
 
@@ -433,30 +391,13 @@
         span2.onclick = function() {
           modal2.style.display = "none";
         }
-<<<<<<< HEAD
+	
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
           if (event.target == modal2) {
             modal2.style.display = "none";
           }
         }
-    </script>
-=======
-      }
 </script>
-
-<header><!-- logo do academiq --></header>
-
-	<div id="conteudo"></div>
-		<main>
-			<form id = 'form-addParc'>
-				<p>Nome do Convidado</p>
-				<input id = 'username' type = 'text'>
-				<button id = 'btn-addParc' type = 'button'>Enviar</button>
-			</form>
-      <hr></hr>
-    <button id = 'btn-remover' type = 'button'>Remover Parceiro</button>
->>>>>>> master
-
   </body>
 </html>
