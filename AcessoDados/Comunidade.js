@@ -1,74 +1,114 @@
 var Comunidade = new function() {
 	$.ajaxSetup({ cache: false });
-    this.filePath = "Dados/Comunidade.xml";
-	this.tagName = "comunidade";
+
 	this.controladorURL = "ControleDados/Comunidade.php";
 
-    this.listar = function () {
-		return Base.listar(this.filePath, this.tagName);
+    this.listar = function (callback = function(data) {}) {
+		return Base.listar(this.controladorURL, callback);
     }
 
-
-	this.getById = function (id) {
-		return Base.getById(id, this.filePath, this.tagName);
+	this.getById = function (id, callback = function(data) {}) {
+		return Base.getById(id, this.controladorURL, callback);
     }
 
+	this.getByNome = function (pesquisa, callback = function(data) {}) {
+		return Base.getByNome(pesquisa, this.controladorURL, callback);
+	}
 
-	this.getByNome = function (pesquisa) {
-		return Base.getByNome(pesquisa, this.filePath, this.tagName);
+	this.getByNomeIgual = function(pesquisa, callback = function(data) {}) {
+		return Base.getByNomeIgual(pesquisa, this.controladorURL, callback);
+	}
+
+	this.getByDescricao = function (pesquisa, callback = function(data) {}) {
+		return Base.getByDescricao(pesquisa, this.controladorURL, callback);
+	}
+
+	// Inativar.
+	this.remover = function (id, callback = function(data) {}) {
+		return Base.inativar(id, this.controladorURL, callback);
+	}
+
+	this.desativarLaboratorio = function (id) {
+		var confirmou = confirm("Deseja realmente desativar a comunidade?");
+		if (confirmou) {
+			this.remover(id, function(data) {
+				if (data.erro == false) {
+					window.location.assign('laboratorios.html');
+				}
+			});
+		}
 	}
 
 
-	this.adicionar = function (nome, descricao, tema, idUsuarioAdministrador) {
-		var comunidades = this.listar();
-
-		// Último id existente:
-		var ultimoId = parseInt(comunidades[comunidades.length - 1].children[0].innerHTML);
-
-		var id = String(ultimoId + 1);
-		var dataCriacao = moment(new Date()).format('DD/MM/YYYY');
-
+	this.adicionar = function (nome, descricao, tema, usernameAdmin, callback = function(data) {} ) {
 		$.post(this.controladorURL, {
 			func: "adicionar",
-			id: id,
 			nome: nome,
 			descricao: descricao,
-			dataCriacao: dataCriacao,
-			dataUltimaEdicao: "",
 			tema: tema,
-			ativa: "true",
-			idUsuarioAdministrador: idUsuarioAdministrador
-		} );
+			usernameAdmin: usernameAdmin
+			},
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
 	}
 
 
 
-	this.editar = function (id, nome, descricao, tema, idUsuarioAdministrador) {
-		var dataUltimaEdicao = moment(new Date()).format('DD/MM/YYYY');
-
+	this.editar = function (id, nome, descricao, tema, usernameAdmin, callback = function(data) {} ) {
 		$.post(this.controladorURL, {
 			func: "editar",
 			id: id,
 			nome: nome,
 			descricao: descricao,
-			dataUltimaEdicao: dataUltimaEdicao,
 			tema: tema,
-			idUsuarioAdministrador: idUsuarioAdministrador
-		} );
+			usernameAdmin: usernameAdmin
+			},
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
+	}
+
+	this.getLabsDisponiveis= function(callback= function(data){}){
+		$.post(
+			this.controladorURL,
+			{func: 'getLabsDisponiveis'},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
+	this.setAdm= function(labName, admId, callback= function(data){}){
+		$.post(
+			this.controladorURL, {
+				func: 'setAdm',
+				labName: labName,
+				admId: admId
+			 },
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
+	this.removeAdm= function(admId, callback= function(data){}){
+		$.post(
+			this.controladorURL,
+			{
+				func: 'removeAdm',
+				admId: admId
+			},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
 	}
 
 
-	// Inativar.
-	this.remover = function (id) {
-		Base.inativar(id, this.controladorURL);
-	}
-
-	
-	this.desativarLaboratorio = function (id) {
-		var confirmou = confirm("Deseja realmente desativar a comunidade?");
-		if (confirmou) {
-			this.remover(id);
-			window.location.assign('laboratorios.html');
-		} 
-	}
 }

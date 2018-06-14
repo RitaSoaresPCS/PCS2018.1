@@ -1,62 +1,95 @@
 var Discussao = new function() {
 	$.ajaxSetup({ cache: false });
-    this.filePath = "../Dados/Discussao.xml";
-	this.tagName = "discussao";
+
 	this.controladorURL = "ControleDados/Discussao.php";
 
-    this.listar = function () {
-		return Base.listar(this.filePath, this.tagName);
+    this.listar = function (callback = function(data) {}) {
+		return Base.listar(this.controladorURL, callback);
     }
 
-
-	this.getById = function (id) {
-		return Base.getById(id, this.filePath, this.tagName);
+	this.getById = function (id, callback = function(data) {}) {
+		return Base.getById(id, this.controladorURL, callback);
     }
 
-
-	this.getByNome = function (pesquisa) {
-		return Base.getByNome(pesquisa, this.filePath, this.tagName);
+	// Inativar.
+	this.remover = function (id, callback = function(data) {}) {
+		return Base.inativar(id, this.controladorURL, callback);
 	}
 
 
-	this.adicionar = function (titulo, descricao) {
-		var discussoes = this.listar();
+	this.getByTitulo = function (pesquisa, callback = function(data) {}) {
+		$.post(
+			this.controladorURL,
+			{ func: "getByTitulo", titulo: pesquisa },
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
+	}
 
-		// Último id existente:
-		var ultimoId = parseInt(discussoes[discussoes.length - 1].children[0].innerHTML);
 
-		var id = String(ultimoId + 1);
-		var dataCriacao = moment(new Date()).format('DD/MM/YYYY');
+	this.getByDescricao = function (pesquisa, callback = function(data) {}) {
+		return Base.getByDescricao(pesquisa, this.controladorURL, callback);
+	}
 
+
+	this.adicionar = function (idComunidadePertence, titulo, descricao, publica, callback = function(data) {}) {
 		$.post(this.controladorURL, {
-			func: "adicionar",
-			id: id,
+			func: "criar",
+			idComunidadePertence: idComunidadePertence,
 			titulo: titulo,
 			descricao: descricao,
-			dataCriacao: dataCriacao,
-			dataUltimaEdicao: "",
-			ativo: "true"
-		} );
+			publica: publica
+			},
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
 	}
 
 
-
-	this.editar = function (id, nome, descricao) {
-		var dataUltimaEdicao = moment(new Date()).format('DD/MM/YYYY');
-
+	this.editar = function (id, titulo, descricao, publica, callback = function(data) {}) {
 		$.post(this.controladorURL, {
 			func: "editar",
 			id: id,
-			nome: nome,
+			titulo: titulo,
 			descricao: descricao,
-			dataUltimaEdicao: dataUltimaEdicao,
-		} );
+			publica: publica
+			},
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
 	}
-
-
-	// Inativar.
-	this.remover = function (id) {
-		Base.inativar(id, this.controladorURL);
+	this.getDiscussaoDoLab= function(labId, callback= function(data){}){
+		$.post(
+			this.controladorURL,
+			{
+				func: 'getDiscussaoDoLab',
+				labId: labId
+			},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
+	this.mudarFixo= function(discussaoId, bool, callback= function(data){}){
+		$.post(
+			this.controladorURL,
+			{
+				func: 'mudarFixo',
+				discussaoId: discussaoId,
+				bool: bool
+			},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
 	}
 
 }

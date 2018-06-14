@@ -1,120 +1,238 @@
 <?php
-$func = $_POST['func'];
+	header('Content-Type: text/html; charset=utf-8');
+	include_once 'Base.php';
 
-switch ($func) {
-    case "adicionar":
+	function removeAdm(){
+		$admId= $_POST['admId'];
+		$sql= "UPDATE comunidade SET idUsuarioAdministrador= NULL WHERE idUsuarioAdministrador= $admId";
+		echo query_no_result($sql);
+	}
+
+	function setAdm(){
+		$labName= $_POST['labName'];
+		$admId= $_POST['admId'];
+		$sql= "UPDATE comunidade SET idUsuarioAdministrador= $admId WHERE nome= '$labName'";
+		echo query_no_result($sql);
+	}
+
+	function getByNomeIgual(){
+		$name= $_POST['nome'];
+		$sql= "SELECT id FROM comunidade WHERE nome= '$name'";
+		echo json_encode(query_result($sql));
+	}
+
+	function getLabsDisponiveis(){
+		$sql= "SELECT id, nome FROM comunidade WHERE idUsuarioAdministrador IS NULL AND ativa= 1";
+		$result = query_result($sql);
+		$return = array();
+		if (mysqli_num_rows($result) > 0)
+		{
+			while($row = mysqli_fetch_assoc($result))
+			{
+				$id= $row['id'];
+				$name= $row['nome'];
+				$s = "{'id': '$id', 'name': '$name'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+		echo "[" . implode(",", $return) . "]";
+	}
+
+	function adicionarComunidade() {
+		$nome = $_POST['nome'];
+		$descricao = $_POST['descricao'];
+		$dataCriacao = date('Y-m-d');
+		$tema = $_POST['tema'];
+		$usernameAdmin = $_POST['usernameAdmin'];
+
+		$_POST['func'] = "";
+		include_once 'Usuario.php';
+
+		$idUsuarioAdministrador = getIdUsuarioByUsername($usernameAdmin);
+
+		$sql = "INSERT INTO Comunidade VALUES (default, '$nome', '$descricao', '$dataCriacao', null, '$tema', 1, $idUsuarioAdministrador)";
+
+		// Retorna um json com o resultado.
+		echo query_no_result($sql);
+	}
+
+
+	function listarComunidade() {
+		$sql = "SELECT * FROM Comunidade WHERE ativa = 1";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+
+			// Para cada linha de resultado:
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$nome = $row["nome"];
+				$descricao = $row["descricao"];
+				$dataCriacao = $row["dataCriacao"];
+				$tema = $row["tema"];
+
+				$s = "{'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema': '$tema'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+
+		// Retorna o array concatenado.
+		echo "[" . implode(",", $return) . "]";
+	}
+
+
+	function getByIdComunidade() {
+		$id = $_POST['id'];
+		$sql = "SELECT * FROM Comunidade WHERE id = $id";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$nome = $row["nome"];
+				$descricao = $row["descricao"];
+				$dataCriacao = $row["dataCriacao"];
+				$tema = $row["tema"];
+				$idUsuarioAdministrador = $row["idUsuarioAdministrador"];
+
+				$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema': '$tema', 'idUsuarioAdministrador': '$idUsuarioAdministrador'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+		echo json_encode($return);
+	}
+
+
+
+	function getIdComunidadeByIdAdmin($idAdmin) {
+		$sql = "SELECT id FROM Comunidade WHERE idUsuarioAdministrador = $idAdmin";
+
+		$result = query_result($sql);
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				return $row["id"];
+			}
+		}
+		return "";
+	}
+
+
+	function getByNomeComunidade() {
+		$nome = $_POST['nome'];
+
+		$sql = "SELECT * FROM Comunidade WHERE LOWER(nome) LIKE LOWER('%$nome%')";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$nome = $row["nome"];
+				$descricao = $row["descricao"];
+				$dataCriacao = $row["dataCriacao"];
+				$tema = $row["tema"];
+
+				$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema':'$tema'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+		echo "[" . implode(",", $return) . "]";
+	}
+
+
+	function getByDescricao() {
+		$descricao = $_POST['descricao'];
+
+		$sql = "SELECT * FROM Comunidade WHERE LOWER(descricao) LIKE LOWER('%$descricao%')";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$nome = $row["nome"];
+				$descricao = $row["descricao"];
+				$dataCriacao = $row["dataCriacao"];
+				$tema = $row["tema"];
+
+				$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema':'$tema'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+		echo "[" . implode(",", $return) . "]";
+	}
+
+
+	function editarComunidade() {
 		$id = $_POST['id'];
 		$nome = $_POST['nome'];
 		$descricao = $_POST['descricao'];
-		$dataCriacao = $_POST['dataCriacao'];
-		$dataUltimaEdicao = $_POST['dataUltimaEdicao'];
-		$tema = $_POST['tema'];	
-		$ativa = $_POST['ativa'];	
-		$idUsuarioAdministrador = $_POST['idUsuarioAdministrador'];	
-	
-		if( $xml = file_get_contents( '..\Dados\Comunidade.xml') ) {
-			$xmldoc = new DomDocument( '1.0' );
-			$xmldoc->preserveWhiteSpace = false;
-			$xmldoc->formatOutput = true;
+		$dataUltimaEdicao = date('Y-m-d');
+		$tema = $_POST['tema'];
+		$usernameAdmin = $_POST['usernameAdmin'];
 
-			$xmldoc->loadXML( $xml, LIBXML_NOBLANKS );
+		$_POST['func'] = "";
+		include_once 'Usuario.php';
 
-			$root = $xmldoc->getElementsByTagName('Comunidade')->item(0);
+		$idUsuarioAdministrador = getIdUsuarioByUsername($usernameAdmin);
 
-			$comunidade = $xmldoc->createElement('comunidade');
-			$root->appendChild($comunidade);
+		$sql = "UPDATE Comunidade SET nome = '$nome', descricao = '$descricao', dataUltimaEdicao = '$dataUltimaEdicao', tema = '$tema', idUsuarioAdministrador = $idUsuarioAdministrador WHERE id = $id";
+
+		echo query_no_result($sql);
+	}
 
 
-			$idElement = $xmldoc->createElement('id');
-			$comunidade->appendChild($idElement);
-			$idText = $xmldoc->createTextNode($id);
-			$idElement->appendChild($idText);
-			
-			
-			$nomeElement = $xmldoc->createElement('nome');
-			$comunidade->appendChild($nomeElement);
-			$nomeText = $xmldoc->createTextNode($nome);
-			$nomeElement->appendChild($nomeText);
-			
-			
-			$descricaoElement = $xmldoc->createElement('descricao');
-			$comunidade->appendChild($descricaoElement);
-			$descricaoText = $xmldoc->createTextNode($descricao);
-			$descricaoElement->appendChild($descricaoText);
-			
-			
-			$dataCriacaoElement = $xmldoc->createElement('dataCriacao');
-			$comunidade->appendChild($dataCriacaoElement);
-			$dataCriacaoText = $xmldoc->createTextNode($dataCriacao);
-			$dataCriacaoElement->appendChild($dataCriacaoText);
-			
-			
-			$dataUltimaEdicaoElement = $xmldoc->createElement('dataUltimaEdicao');
-			$comunidade->appendChild($dataUltimaEdicaoElement);
-			$dataUltimaEdicaoText = $xmldoc->createTextNode($dataUltimaEdicao);
-			$dataUltimaEdicaoElement->appendChild($dataUltimaEdicaoText);
-			
-			
-			$temaElement = $xmldoc->createElement('tema');
-			$comunidade->appendChild($temaElement);
-			$temaText = $xmldoc->createTextNode($tema);
-			$temaElement->appendChild($temaText);
-			
-			
-			$ativaElement = $xmldoc->createElement('ativa');
-			$comunidade->appendChild($ativaElement);
-			$ativaText = $xmldoc->createTextNode($ativa);
-			$ativaElement->appendChild($ativaText);
-			
-			
-			$idUsuarioAdministradorElement = $xmldoc->createElement('idUsuarioAdministrador');
-			$comunidade->appendChild($idUsuarioAdministradorElement);
-			$idUsuarioAdministradorText = $xmldoc->createTextNode($idUsuarioAdministrador);
-			$idUsuarioAdministradorElement->appendChild($idUsuarioAdministradorText);
-
-			$xmldoc->save('..\Dados\Comunidade.xml');
-		}
-		break;
-		
-	case "editar":
+	function inativarComunidade() {
 		$id = $_POST['id'];
-		$nome = $_POST['nome'];
-		$descricao = $_POST['descricao'];
-		$dataUltimaEdicao = $_POST['dataUltimaEdicao'];
-		$tema = $_POST['tema'];	
-		$idUsuarioAdministrador = $_POST['idUsuarioAdministrador'];	
-	
-		$xml = simplexml_load_file( '..\Dados\Comunidade.xml');
-		foreach($xml->comunidade as $com) {
-			$idCom = (string)($com->id);
-			
-			if ($idCom == $id) {
-				$com->nome = $nome;
-				$com->descricao = $descricao;
-				$com->dataUltimaEdicao = $dataUltimaEdicao;
-				$com->tema = $tema;
-				$com->idUsuarioAdministrador = $idUsuarioAdministrador;
-				break;
-			}
-		}
-		$xml->asXml('..\Dados\Comunidade.xml'); // Salva.
-		break;
-		
-	case "inativar":
-		$id = $_POST['id'];
-	
-		$xml = simplexml_load_file( '..\Dados\Comunidade.xml');
-		foreach($xml->comunidade as $com) {
-			$idCom = (string)($com->id);
-			
-			if ($idCom == $id) {
-				$com->ativa = "false";
-				break;
-			}
-		}
-		$xml->asXml('..\Dados\Comunidade.xml'); // Salva.
+		$sql = "UPDATE Comunidade SET ativa = 0 WHERE id = $id";
+		echo query_no_result($sql);
+	}
 
-		break;
-}
+
+	$func = $_POST['func'];
+
+	switch ($func) {
+		case "adicionar":
+			adicionarComunidade();
+			break;
+		case "listar":
+			listarComunidade();
+			break;
+		case "getById":
+			getByIdComunidade();
+			break;
+		case "getByNome":
+			getByNomeComunidade();
+			break;
+		case "getByDescricao":
+			getByDescricaoComunidade();
+			break;
+		case "editar":
+			editarComunidade();
+			break;
+		case "inativar":
+			inativarComunidade();
+			break;
+		case "getLabsDisponiveis":
+			getLabsDisponiveis();
+			break;
+		case "getByNomeIgual":
+			getByNomeIgual();
+			break;
+		case "setAdm":
+			setAdm();
+			break;
+		case "removeAdm":
+			removeAdm();
+			break;
+
+	}
 
 ?>
