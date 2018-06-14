@@ -56,7 +56,86 @@
 			});
 		});
     </script>
+  <style>
+      body {font-family: Arial, Helvetica, sans-serif;}
 
+      /* The Modal (background) */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+      }
+
+<<<<<<< HEAD
+      /* Modal Content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+
+      /* The Close Button */
+      .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  <script type= 'text/javascript'>
+     $(document).ready(function(){
+
+  		var comunidade = Comunidade.getById(Base.getUrlParameter("id"));
+  		conteudo = "";
+
+  		var nome = comunidade.children[1].innerHTML;
+  		var descricao = comunidade.children[2].innerHTML;
+  		var tema = comunidade.children[5].innerHTML;
+  		var usuarioAdmin = Usuario.getById(comunidade.children[7].innerHTML).children[1].innerHTML;
+
+  		conteudo += "<form>"
+  		conteudo += "<input type='hidden' name='id' id='id' value='" + comunidade.children[0].innerHTML + "'>";
+  		conteudo += "Nome:<br><input type='text' name='nome' id='nome' value='" + nome + "' width='100'><br>";
+  		conteudo += "Descrição:<br><input type='text' name='descricao' id='descricao' value='" + descricao + "' width='100'><br>";
+  		conteudo += "Tema:<br><input type='text' name='tema' id='tema' value='" + tema + "' width='100'><br>";
+  		conteudo += "Administrador:<br><input type='text' name='usuarioAdmin' id='usuarioAdmin' value='" + usuarioAdmin + "' width='100'><br><br>";
+  		conteudo += "<button id= 'btn-editar-lab' type= 'button'>Editar</button><br>";
+  		conteudo += "</form>"
+
+  		document.getElementById("conteudo").innerHTML = conteudo;
+
+  	  $('#btn-editar-lab').click(function(){
+  		var id = $('#id').val();
+  		var nome = $('#nome').val();
+  		var descricao = $('#descricao').val();
+  		var tema = $('#tema').val();
+  		var userAdmin = $('#usuarioAdmin').val();
+
+  		var idUsuarioAdministrador = Usuario.getByNome(userAdmin)[0].children[0].innerHTML;
+
+  		Comunidade.editar(id, nome, descricao, tema, idUsuarioAdministrador);
+  		window.location.assign('laboratorio.html?id=' + id);
+  	  });
+  	});
+  </script>
+=======
 	<script type= 'text/javascript'>
 		// Preenche os dados do laboratório.
 		$(document).ready(function(){
@@ -226,9 +305,50 @@
 
 
 
+>>>>>>> master
   </head>
   <body>
+    <header><!-- logo do academiq --></header>
+
     <h2>Laboratório</h2>
+<<<<<<< HEAD
+
+    <main>
+      <h3>Discussões</h3>
+      <br><br>
+      <h3>Parceiros</h3>
+
+      <!-- Trigger/Open The Modal -->
+      <button id="addParcBtn">Adicionar Parceiro</button>
+      <!-- The Modal -->
+      <div id="addParcModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span id="closeAdd" class="close">&times;</span>
+          <form id= 'form-addParc'>
+      			<p>Nome do Convidado</p>
+      			<input id= 'username' type= 'text'>
+      			<button id= 'btn-addParc' type= 'button'>Enviar</button>
+      		</form>
+        </div>
+      </div>
+      <hr>
+
+      <button id= 'btn-remover-modal'>Remover Parceiro</button>
+      <!-- The Modal -->
+      <div id="delParcModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span id="closeRemove" class="close">&times;</span>
+          <select id= 'select-remove-parc'>
+      			<p>Selecione um Parceiro que deseja remover</p>
+            <option value="benedito.freitas">Benedito Kaique Freitas</option>
+            <option value="eduardo.fogaca">Eduardo Nelson Kevin Fogaça</option>
+            <option value="marcio.monteiro">Márcio Emanuel Monteiro</option>
+      		</select>
+          <button id= 'btn-remover' type= 'button'>Confirmar</button>
+        </div>
+=======
     <h3>Discussões</h3>
     <div id= 'discussoes'>
     </div>
@@ -262,8 +382,9 @@
     			<p>Selecione um Parceiro que deseja remover</p>
     	</select>
         <button id= 'btn-remover' type= 'button'>Confirmar</button>
+>>>>>>> master
       </div>
-    </div>
+    </main>
 
     <script>
         // Get the modal
@@ -291,33 +412,36 @@
             modal1.style.display = "none";
           }
         }
-  </script>
+    </script>
 
-  <script>
-      // Get the modal
-      var modal2 = document.getElementById("delParcModal");
+    <script>
+        // Get the modal
+        var modal2 = document.getElementById("delParcModal");
 
-      // Get the button that opens the modal
-      var btn2 = document.getElementById("btn-remover-modal");
+        // Get the button that opens the modal
+        var btn2 = document.getElementById("btn-remover-modal");
 
-      // Get the <span> element that closes the modal
-      var span2 = document.getElementById("closeRemove");
+        // Get the <span> element that closes the modal
+        var span2 = document.getElementById("closeRemove");
 
-      // When the user clicks the button, open the modal
-      btn2.onclick = function() {
-        modal2.style.display = "block";
-      }
+        // When the user clicks the button, open the modal
+        btn2.onclick = function() {
+          modal2.style.display = "block";
+        }
 
-      // When the user clicks on <span> (x), close the modal
-      span2.onclick = function() {
-        modal2.style.display = "none";
-      }
-
-      // When the user clicks anywhere outside of the modal, close it
-      window.onclick = function(event) {
-        if (event.target == modal2) {
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function() {
           modal2.style.display = "none";
         }
+<<<<<<< HEAD
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal2) {
+            modal2.style.display = "none";
+          }
+        }
+    </script>
+=======
       }
 </script>
 
@@ -332,6 +456,7 @@
 			</form>
       <hr></hr>
     <button id = 'btn-remover' type = 'button'>Remover Parceiro</button>
+>>>>>>> master
 
   </body>
 </html>

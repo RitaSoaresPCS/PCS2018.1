@@ -1,0 +1,25 @@
+input {
+  width: 65%;
+}
+button {
+  display: block;
+  background-color: white;
+  border: none;
+  color: black;
+  padding: 8px 10px 8px 10px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  align-self: center;
+}
+
+button:hover{
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+form > p {
+  font-weight: bold;
+}
