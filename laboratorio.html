@@ -154,6 +154,7 @@
           alert(result.mensagem);
         }else{
           alert('Discussao fixada.');
+		  location.reload();
         }
       });
     });
@@ -166,6 +167,7 @@
           alert(result.mensagem);
         }else{
           alert('Discussao desfixada.');
+		  location.reload();
         }
       });
     });
@@ -194,6 +196,8 @@
           var divDiscusssaoInner= $('<div />').appendTo(divDiscussaoInfo);
           var divDiscussaoHeader= $('<div />').appendTo(divDiscussaoOuter);
           var divDiscussaoActions= $('<div />').appendTo(divDiscussaoOuter);
+		  
+		  
           $('<p />')
             .text(dTtl)
             .appendTo(divDiscussaoHeader);
@@ -277,6 +281,7 @@
 	  <div id="discussoes"></div>
       <br><br>
       <h3>Parceiros</h3>
+	  <div id="lista-parceiros"></div>
 
       <!-- Trigger/Open The Modal -->
       <button id="addParcBtn">Adicionar Parceiro</button>
