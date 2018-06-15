@@ -13,7 +13,17 @@ var Discussao = new function() {
 
 	// Inativar.
 	this.remover = function (id, callback = function(data) {}) {
-		return Base.inativar(id, this.controladorURL, callback);
+		var confirmar = confirm('Deseja remover a discussão?');
+    if (confirmar) {
+			$.post(
+			this.controladorURL,
+			{ func: "inativarDiscussao", id: id },
+			function(data) {
+				callback(data);
+			},
+			"json"
+			);
+		}
 	}
 
 
@@ -91,6 +101,6 @@ var Discussao = new function() {
 			"json"
 		);
 	}
-	
+
 
 }
