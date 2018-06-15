@@ -2,6 +2,31 @@
 	header('Content-Type: text/html; charset=utf-8');
 	include_once 'Base.php';
 
+
+function getByNomeOuDescricaoComunidade(){
+	$nome = $_POST['nome'];
+	$descriptn= $_POST['descricao'];
+
+	$sql = "SELECT * FROM Comunidade WHERE LOWER(nome) LIKE LOWER('%$nome%') OR LOWER(descricao) LIKE LOWER('%$descriptn%')";
+
+	$result = query_result($sql);
+	$return = array();
+
+	if (mysqli_num_rows($result) > 0) {
+		while($row = mysqli_fetch_assoc($result)) {
+			$id = $row["id"];
+			$nome = $row["nome"];
+			$descricao = $row["descricao"];
+			$dataCriacao = $row["dataCriacao"];
+			$tema = $row["tema"];
+
+			$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema':'$tema'}";
+			array_push($return, str_replace("'", "\"", $s));
+		}
+	}
+	echo "[" . implode(",", $return) . "]";
+}
+
 	function removeAdm(){
 		$admId= $_POST['admId'];
 		$sql= "UPDATE comunidade SET idUsuarioAdministrador= NULL WHERE idUsuarioAdministrador= $admId";
@@ -231,6 +256,9 @@
 			break;
 		case "removeAdm":
 			removeAdm();
+			break;
+		case "getByNomeOuDescricao":
+			getByNomeOuDescricaoComunidade();
 			break;
 
 	}
