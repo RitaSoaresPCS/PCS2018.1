@@ -214,6 +214,93 @@
 			}
 		});
 
+    $('#btn-search').click(function(){
+      var searchTxt= $('#search-users').val();
+      if (searchTxt!= '')
+      {
+        Usuario.getByNome(searchTxt, function(result){
+          if (result.erro== true)
+          {
+            alert(result.mensagem);
+          }else{
+            if (result[0]== null)
+            {
+              alert('usuário não encontrado.');
+            }else{
+              var divUsuarios = $('#usuarios');
+              divUsuarios.empty();
+        			usuariosSize = result.length;
+        			for (var iterator = 0; iterator < usuariosSize; iterator++)
+        			{
+        				var currentUser = result[iterator];
+
+        				var divUserInfo = $('<div />').appendTo(divUsuarios);
+        				var userUsername = currentUser["username"];
+        				var userPicture = currentUser["urlImagemPerfil"];
+        				var userInstit = currentUser["instituicaoOrigem"];
+        				var userTtl = currentUser["titulo"];
+        				var userName = currentUser["nome"];
+
+        				var userLab = currentUser["nomeComunidade"];
+                var userPermission= currentUser['isAdm'];
+        				var divUserPicnName = $('<div />').appendTo(divUserInfo);
+        				$('<img />')
+        				  .attr('src', userPicture)
+        				  .attr('alt', 'Photo of '+userName)
+        				  .appendTo(divUserPicnName);
+        				$('<p />')
+        				  .text(userUsername)
+        				  .appendTo(divUserPicnName);
+        				var divUserMainInfo= $('<div />').appendTo(divUserInfo);
+        				 $('<p />')
+        				  .text(userName)
+        				  .appendTo(divUserMainInfo);
+        				$('<p />')
+        				  .text('Laboratório: '+userLab)
+        				  .appendTo(divUserMainInfo);
+        				$('<p />')
+        				  .text('Título: '+userTtl)
+        				  .appendTo(divUserMainInfo);
+        				$('<p />')
+        				  .text('Instituição: '+userInstit)
+        				  .appendTo(divUserMainInfo);
+                if(userPermission != -1){
+                  var divPermission= $('<div />').attr('id', 'div-permission').appendTo(divUserInfo);
+                  if(userPermission == 1)
+                  {
+                    $('<p />')
+                      .text('retirar permissão de administrador')
+                      .attr('id', 'remove-adm-'+currentUser["id"])
+                      .appendTo(divPermission);
+                  }else{
+                    $('<p />')
+                      .text('tornar administrador de laboratório')
+                      .attr('id', 'new-adm-'+currentUser["id"])
+                      .attr('data-toggle', 'modal')
+            				  .attr('data-target', '#modalAddAdm')
+                      .appendTo(divPermission);
+                  }
+                }
+
+
+        				var divUserDetails= $('<div />').attr('id', 'div-user-details').appendTo(divUserInfo);
+        				$('<button />')
+        				  .attr('type', 'button')
+        				  .attr('id', 'btn-edit-'+currentUser["id"])
+        				  .attr('data-toggle', 'modal')
+        				  .attr('data-target', '#my-modal')
+        				  .text('detalhes')
+        				  .appendTo(divUserDetails);
+        				$('<hr>').appendTo(divUsuarios);
+        			}
+            }
+
+          }
+
+    		});
+      }
+
+    });
 
   });
     </script>
@@ -296,7 +383,10 @@
         </div>
 
       </div>
-
+      <div>
+        <input type= 'text' id= 'search-users' placeholder='search'></input>
+        <button type= 'button' id= 'btn-search'>search</button>
+      </div>
       <div id= 'usuarios'>
 
       </div>
