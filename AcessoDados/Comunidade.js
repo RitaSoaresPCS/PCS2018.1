@@ -109,6 +109,20 @@ var Comunidade = new function() {
 			"json"
 		);
 	}
+	this.getByNomeOuDescricao= function(nome, descricao, callback= function(data){}){
+		$.post(
+			this.controladorURL,
+			{
+				func: 'getByNomeOuDescricao',
+				nome: nome,
+				descricao: descricao
+			},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
 
 
 }
