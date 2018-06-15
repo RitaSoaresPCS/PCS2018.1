@@ -1,6 +1,7 @@
 <?php
 	header('Content-Type: text/html; charset=utf-8');
 	include_once 'Base.php';
+	include_once 'Login.php';
 
 	function mudarFixo(){
 		$discussaoId= $_POST['discussaoId'];
@@ -9,12 +10,14 @@
 		echo query_no_result($sql);
 	}
 
-	function getDiscussaoDoLab(){
+	function getDiscussaoDoLab(){	
 		$labId= $_POST['labId'];
 		//primeiro pega as dicussões fixas.
-		$sql= "SELECT * FROM discussao WHERE idComunidadePertence= $labId AND fixa= 1" ;
+		$sql= "SELECT * FROM discussao WHERE idComunidadePertence= $labId and ativa = 1 order by fixa desc";
+
 		$result = query_result($sql);
 		$return = array();
+
 		if (mysqli_num_rows($result) > 0) {
 
 			// Para cada linha de resultado:
@@ -31,37 +34,16 @@
 
 				$s = "{'id': '$id', 'idCreator': '$idCreator', 'ttl': '$ttl', 'crDate': '$crDate', 'descriptn': '$descriptn', 'active': '$active', 'fix': '$fix', 'lastEdit':'$lastEdit', 'publc':'$publc' }";
 				array_push($return, str_replace("'", "\"", $s));
-
-			}
-			//agora pega as outras
-			$sql= "SELECT * FROM discussao WHERE idComunidadePertence= $labId AND fixa= 0" ;
-			$result = query_result($sql);
-			if (mysqli_num_rows($result) > 0) {
-
-				// Para cada linha de resultado:
-				while($row = mysqli_fetch_assoc($result)) {
-					$id = $row["id"];
-					$idCreator = $row["idUsuarioCriador"];
-					$ttl = $row["titulo"];
-					$crDate = $row["dataCriacao"];
-					$descriptn = $row["descricao"];
-					$active = $row["ativa"];
-					$fix = $row["fixa"];
-					$lastEdit= $row["dataUltimaEdicao"];
-					$publc= $row["publica"];
-
-					$s = "{'id': '$id', 'idCreator': '$idCreator', 'ttl': '$ttl', 'crDate': '$crDate', 'descriptn': '$descriptn', 'active': '$active', 'fix': '$fix', 'lastEdit':'$lastEdit', 'publc':'$publc' }";
-					array_push($return, str_replace("'", "\"", $s));
-
-				}
-				echo "[" . implode(",", $return) . "]";
 			}
 		}
+
+		// Retorna o array concatenado.
+		echo "[" . implode(",", $return) . "]";
 	}
 
 	function criarDiscussao() {
-		if ($GLOBALS['userId'] != null) { // usuário logado, mas ainda não verifica se pode criar na comunidade.
-			$idUsuarioCriador = $GLOBALS['userId'];
+		$idUsuarioCriador = $_POST['userId'];
+		if ($idUsuarioCriador != null) { // usuário logado, mas ainda não verifica se pode criar na comunidade.
 			$idComunidadePertence = $_POST['idComunidadePertence'];
 			$titulo = $_POST['titulo'];
 			$dataCriacao = date('Y-m-d');
@@ -259,7 +241,7 @@
 		case "editar":
 			editarDiscussao();
 			break;
-		case "inativar":
+		case "inativarDiscussao":
 			inativarDiscussao();
 			break;
 		case "exibirDiscussoesGlobal":

@@ -12,6 +12,29 @@
     <script src="AcessoDados/Comunidade.js"></script>
     <script src="AcessoDados/Usuario.js"></script>
 
+	
+	<script type= 'text/javascript'>
+      $(document).ready(function(){
+        $('#btn-addDisc').click(function(){
+          var titulo= $('#titulo-add').val();
+		  var descricao= $('#descricao-add').val();
+		  var publica= $('#publica-add').val();
+		  var comunidadeAtual = Base.getUrlParameter("id");
+		  var userId = localStorage.userId;
+          
+		  Discussao.adicionar(comunidadeAtual, titulo, descricao, publica, userId, function(data) {
+			if (data.erro == true) {
+                alert(data.mensagem);
+              } else {
+                alert("Adicionada com sucesso.");
+                location.reload();
+              }
+		  });
+        });
+      });
+    </script>
+	
+	
     <script type= 'text/javascript'>
       $(document).ready(function(){
         $('#btn-addParc').click(function(){
@@ -158,6 +181,22 @@
         }
       });
     });
+	
+	
+    $('body').on('click', 'button[id^="btn-desativarDisc-"]', function(){
+      var idDiscussao= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
+      Discussao.remover(idDiscussao, function(result){
+        if (result.erro== true)
+        {
+          alert(result.mensagem);
+        }else{
+          alert('Discussao removida.');
+		  location.reload();
+        }
+      });
+    });
+	
+	
 
     $('body').on('click', 'button[id^="btn-desfixar-"]', function(){
       var idDiscussao= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
@@ -206,6 +245,20 @@
             .text('criada por '+ dIdCreator)//futuramente virará o nome da pessoa.
             .appendTo(divDiscussaoHeader);
           $('<br>').appendTo(divDiscussaoHeader);
+		  
+		  $('<button />')
+              .attr('type', 'button')
+              .attr('id', 'btn-desativarDisc-'+dId)
+              .text('remover')
+              .appendTo(divDiscussaoActions);
+			  
+			  
+			$('<button />')
+              .attr('type', 'button')
+              .attr('id', 'btn-editarDisc-'+dId)
+              .text('editar')
+              .appendTo(divDiscussaoActions);
+		  
           if (dFix== '0')
           {
             $('<button />')
@@ -278,6 +331,35 @@
 	<div id="conteudo"></div>  
     <main>
       <h3>Discussões</h3>
+
+	  <!-- Trigger/Open The Modal -->
+      <button id="addDiscBtn">Adicionar</button>
+      <!-- The Modal -->
+      <div id="addDiscModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span id="closeAddDisc" class="close">&times;</span>
+          <form id= 'form-addDisc'>
+      			<label for="titulo-add">Título</label><br>
+      			<input id= 'titulo-add' type= 'text'>
+				
+				<br>
+				<label for="descricao-add">Descrição</label><br>
+      			<textarea rows="4" cols="50" id= 'descricao-add'></textarea>
+				
+				<br>
+				<label for="publica-add">Pública</label><br>
+				<select id="publica-add">
+					<option value="1">Sim</option>
+					<option value="0">Não</option>
+				</select>
+				<br><br>
+      			<button id= 'btn-addDisc' type= 'button'>Adicionar</button>
+      		</form>
+        </div>
+      </div>
+	  
+	  
 	  <div id="discussoes"></div>
       <br><br>
       <h3>Parceiros</h3>
@@ -313,6 +395,35 @@
       </div>
     </main>
 
+	<script>
+        // Get the modal
+        var modal0 = document.getElementById("addDiscModal");
+
+        // Get the button that opens the modal
+        var btn0 = document.getElementById("addDiscBtn");
+
+        // Get the <span> element that closes the modal
+        var span0 = document.getElementById("closeAddDisc");
+
+        // When the user clicks the button, open the modal
+        btn0.onclick = function() {
+          modal0.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span0.onclick = function() {
+          modal0.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal0) {
+            modal0.style.display = "none";
+          }
+        }
+    </script>
+	
+	
     <script>
         // Get the modal
         var modal1 = document.getElementById("addParcModal");
@@ -367,6 +478,6 @@
             modal2.style.display = "none";
           }
         }
-</script>
+	</script>
   </body>
 </html>

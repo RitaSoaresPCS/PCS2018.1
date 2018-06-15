@@ -1,5 +1,4 @@
 <?php
-
 	function logout() {
 		$GLOBALS['userId'] = null;
 	}

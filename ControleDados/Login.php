@@ -4,7 +4,8 @@
 	include_once 'Usuario.php';
 	include_once 'Comunidade.php';
 	
-	
+	$userId;
+
 	class User {
 		function __construct($id, $username, $email, $picture, $active, $instit, $title, $cpf, $name, $ban, $idLab, $idComuAdm){
 			$this->id = $id;

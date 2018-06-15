@@ -13,7 +13,17 @@ var Discussao = new function() {
 
 	// Inativar.
 	this.remover = function (id, callback = function(data) {}) {
-		return Base.inativar(id, this.controladorURL, callback);
+		var confirmar = confirm('Deseja remover a discussão?');
+        if (confirmar) {
+			$.post(
+			this.controladorURL, 
+			{ func: "inativarDiscussao", id: id }, 
+			function(data) {
+				callback(data);
+			},
+			"json"
+			);
+		}
 	}
 
 
@@ -34,13 +44,14 @@ var Discussao = new function() {
 	}
 
 
-	this.adicionar = function (idComunidadePertence, titulo, descricao, publica, callback = function(data) {}) {
+	this.adicionar = function (idComunidadePertence, titulo, descricao, publica, userId, callback = function(data) {}) {
 		$.post(this.controladorURL, {
 			func: "criar",
 			idComunidadePertence: idComunidadePertence,
 			titulo: titulo,
 			descricao: descricao,
-			publica: publica
+			publica: publica,
+			userId: userId
 			},
 			function(data) {
 				callback(data);
