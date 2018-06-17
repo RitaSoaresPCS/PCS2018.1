@@ -1,0 +1,44 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+
+#head-discussao img {
+	width:100px;
+	display:inline;
+}
+
+#head-discussao h3 {
+	display:inline;
+}
+
+.msg-profile {
+	width:100px;
+}
+
+.msg-left {
+    width: 20%;
+    float: left;
+}
+
+.msg-right {
+    width: 80%;
+	float: left;
+}
+
+p.clear {
+    clear: both;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+
+.modal {
+	max-width: 700px;
+}
+
+.msgText {
+	width: 600px;
+	resize: none;
+}
+
+.hidden {
+	display:none;
+}

@@ -39,7 +39,34 @@
 	}
 
 	
+	function adicionarMensagemDiscussao() {		
+		$idUsuarioCriador = $_POST['idUsuarioCriador'];
+		$idDiscussao = $_POST['idDiscussao'];
+		$conteudo = $_POST['conteudo'];
+		
+		if ($idUsuarioCriador != null) { // usuário logado, mas ainda não verifica se pode criar na comunidade.
+			$dataEnvio = date('Y-m-d');
 
+			$sql = "INSERT INTO MensagemDiscussao VALUES (default, $idUsuarioCriador, $idDiscussao, '$conteudo', '$dataEnvio', null)";
+
+			// Retorna um json com o resultado.
+			echo query_no_result($sql);
+			return;
+		}
+		echo "[]";
+	}
+
+	
+	function editarMensagemDiscussao() {
+		$id = $_POST['id'];
+		$conteudo = $_POST['conteudo'];
+		$dataUltimaEdicao = date('Y-m-d');
+		
+		$sql = "UPDATE MensagemDiscussao set conteudo = '$conteudo', dataUltimaEdicao = '$dataUltimaEdicao' where id = $id";
+		echo query_no_result($sql);
+	}
+	
+	
 	$func = $_POST['func'];
 
 	switch ($func) {
@@ -48,6 +75,12 @@
 			break;
 		case "removerMensagemDiscussao":
 			removerMensagemDiscussao();
+			break;
+		case "adicionarMensagemDiscussao":
+			adicionarMensagemDiscussao();
+			break;
+		case "editarMensagemDiscussao":
+			editarMensagemDiscussao();
 			break;
 	}
 

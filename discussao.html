@@ -5,8 +5,13 @@
 	<meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+	<script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+	<!-- Modal jQuery -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+	
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/discussao.css">
 
     <script src="AcessoDados/Base.js"></script>
     <!-- Carregar apenas se necessário na página: -->
@@ -29,7 +34,37 @@
 			});
 		}
 	
-	
+		function enviarNovaMsg() {
+			conteudo = MensagemDiscussao.novaMensagem.getData();
+			MensagemDiscussao.adicionar(localStorage.userId, Base.getUrlParameter("id"), conteudo, function(data) {
+				if (data.erro == true) {
+					alert(data.mensagem);
+				} else {
+					alert("Adicionada com sucesso.");
+					location.reload();
+				}
+			});
+		}
+		
+		
+		function editarMsg(id) {
+			document.getElementById("msg-" + id + "-content").disabled = false;
+			document.getElementById("salvarEdicaoMsg" + id).style.display = "block";
+		}
+		
+		
+		function salvarEdicaoMsg(id) {
+			conteudo = document.getElementById("msg-" + id + "-content").value;
+			MensagemDiscussao.editar(id, conteudo, function(data) {
+				if (data.erro == true) {
+					alert(data.mensagem);
+				} else {
+					alert("Editada com sucesso.");
+					location.reload();
+				}
+			});
+		}
+		
 	
 		// Preenche os dados da discussão.
 		$(document).ready(function(){
@@ -70,16 +105,22 @@
 									
 									
 									if (usuarioLogado == msg.idUsuarioCriador || usuarioLogado == comunidadePertence.idUsuarioAdministrador) {
-										mensagensContent += "<button id='removeMsgBtn' onclick='MensagemDiscussao.remover(" + msg.id + ", function(data) { location.reload(); });'>Remover</button>";
+										mensagensContent += "<button class='removeMsgBtn' onclick='MensagemDiscussao.remover(" + msg.id + ", function(data) { location.reload(); });'>Remover</button>";
 									}
 									
 									
 									if (usuarioLogado == msg.idUsuarioCriador) {
-										mensagensContent += "<button id='editMsgBtn' value='" + msg.id + "'>Editar</button>";
+										mensagensContent += "<button class='editMsgBtn' onclick='editarMsg(" + msg.id + ")'>Editar</button>";
 									}
 									
-									mensagensContent += "</p><div id='msg-" + msg.id + "-content'></div>";
-									mensagensContent += "</div>";
+									mensagensContent += "</p><textarea class='msgText' id='msg-" + msg.id + "-content' disabled></textarea>";
+									
+									if (usuarioLogado == msg.idUsuarioCriador) {
+										mensagensContent += "<button class='hidden' id='salvarEdicaoMsg" + msg.id + "' onclick='salvarEdicaoMsg(" + msg.id + ")'>Salvar</button>";
+									}
+									
+									
+									mensagensContent += "</div><p class='clear'></p>";
 								
 									document.getElementById('msgDiscussao').innerHTML += mensagensContent;
 									$("#msg-" + msg.id + "-content").append($.parseHTML(msg.conteudo));
@@ -119,6 +160,16 @@
 				"<a href='anexoDiscussao.html?id=" + data.id + "' title='Anexos da discussão'>Visualizar anexos</a>";
 				
 			});
+			
+			ClassicEditor
+				.create( document.querySelector( '#novaMensagem' ) )
+				.then( editor => {
+					MensagemDiscussao.novaMensagem = editor;
+				} )
+				.catch( error => {
+					console.error( error );
+				} );
+				
 		});
 		
 	</script>
@@ -147,8 +198,15 @@
 	<p class='clear'></p>
 	
 	<!-- Botão pra responder -->
-	<button id="responderDiscBtn">Responder</button>
+	<a href="#novaMensagemModal" rel="modal:open">Responder</a>
 	
+	
+	<div id="novaMensagemModal" class="modal">
+		<textarea name="content" id="novaMensagem"></textarea>
+		Anexar arquivos
+		<button id="enviarNovaMsg" onclick='enviarNovaMsg()'>Enviar</button>
+	</div>
+
 	<footer></footer>
   </body>
 </html>

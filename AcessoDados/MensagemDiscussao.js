@@ -30,5 +30,37 @@ var MensagemDiscussao = new function() {
 		}
 	}
 
-
+	
+	this.adicionar = function (idUsuarioCriador, idDiscussao, conteudo, callback = function(data) {}) {
+		$.post(
+		this.controladorURL,
+		{ 
+			func: "adicionarMensagemDiscussao", 
+			idUsuarioCriador: idUsuarioCriador, 
+			idDiscussao: idDiscussao,
+			conteudo: conteudo
+		},
+		function(data) {
+			callback(data);
+		},
+		"json"
+		);
+	}
+	
+	
+	this.editar = function (id, conteudo, callback = function(data) {}) {
+		$.post(
+		this.controladorURL,
+		{ 
+			func: "editarMensagemDiscussao", 
+			id: id,
+			conteudo: conteudo
+		},
+		function(data) {
+			callback(data);
+		},
+		"json"
+		);
+	}
+	
 }

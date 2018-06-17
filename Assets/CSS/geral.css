@@ -71,32 +71,3 @@ li#logout:hover {
 	z-index: 0;
 }
 
-
-#head-discussao img {
-	width:100px;
-	display:inline;
-}
-
-#head-discussao h3 {
-	display:inline;
-}
-
-.msg-profile {
-	width:100px;
-}
-
-.msg-left {
-    width: 20%;
-    float: left;
-}
-
-.msg-right {
-    width: 80%;
-	float: left;
-}
-
-p.clear {
-    clear: both;
-	padding-top:10px;
-	padding-bottom:10px;
-}
