@@ -2,13 +2,14 @@ var Usuario = new function() {
 	$.ajaxSetup({ cache: false });
 
 	this.controladorURL = "ControleDados/Usuario.php";
+	this.nomeEntidade = "Usuario";
 
     this.listar = function (callback = function(data) {}) {
 		return Base.listar(this.controladorURL, callback);
     }
 
 	this.getById = function (id, callback = function(data) {}) {
-		return Base.getById(id, this.controladorURL, callback);
+		return Base.getById(id, this.controladorURL, this.nomeEntidade, callback);
     }
 
 	this.getByNome = function (pesquisa, callback = function(data) {}) {

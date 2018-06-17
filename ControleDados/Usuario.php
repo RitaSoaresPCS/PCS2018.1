@@ -296,7 +296,7 @@
 		case "listar":
 			listarUsuario();
 			break;
-		case "getById":
+		case "getByIdUsuario":
 			getByIdUsuario();
 			break;
 		case "getByNome":

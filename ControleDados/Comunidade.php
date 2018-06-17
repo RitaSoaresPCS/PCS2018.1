@@ -230,7 +230,7 @@ function getByNomeOuDescricaoComunidade(){
 		case "listar":
 			listarComunidade();
 			break;
-		case "getById":
+		case "getByIdComunidade":
 			getByIdComunidade();
 			break;
 		case "getByNome":

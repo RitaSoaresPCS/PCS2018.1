@@ -2,13 +2,14 @@ var Comunidade = new function() {
 	$.ajaxSetup({ cache: false });
 
 	this.controladorURL = "ControleDados/Comunidade.php";
+	this.nomeEntidade = "Comunidade";
 
     this.listar = function (callback = function(data) {}) {
 		return Base.listar(this.controladorURL, callback);
     }
 
 	this.getById = function (id, callback = function(data) {}) {
-		return Base.getById(id, this.controladorURL, callback);
+		return Base.getById(id, this.controladorURL, this.nomeEntidade, callback);
     }
 
 	this.getByNome = function (pesquisa, callback = function(data) {}) {

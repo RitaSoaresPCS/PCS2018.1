@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="Estilos/geral.css">
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
 
     <script src="AcessoDados/Base.js"></script>
     <!-- Carregar apenas se necessário na página: -->
@@ -279,8 +279,7 @@
             .text('responder')
             .appendTo(divDiscussaoActions);
 
-          $('<p />')
-            .text(dDescriptn)
+          $('<div />').append($.parseHTML(dDescriptn))
             .appendTo(divDiscusssaoInner);
           $('<hr>').appendTo(divDiscussaoInfo);
         }

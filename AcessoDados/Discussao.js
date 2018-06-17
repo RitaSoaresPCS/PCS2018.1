@@ -2,19 +2,20 @@ var Discussao = new function() {
 	$.ajaxSetup({ cache: false });
 
 	this.controladorURL = "ControleDados/Discussao.php";
+	this.nomeEntidade = "Discussao";
 
     this.listar = function (callback = function(data) {}) {
 		return Base.listar(this.controladorURL, callback);
     }
 
 	this.getById = function (id, callback = function(data) {}) {
-		return Base.getById(id, this.controladorURL, callback);
+		return Base.getById(id, this.controladorURL, this.nomeEntidade, callback);
     }
 
 	// Inativar.
 	this.remover = function (id, callback = function(data) {}) {
 		var confirmar = confirm('Deseja remover a discussão?');
-    if (confirmar) {
+		if (confirmar) {
 			$.post(
 			this.controladorURL,
 			{ func: "inativarDiscussao", id: id },

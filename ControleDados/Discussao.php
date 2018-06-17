@@ -229,7 +229,7 @@
 		case "listar":
 			listarDiscussao();
 			break;
-		case "getById":
+		case "getByIdDiscussao":
 			getByIdDiscussao();
 			break;
 		case "getByTitulo":

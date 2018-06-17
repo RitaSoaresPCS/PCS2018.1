@@ -16,10 +16,10 @@ var Base = new function() {
     }
 
 
-	this.getById = function (id, controladorURL, callback = function(data) {}) {
+	this.getById = function (id, controladorURL, nomeEntidade = "", callback = function(data) {}) {
 		$.post(
 			controladorURL, 
-			{ func: "getById", id: id }, 
+			{ func: "getById" + nomeEntidade, id: id }, 
 			function(data) {
 				callback(data);
 			},
