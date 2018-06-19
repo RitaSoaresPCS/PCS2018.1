@@ -3,29 +3,29 @@
 	include_once 'Base.php';
 
 
-function getByNomeOuDescricaoComunidade(){
-	$nome = $_POST['nome'];
-	$descriptn= $_POST['descricao'];
+	function getByNomeOuDescricaoComunidade(){
+		$nome = $_POST['nome'];
+		$descriptn= $_POST['descricao'];
 
-	$sql = "SELECT * FROM Comunidade WHERE LOWER(nome) LIKE LOWER('%$nome%') OR LOWER(descricao) LIKE LOWER('%$descriptn%')";
+		$sql = "SELECT * FROM Comunidade WHERE LOWER(nome) LIKE LOWER('%$nome%') OR LOWER(descricao) LIKE LOWER('%$descriptn%')";
 
-	$result = query_result($sql);
-	$return = array();
+		$result = query_result($sql);
+		$return = array();
 
-	if (mysqli_num_rows($result) > 0) {
-		while($row = mysqli_fetch_assoc($result)) {
-			$id = $row["id"];
-			$nome = $row["nome"];
-			$descricao = $row["descricao"];
-			$dataCriacao = $row["dataCriacao"];
-			$tema = $row["tema"];
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$nome = $row["nome"];
+				$descricao = $row["descricao"];
+				$dataCriacao = $row["dataCriacao"];
+				$tema = $row["tema"];
 
-			$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema':'$tema'}";
-			array_push($return, str_replace("'", "\"", $s));
+				$s = "{ 'id': '$id', 'nome': '$nome', 'descricao': '$descricao', 'dataCriacao': '$dataCriacao', 'tema':'$tema'}";
+				array_push($return, str_replace("'", "\"", $s));
+			}
 		}
+		echo "[" . implode(",", $return) . "]";
 	}
-	echo "[" . implode(",", $return) . "]";
-}
 
 	function removeAdm(){
 		$admId= $_POST['admId'];
@@ -40,7 +40,7 @@ function getByNomeOuDescricaoComunidade(){
 		echo query_no_result($sql);
 	}
 
-	function getByNomeIgual(){
+	function getByNomeIgualComunidade(){
 		$name= $_POST['nome'];
 		$sql= "SELECT id FROM comunidade WHERE nome= '$name'";
 		echo json_encode(query_result($sql));
@@ -171,7 +171,7 @@ function getByNomeOuDescricaoComunidade(){
 	}
 
 
-	function getByDescricao() {
+	function getByDescricaoComunidade() {
 		$descricao = $_POST['descricao'];
 
 		$sql = "SELECT * FROM Comunidade WHERE LOWER(descricao) LIKE LOWER('%$descricao%')";
@@ -224,32 +224,32 @@ function getByNomeOuDescricaoComunidade(){
 	$func = $_POST['func'];
 
 	switch ($func) {
-		case "adicionar":
+		case "adicionarComunidade":
 			adicionarComunidade();
 			break;
-		case "listar":
+		case "listarComunidade":
 			listarComunidade();
 			break;
 		case "getByIdComunidade":
 			getByIdComunidade();
 			break;
-		case "getByNome":
+		case "getByNomeComunidade":
 			getByNomeComunidade();
 			break;
-		case "getByDescricao":
+		case "getByDescricaoComunidade":
 			getByDescricaoComunidade();
 			break;
-		case "editar":
+		case "editarComunidade":
 			editarComunidade();
 			break;
-		case "inativar":
+		case "inativarComunidade":
 			inativarComunidade();
 			break;
 		case "getLabsDisponiveis":
 			getLabsDisponiveis();
 			break;
-		case "getByNomeIgual":
-			getByNomeIgual();
+		case "getByNomeIgualComunidade":
+			getByNomeIgualComunidade();
 			break;
 		case "setAdm":
 			setAdm();
@@ -257,7 +257,7 @@ function getByNomeOuDescricaoComunidade(){
 		case "removeAdm":
 			removeAdm();
 			break;
-		case "getByNomeOuDescricao":
+		case "getByNomeOuDescricaoComunidade":
 			getByNomeOuDescricaoComunidade();
 			break;
 

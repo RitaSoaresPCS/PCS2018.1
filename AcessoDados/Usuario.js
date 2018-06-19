@@ -5,7 +5,7 @@ var Usuario = new function() {
 	this.nomeEntidade = "Usuario";
 
     this.listar = function (callback = function(data) {}) {
-		return Base.listar(this.controladorURL, callback);
+		return Base.listar(this.controladorURL, this.nomeEntidade, callback);
     }
 
 	this.getById = function (id, callback = function(data) {}) {
@@ -13,16 +13,16 @@ var Usuario = new function() {
     }
 
 	this.getByNome = function (pesquisa, callback = function(data) {}) {
-		return Base.getByNome(pesquisa, this.controladorURL, callback);
+		return Base.getByNome(pesquisa, this.controladorURL, this.nomeEntidade, callback);
 	}
 
 	this.getByNomeIgual = function(pesquisa, callback = function(data) {}) {
-		return Base.getByNomeIgual(pesquisa, this.controladorURL, callback);
+		return Base.getByNomeIgual(pesquisa, this.controladorURL, this.nomeEntidade, callback);
 	}
 
 	// Inativar.
 	this.remover = function (id, callback = function(data) {}) {
-		return Base.inativar(id, this.controladorURL, callback);
+		return Base.inativar(id, this.controladorURL, this.nomeEntidade, callback);
 	}
 
 	this.listarUsuariosPermissao = function(callback = function(data){}){
@@ -41,7 +41,7 @@ var Usuario = new function() {
 		$.post(
 			this.controladorURL,
 			{
-				func: "adicionar",
+				func: "adicionar" + this.nomeEntidade,
 				username: username,
 				email: email,
 				instituicaoOrigem: instituicaoOrigem,
@@ -62,7 +62,7 @@ var Usuario = new function() {
 		$.post(
 			this.controladorURL,
 			{
-				func: "editar",
+				func: "editar" + this.nomeEntidade,
 				id: id,
 				username: username,
 				email: email,

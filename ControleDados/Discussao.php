@@ -12,8 +12,9 @@
 
 	function getDiscussaoDoLab(){	
 		$labId= $_POST['labId'];
-		//primeiro pega as dicussões fixas.
-		$sql= "SELECT * FROM discussao WHERE idComunidadePertence= $labId and ativa = 1 order by fixa desc";
+		
+		// Ordenado pelas discussões fixas primeiro.
+		$sql= "SELECT discussao.id as discId, discussao.titulo as discTitulo, discussao.*, usuario.* FROM discussao join usuario on usuario.id = discussao.idUsuarioCriador WHERE discussao.idComunidadePertence=$labId and ativa = 1 order by fixa desc";
 
 		$result = query_result($sql);
 		$return = array();
@@ -22,17 +23,20 @@
 
 			// Para cada linha de resultado:
 			while($row = mysqli_fetch_assoc($result)) {
-				$id = $row["id"];
-				$idCreator = $row["idUsuarioCriador"];
-				$ttl = $row["titulo"];
-				$crDate = $row["dataCriacao"];
-				$descriptn = $row["descricao"];
-				$active = $row["ativa"];
-				$fix = $row["fixa"];
-				$lastEdit= $row["dataUltimaEdicao"];
-				$publc= $row["publica"];
+				$id = $row["discId"];
+				$idUsuarioCriador = $row["idUsuarioCriador"];
+				$urlImagemPerfil = $row["urlImagemPerfil"];
+				$username = $row["username"];
+				
+				$titulo = $row["discTitulo"];
+				$dataCriacao = $row["dataCriacao"];
+				$descricao = $row["descricao"];
+				$fixa = $row["fixa"];
+				$dataUltimaEdicao = $row["dataUltimaEdicao"];
+				$publica = $row["publica"];
+				
 
-				$s = "{'id': '$id', 'idCreator': '$idCreator', 'ttl': '$ttl', 'crDate': '$crDate', 'descriptn': '$descriptn', 'active': '$active', 'fix': '$fix', 'lastEdit':'$lastEdit', 'publc':'$publc' }";
+				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'urlImagemPerfil': '$urlImagemPerfil', 'username': '$username', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa':'$fixa', 'dataUltimaEdicao':'$dataUltimaEdicao', 'publica':'$publica' }";
 				array_push($return, str_replace("'", "\"", $s));
 			}
 		}
@@ -146,53 +150,62 @@
 
 	function getByTituloDiscussao() {
 		$titulo = $_POST['titulo'];
+		$idComunidadePertence = $_POST['idComunidadePertence'];
 
-		$sql = "SELECT * FROM Discussao WHERE LOWER(titulo) LIKE LOWER('%$titulo%')";
+		$sql = "SELECT discussao.id as discId, discussao.titulo as discTitulo, discussao.*, usuario.* FROM discussao join usuario on usuario.id = discussao.idUsuarioCriador WHERE discussao.idComunidadePertence=$idComunidadePertence and ativa = 1 and LOWER(discussao.titulo) LIKE LOWER('%$titulo%') order by fixa desc";
 
 		$result = query_result($sql);
 		$return = array();
 
 		if (mysqli_num_rows($result) > 0) {
 			while($row = mysqli_fetch_assoc($result)) {
-				$id = $row["id"];
+				$id = $row["discId"];
 				$idUsuarioCriador = $row["idUsuarioCriador"];
-				$idComunidadePertence = $row["idComunidadePertence"];
-				$titulo = $row["titulo"];
+				$urlImagemPerfil = $row["urlImagemPerfil"];
+				$username = $row["username"];
+				
+				$titulo = $row["discTitulo"];
 				$dataCriacao = $row["dataCriacao"];
 				$descricao = $row["descricao"];
 				$fixa = $row["fixa"];
 				$dataUltimaEdicao = $row["dataUltimaEdicao"];
 				$publica = $row["publica"];
+				
 
-				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
+				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'urlImagemPerfil': '$urlImagemPerfil', 'username': '$username', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa':'$fixa', 'dataUltimaEdicao':'$dataUltimaEdicao', 'publica':'$publica' }";
 				array_push($return, str_replace("'", "\"", $s));
 			}
 		}
+
 		echo "[" . implode(",", $return) . "]";
 	}
 
 
 	function getByDescricaoDiscussao() {
 		$descricao = $_POST['descricao'];
-
-		$sql = "SELECT * FROM Discussao WHERE LOWER(descricao) LIKE LOWER('%$descricao%')";
+		$idComunidadePertence = $_POST['idComunidadePertence'];
+		
+		$sql = "SELECT discussao.id as discId, discussao.titulo as discTitulo, discussao.*, usuario.* FROM discussao join usuario on usuario.id = discussao.idUsuarioCriador WHERE discussao.idComunidadePertence=$idComunidadePertence and ativa = 1 and LOWER(descricao) LIKE LOWER('%$descricao%') order by fixa desc";
 
 		$result = query_result($sql);
 		$return = array();
 
 		if (mysqli_num_rows($result) > 0) {
 			while($row = mysqli_fetch_assoc($result)) {
-				$id = $row["id"];
+				$id = $row["discId"];
 				$idUsuarioCriador = $row["idUsuarioCriador"];
-				$idComunidadePertence = $row["idComunidadePertence"];
-				$titulo = $row["titulo"];
+				$urlImagemPerfil = $row["urlImagemPerfil"];
+				$username = $row["username"];
+				
+				$titulo = $row["discTitulo"];
 				$dataCriacao = $row["dataCriacao"];
 				$descricao = $row["descricao"];
 				$fixa = $row["fixa"];
 				$dataUltimaEdicao = $row["dataUltimaEdicao"];
 				$publica = $row["publica"];
+				
 
-				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa': '$fixa', 'dataUltimaEdicao': '$dataUltimaEdicao', 'publica': '$publica'}";
+				$s = "{'id': '$id', 'idUsuarioCriador': '$idUsuarioCriador', 'urlImagemPerfil': '$urlImagemPerfil', 'username': '$username', 'titulo': '$titulo', 'dataCriacao': '$dataCriacao', 'descricao': '$descricao', 'fixa':'$fixa', 'dataUltimaEdicao':'$dataUltimaEdicao', 'publica':'$publica' }";
 				array_push($return, str_replace("'", "\"", $s));
 			}
 		}
@@ -223,22 +236,22 @@
 	$func = $_POST['func'];
 
 	switch ($func) {
-		case "criar":
+		case "criarDiscussao":
 			criarDiscussao();
 			break;
-		case "listar":
+		case "listarDiscussao":
 			listarDiscussao();
 			break;
 		case "getByIdDiscussao":
 			getByIdDiscussao();
 			break;
-		case "getByTitulo":
+		case "getByTituloDiscussao":
 			getByTituloDiscussao();
 			break;
-		case "getByDescricao":
+		case "getByDescricaoDiscussao":
 			getByDescricaoDiscussao();
 			break;
-		case "editar":
+		case "editarDiscussao":
 			editarDiscussao();
 			break;
 		case "inativarDiscussao":

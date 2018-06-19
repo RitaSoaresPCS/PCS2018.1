@@ -1,12 +1,12 @@
 var Base = new function() {
 	$.ajaxSetup({ cache: false });
 
-    this.listar = function (controladorURL, callback = function(data) {}) {
+    this.listar = function (controladorURL, nomeEntidade = "", callback = function(data) {}) {
 		
 		// jQuery.post( url [, data ] [, success ] [, dataType ] )
 		$.post(
 			controladorURL, 
-			{ func: "listar" }, 
+			{ func: "listar" + nomeEntidade }, 
 			function(data) {
 				callback(data);
 			},
@@ -28,10 +28,10 @@ var Base = new function() {
     }
 
 	
-	this.getByDescricao = function (descricao, controladorURL, callback = function(data) {}) {
+	this.getByDescricao = function (descricao, controladorURL, nomeEntidade = "", callback = function(data) {}) {
 		$.post(
 			controladorURL, 
-			{ func: "getByDescricao", descricao: descricao }, 
+			{ func: "getByDescricao" + nomeEntidade, descricao: descricao }, 
 			function(data) {
 				callback(data);
 			},
@@ -40,10 +40,10 @@ var Base = new function() {
 	}
 	
 
-	this.getByNome = function (nome, controladorURL, callback = function(data) {}) {
+	this.getByNome = function (nome, controladorURL, nomeEntidade = "", callback = function(data) {}) {
 		$.post(
 			controladorURL, 
-			{ func: "getByNome", nome: nome }, 
+			{ func: "getByNome" + nomeEntidade, nome: nome }, 
 			function(data) {
 				callback(data);
 			},
@@ -52,10 +52,10 @@ var Base = new function() {
 	}
 
 	
-	this.getByNomeIgual = function (nome, controladorURL, callback = function(data) {}) {
+	this.getByNomeIgual = function (nome, controladorURL, nomeEntidade = "", callback = function(data) {}) {
 		$.post(
 			controladorURL, 
-			{ func: "getByNomeIgual", nome: nome }, 
+			{ func: "getByNomeIgual" + nomeEntidade, nome: nome }, 
 			function(data) {
 				callback(data);
 			},
@@ -64,10 +64,10 @@ var Base = new function() {
 	}
 
 
-	this.inativar = function (id, controladorURL, callback = function(data) {}) {
+	this.inativar = function (id, controladorURL, nomeEntidade = "", callback = function(data) {}) {
 		$.post(
 			controladorURL, 
-			{ func: "inativar", id: id }, 
+			{ func: "inativar" + nomeEntidade, id: id }, 
 			function(data) {
 				callback(data);
 			},

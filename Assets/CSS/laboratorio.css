@@ -1,0 +1,27 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.topo-discussao img {
+	width:100px;
+}
+
+.topo-discussao h2 {
+	display:inline;
+}
+
+.modal {
+	max-width: 700px;
+}
+
+#descricao-add {
+	width: 600px;
+	resize: none;
+}
+
+.far.fa-edit, .far.fa-save {
+	display:inline;
+	padding-left: 40px;
+}
+
+#temaLab, #descricaoLab, #nomeLab, #adminLab {
+	display:inline;
+}

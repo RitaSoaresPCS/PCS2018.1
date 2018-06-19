@@ -114,7 +114,7 @@
 	function getByIdUsuario() {
 		$id = $_POST['id'];
 		$sql = "select usuario.id, username, urlImagemPerfil, instituicaoOrigem, usuario.nome, idComunidadePertence, titulo, comunidade.nome as nomeComunidade, email, cpf FROM usuario, comunidade where usuario.idComunidadePertence = comunidade.id and usuario.id = $id";
-
+		
 		$result = query_result($sql);
 		$return = array();
 
@@ -290,32 +290,32 @@
 	$func = $_POST['func'];
 
 	switch ($func) {
-		case "adicionar":
+		case "adicionarUsuario":
 			adicionarUsuario();
 			break;
-		case "listar":
+		case "listarUsuario":
 			listarUsuario();
 			break;
 		case "getByIdUsuario":
 			getByIdUsuario();
 			break;
-		case "getByNome":
+		case "getByNomeUsuario":
 			getByNomeUsuario();
 			break;
-		case "getByNomeIgual":
+		case "getByNomeIgualUsuario":
 			getByNomeIgualUsuario();
 			break;
 		case "getByUsername":
 			getByUsernameUsuario();
 			break;
-		case "editar":
+		case "editarUsuario":
 			editarUsuario();
 			break;
-		case "inativar":
+		case "inativarUsuario":
 			inativarUsuario();
 			break;
 		case "listarUsuariosPermissao":
-				listarUsuariosPermissao();
+			listarUsuariosPermissao();
 			break;
 	}
 ?>

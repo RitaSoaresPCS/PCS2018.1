@@ -5,7 +5,7 @@ var Discussao = new function() {
 	this.nomeEntidade = "Discussao";
 
     this.listar = function (callback = function(data) {}) {
-		return Base.listar(this.controladorURL, callback);
+		return Base.listar(this.controladorURL, this.nomeEntidade, callback);
     }
 
 	this.getById = function (id, callback = function(data) {}) {
@@ -28,10 +28,10 @@ var Discussao = new function() {
 	}
 
 
-	this.getByTitulo = function (pesquisa, callback = function(data) {}) {
+	this.getByTitulo = function (pesquisa, idComunidadePertence, callback = function(data) {}) {
 		$.post(
 			this.controladorURL,
-			{ func: "getByTitulo", titulo: pesquisa },
+			{ func: "getByTitulo" + this.nomeEntidade, titulo: pesquisa, idComunidadePertence: idComunidadePertence },
 			function(data) {
 				callback(data);
 			},
@@ -40,14 +40,21 @@ var Discussao = new function() {
 	}
 
 
-	this.getByDescricao = function (pesquisa, callback = function(data) {}) {
-		return Base.getByDescricao(pesquisa, this.controladorURL, callback);
+	this.getByDescricao = function (pesquisa, idComunidadePertence, callback = function(data) {}) {
+		$.post(
+			this.controladorURL,
+			{ func: "getByDescricao" + this.nomeEntidade, descricao: pesquisa, idComunidadePertence: idComunidadePertence },
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
 	}
 
 
 	this.adicionar = function (idComunidadePertence, titulo, descricao, publica, userId, callback = function(data) {}) {
 		$.post(this.controladorURL, {
-			func: "criar",
+			func: "criar" + this.nomeEntidade,
 			idComunidadePertence: idComunidadePertence,
 			titulo: titulo,
 			descricao: descricao,
@@ -64,7 +71,7 @@ var Discussao = new function() {
 
 	this.editar = function (id, titulo, descricao, publica, callback = function(data) {}) {
 		$.post(this.controladorURL, {
-			func: "editar",
+			func: "editar" + this.nomeEntidade,
 			id: id,
 			titulo: titulo,
 			descricao: descricao,
@@ -89,7 +96,7 @@ var Discussao = new function() {
 			"json"
 		);
 	}
-	this.mudarFixo= function(discussaoId, bool, callback= function(data){}){
+	this.mudarFixo= function(discussaoId, bool, callback = function(data){}){
 		$.post(
 			this.controladorURL,
 			{

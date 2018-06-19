@@ -5,7 +5,7 @@ var Comunidade = new function() {
 	this.nomeEntidade = "Comunidade";
 
     this.listar = function (callback = function(data) {}) {
-		return Base.listar(this.controladorURL, callback);
+		return Base.listar(this.controladorURL, this.nomeEntidade, callback);
     }
 
 	this.getById = function (id, callback = function(data) {}) {
@@ -13,20 +13,20 @@ var Comunidade = new function() {
     }
 
 	this.getByNome = function (pesquisa, callback = function(data) {}) {
-		return Base.getByNome(pesquisa, this.controladorURL, callback);
+		return Base.getByNome(pesquisa, this.controladorURL, this.nomeEntidade, callback);
 	}
 
 	this.getByNomeIgual = function(pesquisa, callback = function(data) {}) {
-		return Base.getByNomeIgual(pesquisa, this.controladorURL, callback);
+		return Base.getByNomeIgual(pesquisa, this.controladorURL, this.nomeEntidade, callback);
 	}
 
 	this.getByDescricao = function (pesquisa, callback = function(data) {}) {
-		return Base.getByDescricao(pesquisa, this.controladorURL, callback);
+		return Base.getByDescricao(pesquisa, this.controladorURL, this.nomeEntidade, callback);
 	}
 
 	// Inativar.
 	this.remover = function (id, callback = function(data) {}) {
-		return Base.inativar(id, this.controladorURL, callback);
+		return Base.inativar(id, this.controladorURL, this.nomeEntidade, callback);
 	}
 
 	this.desativarLaboratorio = function (id) {
@@ -43,7 +43,7 @@ var Comunidade = new function() {
 
 	this.adicionar = function (nome, descricao, tema, usernameAdmin, callback = function(data) {} ) {
 		$.post(this.controladorURL, {
-			func: "adicionar",
+			func: "adicionar" + this.nomeEntidade,
 			nome: nome,
 			descricao: descricao,
 			tema: tema,
@@ -60,7 +60,7 @@ var Comunidade = new function() {
 
 	this.editar = function (id, nome, descricao, tema, usernameAdmin, callback = function(data) {} ) {
 		$.post(this.controladorURL, {
-			func: "editar",
+			func: "editar" + this.nomeEntidade,
 			id: id,
 			nome: nome,
 			descricao: descricao,
@@ -114,7 +114,7 @@ var Comunidade = new function() {
 		$.post(
 			this.controladorURL,
 			{
-				func: 'getByNomeOuDescricao',
+				func: 'getByNomeOuDescricao' + this.nomeEntidade,
 				nome: nome,
 				descricao: descricao
 			},
