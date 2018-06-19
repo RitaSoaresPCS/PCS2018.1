@@ -64,7 +64,7 @@
 	}
 	
 	
-	function getByNomeParceiroComunidade() {
+	function getByNomeUsuarioParceriaComunidade() {
 		$idComunidade = $_POST['idComunidade'];
 		$nome = $_POST['nome'];
 		
@@ -94,17 +94,17 @@
 	$func= $_POST['func'];
 
 	switch ($func) {
-		case "adicionar":
+		case "adicionarUsuarioParceriaComunidade":
 			adicionarUsuarioParceriaComunidade();
 			break;
-		case "remover":
+		case "removerUsuarioParceriaComunidade":
 			removerUsuarioParceriaComunidade();
 			break;
 		case "getParceiroByIdComunidade":
 			getParceiroByIdComunidade();
 			break;
-		case "getByNome":
-			getByNomeParceiroComunidade();
+		case "getByNomeUsuarioParceriaComunidade":
+			getByNomeUsuarioParceriaComunidade();
 			break;
 	}
 

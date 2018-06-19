@@ -25,3 +25,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 #temaLab, #descricaoLab, #nomeLab, #adminLab {
 	display:inline;
 }
+
+
+p.clear {
+    clear: both;
+	padding-top:10px;
+	padding-bottom:10px;
+}

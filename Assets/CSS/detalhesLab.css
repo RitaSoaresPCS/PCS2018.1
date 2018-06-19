@@ -1,0 +1,8 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+
+
+p.clear {
+    clear: both;
+	padding-top:10px;
+	padding-bottom:10px;
+}

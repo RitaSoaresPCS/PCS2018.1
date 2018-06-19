@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+		
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		
+		
+		<link rel="stylesheet" type="text/css" href="Assets/CSS/detalhesLab.css">
+
+		<script src="AcessoDados/Base.js"></script>
+		<!-- Carregar apenas se necessário na página: -->
+		<!-- <script src="AcessoDados/Discussao.js"></script> -->
+		<script src="AcessoDados/Comunidade.js"></script>
+		<script src="AcessoDados/UsuarioParceriaComunidade.js"></script>
+		
+		<!-- <script src="AcessoDados/Usuario.js"></script> -->
+
+	
+		<script>
+			$(document).ready(function(){
+				Comunidade.getById(Base.getUrlParameter("id"), function(data) {
+					data = JSON.parse(data);
+						
+					$("#nomeLab").append('<a href="laboratorio.html?id=' + data.id + '" title="' + data.nome + '">' + data.nome + '</a>');
+
+					UsuarioParceriaComunidade.getParceiroByIdComunidade(data.id, function(parceiros) {
+						
+						var contentP = "";
+						for (var iterador = 0; iterador < parceiros.length; iterador++) {
+							contentP += parceiros[iterador].id;
+					
+						}
+						
+						document.getElementById("parceiros").innerHTML = contentP;
+					
+					});
+				
+				
+				});
+				
+				
+				$( function() {
+					$( "#tabs" ).tabs();
+				});
+			
+			});
+		
+		
+		
+			
+		</script>
+	
+	</head>
+	<body>
+		<!-- Barra de navegação com botão pro perfil -->
+		<nav></nav>
+	
+		<!-- Tabs com parceiros e solicitações do laboratório -->
+		<h1 id="nomeLab"></h1>
+		<p class='clear'></p>
+		
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">Parceiros</a></li>
+				<li><a href="#tabs-2">Solicitações</a></li>
+			</ul>
+			<div id="tabs-1">
+				
+				<!-- Caixa de pesquisa -->
+				<!-- Botao adicionar parceiro -->
+				
+				<!-- Lista de parceiros -->
+				<div id="parceiros"></div>
+			</div>
+			<div id="tabs-2">
+				<!-- Caixa de pesquisa -->
+				
+				<!-- Lista de solicitações -->
+				
+			</div>
+		</div>
+	
+	</body>
+</html>
