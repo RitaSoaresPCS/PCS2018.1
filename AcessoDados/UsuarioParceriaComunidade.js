@@ -25,4 +25,20 @@ var UsuarioParceriaComunidade = new function() {
 			"json"
 		);
 	}
+	
+	
+	this.remover = function (idUsuario, idComunidade, callback = function(data) {}) {
+		var confirmar = confirm('Deseja realmente remover este parceiro?');
+		if (confirmar) {
+			$.post(
+				this.controladorURL, 
+				{ func: "remover" + this.nomeEntidade, idUsuario: idUsuario, idComunidade: idComunidade }, 
+				function(data) {
+					callback(data);
+				},
+				"json"
+			);
+		}
+	}
+
 }

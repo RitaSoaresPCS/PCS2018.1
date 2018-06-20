@@ -32,8 +32,31 @@
 						
 						var contentP = "";
 						for (var iterador = 0; iterador < parceiros.length; iterador++) {
-							contentP += parceiros[iterador].id;
-					
+							
+							var imgPerfil = parceiros[iterador].urlImagemPerfil;
+							if (parceiros[iterador].urlImagemPerfil == "") {
+								imgPerfil = "Assets\\Imagens\\avatar round.png";
+							}
+							
+							contentP += '<div class="parceiro">';
+							contentP += '	<div class="parceiro-left">';
+							contentP += '		<img class="parceiro-img" src="' + imgPerfil + '">';
+							contentP += '		<p>' + parceiros[iterador].username + '</p>';
+							contentP += '	</div>';
+							contentP += '	<div class="parceiro-middle">';
+							contentP += '		<p>' + parceiros[iterador].nome + '</p>';
+							contentP += '		<p>Laboratório: '+ parceiros[iterador].nomeComunidade + '</p>';
+							contentP += '		<p>Título: ' + parceiros[iterador].titulo + '</p>';
+							contentP += '		<p>Instituição: ' + parceiros[iterador].instituicaoOrigem + '</p>';
+							contentP += '	</div>';
+							contentP += '	<div class="parceiro-right">';
+							if (data.idUsuarioAdministrador == localStorage.userId) {
+								contentP += '		<button type="button" onclick="UsuarioParceriaComunidade.remover(' + parceiros[iterador].id + ', ' + data.id + ',function(){location.reload()})">Remover</button>';
+							}
+							contentP += '	</div>';
+							contentP += '</div>';
+							contentP += '<p class="clear"></p>';
+							
 						}
 						
 						document.getElementById("parceiros").innerHTML = contentP;
@@ -76,6 +99,8 @@
 				
 				<!-- Lista de parceiros -->
 				<div id="parceiros"></div>
+				
+		
 			</div>
 			<div id="tabs-2">
 				<!-- Caixa de pesquisa -->

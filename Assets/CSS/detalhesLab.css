@@ -6,3 +6,18 @@ p.clear {
 	padding-top:10px;
 	padding-bottom:10px;
 }
+
+.parceiro {
+	width:100%;
+	max-width:900px;
+	margin:0px auto;
+}
+
+.parceiro-left, .parceiro-middle, .parceiro-right {
+	width:33%;
+	float:left;
+}
+
+.parceiro-img {
+	width:100px;
+}

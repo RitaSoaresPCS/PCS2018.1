@@ -19,13 +19,8 @@
 	
 	
 	function removerUsuarioParceriaComunidade() {
-		$username = $_POST['username'];
+		$idUsuario = $_POST['idUsuario'];
 		$idComunidade = $_POST['idComunidade'];
-		
-		$_POST['func'] = "";
-		include_once 'Usuario.php';
-		
-		$idUsuario = getIdUsuarioByUsername($username);
 
 		$sql = "DELETE FROM UsuarioParceriaComunidade WHERE idUsuario = $idUsuario AND idComunidade = $idComunidade";
 		
@@ -37,7 +32,7 @@
 	function getParceiroByIdComunidade() {
 		$idComunidade = $_POST['idComunidade'];
 		
-		$sql = "SELECT * FROM Usuario JOIN UsuarioParceriaComunidade ON Usuario.id = UsuarioParceriaComunidade.idUsuario AND UsuarioParceriaComunidade.idComunidade = $idComunidade";
+		$sql = "SELECT Comunidade.nome as nomeComunidade, Usuario.* FROM Usuario JOIN UsuarioParceriaComunidade ON Usuario.id = UsuarioParceriaComunidade.idUsuario join comunidade on uSUARIO.idComunidadePertence = comunidade.id where UsuarioParceriaComunidade.idComunidade = $idComunidade";
 		
 		$result = query_result($sql);
 		$return = array();
@@ -52,8 +47,11 @@
 				$instituicaoOrigem = $row["instituicaoOrigem"];
 				$nome = $row["nome"];
 				$idComunidadePertence = $row["idComunidadePertence"];
+				$titulo = $row["titulo"];
+				$nomeComunidade = $row["nomeComunidade"];
 				
-				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence'}";
+				
+				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'nomeComunidade': '$nomeComunidade'}";
 				array_push($return, str_replace("'", "\"", $s));
 			}
 		} 
