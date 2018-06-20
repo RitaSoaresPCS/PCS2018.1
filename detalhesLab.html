@@ -9,18 +9,18 @@
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		
+		<!-- Modal jQuery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+		
 		
 		<link rel="stylesheet" type="text/css" href="Assets/CSS/detalhesLab.css">
 
 		<script src="AcessoDados/Base.js"></script>
 		<!-- Carregar apenas se necessário na página: -->
-		<!-- <script src="AcessoDados/Discussao.js"></script> -->
 		<script src="AcessoDados/Comunidade.js"></script>
 		<script src="AcessoDados/UsuarioParceriaComunidade.js"></script>
 		
-		<!-- <script src="AcessoDados/Usuario.js"></script> -->
-
-	
 		<script>
 			$(document).ready(function(){
 				Comunidade.getById(Base.getUrlParameter("id"), function(data) {
@@ -63,6 +63,11 @@
 					
 					});
 				
+					
+					if (data.idUsuarioAdministrador == localStorage.userId) {
+						$("#add-parc").append('<button type="button"><a href="#addParcModal" rel="modal:open">Adicionar parceiro</a></button>');
+					}
+				
 				
 				});
 				
@@ -95,7 +100,10 @@
 			<div id="tabs-1">
 				
 				<!-- Caixa de pesquisa -->
-				<!-- Botao adicionar parceiro -->
+				
+				<!-- Botão adicionar parceiro -->
+				<div id="add-parc"></div>
+				<p class='clear'></p>
 				
 				<!-- Lista de parceiros -->
 				<div id="parceiros"></div>
@@ -108,6 +116,14 @@
 				<!-- Lista de solicitações -->
 				
 			</div>
+		</div>
+		
+	
+		<div id="addParcModal" class="modal">
+			<h2>Enviar convite</h2>
+			<label for="emailAddParc">E-mail do convidado:</label>
+			<input name="emailAddParc" id="emailAddParc" type="email"><br><br>
+			<button type="button">Salvar</button>
 		</div>
 	
 	</body>
