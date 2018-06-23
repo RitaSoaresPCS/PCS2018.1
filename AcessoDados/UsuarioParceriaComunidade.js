@@ -40,5 +40,17 @@ var UsuarioParceriaComunidade = new function() {
 			);
 		}
 	}
+	
+	this.enviarConviteParceiro = function (idComunidade, email, callback = function(data) {}) {
+		$.post(
+			this.controladorURL, 
+			{ func: "enviarConviteParceiro", idComunidade: idComunidade, email: email }, 
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
+
+	}
 
 }

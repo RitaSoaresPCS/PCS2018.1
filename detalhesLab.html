@@ -22,6 +22,65 @@
 		<script src="AcessoDados/UsuarioParceriaComunidade.js"></script>
 		
 		<script>
+		
+			function enviarConviteParceiro() {
+				var email = $("#emailAddParc").val();
+				UsuarioParceriaComunidade.enviarConviteParceiro(Base.getUrlParameter("id"), email, function(data) {
+					if (data.erro == false) {
+						alert("Convite enviado com sucesso.");
+					} else {
+						if (data.mensagem == "aluno") {
+							alert("Alunos não podem ser adicionados como parceiros, devem ser adicionados como membros.");
+						}
+						if (data.mensagem == "parceiro") {
+							alert("Usuário já é parceiro do laboratório.");
+						}
+						if (data.mensagem == "email") {
+							var confirmar = confirm('O e-mail ainda não está cadastrado no Academiq. Deseja realmente enviar um convite?');
+							if (confirmar) {
+								// Envio de e-mail.
+							
+							}
+						}
+					}
+				});
+			}
+			
+			function loadParceiros(parceiros, idUsuarioAdministrador) {
+				var contentP = "";
+				for (var iterador = 0; iterador < parceiros.length; iterador++) {
+					
+					var imgPerfil = parceiros[iterador].urlImagemPerfil;
+					if (parceiros[iterador].urlImagemPerfil == "") {
+						imgPerfil = "Assets\\Imagens\\avatar round.png";
+					}
+					
+					contentP += '<div class="parceiro">';
+					contentP += '	<div class="parceiro-left">';
+					contentP += '		<img class="parceiro-img" src="' + imgPerfil + '">';
+					contentP += '		<p>' + parceiros[iterador].username + '</p>';
+					contentP += '	</div>';
+					contentP += '	<div class="parceiro-middle">';
+					contentP += '		<p>' + parceiros[iterador].nome + '</p>';
+					contentP += '		<p>Laboratório: '+ parceiros[iterador].nomeComunidade + '</p>';
+					contentP += '		<p>Título: ' + parceiros[iterador].titulo + '</p>';
+					contentP += '		<p>Instituição: ' + parceiros[iterador].instituicaoOrigem + '</p>';
+					contentP += '	</div>';
+					contentP += '	<div class="parceiro-right">';
+					if (idUsuarioAdministrador == localStorage.userId) {
+						contentP += '		<button type="button" onclick="UsuarioParceriaComunidade.remover(' + parceiros[iterador].id + ', ' + Base.getUrlParameter("id") + ',function(){location.reload()})">Remover</button>';
+					}
+					contentP += '	</div>';
+					contentP += '</div>';
+					contentP += '<p class="clear"></p>';
+					
+				}
+				
+				document.getElementById("parceiros").innerHTML = contentP;
+	
+			}
+			
+		
 			$(document).ready(function(){
 				Comunidade.getById(Base.getUrlParameter("id"), function(data) {
 					data = JSON.parse(data);
@@ -29,38 +88,7 @@
 					$("#nomeLab").append('<a href="laboratorio.html?id=' + data.id + '" title="' + data.nome + '">' + data.nome + '</a>');
 
 					UsuarioParceriaComunidade.getParceiroByIdComunidade(data.id, function(parceiros) {
-						
-						var contentP = "";
-						for (var iterador = 0; iterador < parceiros.length; iterador++) {
-							
-							var imgPerfil = parceiros[iterador].urlImagemPerfil;
-							if (parceiros[iterador].urlImagemPerfil == "") {
-								imgPerfil = "Assets\\Imagens\\avatar round.png";
-							}
-							
-							contentP += '<div class="parceiro">';
-							contentP += '	<div class="parceiro-left">';
-							contentP += '		<img class="parceiro-img" src="' + imgPerfil + '">';
-							contentP += '		<p>' + parceiros[iterador].username + '</p>';
-							contentP += '	</div>';
-							contentP += '	<div class="parceiro-middle">';
-							contentP += '		<p>' + parceiros[iterador].nome + '</p>';
-							contentP += '		<p>Laboratório: '+ parceiros[iterador].nomeComunidade + '</p>';
-							contentP += '		<p>Título: ' + parceiros[iterador].titulo + '</p>';
-							contentP += '		<p>Instituição: ' + parceiros[iterador].instituicaoOrigem + '</p>';
-							contentP += '	</div>';
-							contentP += '	<div class="parceiro-right">';
-							if (data.idUsuarioAdministrador == localStorage.userId) {
-								contentP += '		<button type="button" onclick="UsuarioParceriaComunidade.remover(' + parceiros[iterador].id + ', ' + data.id + ',function(){location.reload()})">Remover</button>';
-							}
-							contentP += '	</div>';
-							contentP += '</div>';
-							contentP += '<p class="clear"></p>';
-							
-						}
-						
-						document.getElementById("parceiros").innerHTML = contentP;
-					
+						loadParceiros(parceiros, data.idUsuarioAdministrador);
 					});
 				
 					
@@ -75,6 +103,26 @@
 				$( function() {
 					$( "#tabs" ).tabs();
 				});
+				
+				
+				// Pesquisa.
+				$('#btn-search-parceiros').click(function(){
+					var searchTxt=$('#search-parceiros').val();
+					if (searchTxt!= '') {
+					
+						UsuarioParceriaComunidade.getByNome(searchTxt, Base.getUrlParameter("id"), function(parceiros) {
+							if (parceiros.length == 0) {
+								alert("Não foram encontrados parceiros.");
+							} else {
+								document.getElementById("parceiros").innerHTML = "";
+								Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
+									loadParceiros(parceiros, dataCom.idUsuarioAdministrador);	
+								});
+							}
+						});
+					}
+				});
+				
 			
 			});
 		
@@ -100,6 +148,11 @@
 			<div id="tabs-1">
 				
 				<!-- Caixa de pesquisa -->
+				<div>
+					<input type= 'text' id='search-parceiros'></input>
+					<button type= 'button' id= 'btn-search-parceiros'>Pesquisar por nome</button>
+				</div>
+				<p class='clear'></p>
 				
 				<!-- Botão adicionar parceiro -->
 				<div id="add-parc"></div>
@@ -123,7 +176,7 @@
 			<h2>Enviar convite</h2>
 			<label for="emailAddParc">E-mail do convidado:</label>
 			<input name="emailAddParc" id="emailAddParc" type="email"><br><br>
-			<button type="button">Salvar</button>
+			<button type="button" onclick="enviarConviteParceiro()">Salvar</button>
 		</div>
 	
 	</body>

@@ -88,6 +88,47 @@
 	}
 	
 	
+	function enviarConviteParceiro() {
+		$idComunidade = $_POST['idComunidade'];
+		$email = $_POST['email'];
+		
+		$sql = "SELECT * FROM Usuario WHERE email = '$email'";
+		
+		$result = query_result($sql);
+		$return = array();
+		
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$titulo = $row["titulo"];
+				$id = $row["id"];
+				
+				if ($titulo == "aluno") {
+					// Não é possível adicionar aluno como parceiro, deve ser adicionado como membro.
+					$return['erro'] = true;
+					$return['mensagem'] = "aluno";	
+				} else {
+					// Verifica se usuário já não é parceiro.
+					$sql2 = "select * from usuarioparceriacomunidade where idUsuario = $id AND idComunidade = $idComunidade";
+					$result2 = query_result($sql2);
+		
+					if (mysqli_num_rows($result2) > 0) {
+						$return['erro'] = true;
+						$return['mensagem'] = "parceiro";	
+					} else {
+						// Envio de e-mail - ainda não implementado.
+						$return['erro'] = false;	
+					}
+				}
+			}
+		} else {
+			// Não existe usuário com o e-mail digitado. Pergunta se quer convidar mesmo assim. 
+			$return['erro'] = true;
+			$return['mensagem'] = "email";	
+		}
+		echo json_encode($return);
+	}
+	
+	
 
 	$func= $_POST['func'];
 
@@ -103,6 +144,9 @@
 			break;
 		case "getByNomeUsuarioParceriaComunidade":
 			getByNomeUsuarioParceriaComunidade();
+			break;
+		case "enviarConviteParceiro":
+			enviarConviteParceiro();
 			break;
 	}
 
