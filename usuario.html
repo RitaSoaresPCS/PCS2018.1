@@ -1,0 +1,94 @@
+<!DOCKTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset= 'utf-8'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+
+	<script src="AcessoDados/Base.js"></script>
+	<script src="AcessoDados/Usuario.js"></script>
+	<script src="AcessoDados/Comunidade.js"></script>
+	<script src="AcessoDados/UsuarioAmizadeUsuario.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/usuario.css">
+	
+    <script type= 'text/javascript'>
+		$(document).ready(function(){
+			var userId = Base.getUrlParameter("id");
+			if (userId == localStorage.userId) {
+				window.location.assign("perfil.html");
+			} else {
+				Usuario.getById(Base.getUrlParameter("id"), function(data) {
+					data = JSON.parse(data);
+				
+					Comunidade.getById(data.idComunidadePertence, function(dataCom) {
+						dataCom = JSON.parse(dataCom);
+						
+						conteudo = "";
+					
+						if (data.urlImagemPerfil == "") {
+							data.urlImagemPerfil = "Assets\\Imagens\\avatar round.png";
+						}
+					
+						conteudo += '<img id="imgPerfilUser" src="' + data.urlImagemPerfil + '" title="Imagem de perfil" alt="Imagem de perfil">';
+						conteudo += '<p>' + data.username + '</p>';
+						conteudo += '<p>Laboratório: ' + dataCom.nome + '</p>';
+					
+						conteudo += '<div id="discussoes-user-' + data.id + '"><a href="#" title="Discussões">Discussões</a></div>';
+						conteudo += '<div id="repositorio-user-' + data.id + '"><a href="#" title="Repositório">Repositório</a></div>';
+						document.getElementById('dados-left').innerHTML = conteudo;
+		
+					});
+					
+					
+					UsuarioAmizadeUsuario.getAmizade(localStorage.userId, userId, function(dataAmigo) {
+						botao = document.getElementById("botaoAmizade");
+						if (dataAmigo.length > 0) {
+							amigo = dataAmigo[0];
+							botao.innerHTML = "Remover este amigo";
+							botao.onclick = function(){
+								UsuarioAmizadeUsuario.remover(localStorage.userId, userId, function(resposta) {
+									if (resposta.erro == false) {
+										location.reload();
+									}
+								});
+							}	
+						} else {
+							botao.onclick = function(){
+								UsuarioAmizadeUsuario.adicionar(localStorage.userId, userId, function(resposta) {
+									if (resposta.erro == false) {
+										location.reload();
+									}
+								});
+							}
+						}
+					
+						
+					});
+					
+					
+					// Preenchimento do mural fora do escopo.
+					
+				});
+				
+			
+			}
+			
+		});
+    </script>
+
+  </head>
+  <body>
+    <header></header>
+    <main>
+		<div id="dados-usuario">
+			<div id="dados-left"></div>
+			<div id="dados-right"><button id='botaoAmizade' type='button'>Enviar solicitação de amizade</button></div>
+		</div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

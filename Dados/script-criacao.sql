@@ -287,6 +287,7 @@ insert into UsuarioAutoriaRecurso values(4,1);
 insert into UsuarioParceriaUsuario values(3,4);
 
 insert into usuarioAmizadeUsuario values(9,6);
+insert into usuarioAmizadeUsuario values(1,2);
 
 insert into UsuarioVisualizaComunidade values(1,8);
 insert into UsuarioVisualizaComunidade values(2,4);
