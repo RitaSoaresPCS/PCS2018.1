@@ -286,6 +286,42 @@
 		return false;
 	}
 
+	
+	function enviarConviteMembro() {
+		$idComunidade = $_POST['idComunidade'];
+		$email = $_POST['email'];
+		
+		$sql = "SELECT * FROM Usuario WHERE email = '$email'";
+		
+		$result = query_result($sql);
+		$return = array();
+		
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				
+				// Verifica se o usuário já não é membro.
+				$sql2 = "select * from usuario where id = $id AND idComunidadePertence = $idComunidade";
+				$result2 = query_result($sql2);
+	
+				if (mysqli_num_rows($result2) > 0) {
+					$return['erro'] = true;
+					$return['mensagem'] = "membro";	
+				} else {
+					// Envio de e-mail - ainda não implementado.
+					$return['erro'] = false;	
+				}
+				
+			}
+		} else {
+			// Não existe usuário com o e-mail digitado. Pergunta se quer convidar mesmo assim. 
+			$return['erro'] = true;
+			$return['mensagem'] = "email";	
+		}
+		echo json_encode($return);
+	}
+	
+	
 
 	$func = $_POST['func'];
 
@@ -316,6 +352,9 @@
 			break;
 		case "listarUsuariosPermissao":
 			listarUsuariosPermissao();
+			break;
+		case "enviarConviteMembro":
+			enviarConviteMembro();
 			break;
 	}
 ?>

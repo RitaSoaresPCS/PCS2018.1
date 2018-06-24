@@ -24,6 +24,27 @@
 	
 		<script>
 		
+			function enviarConviteMembro() {
+				var email = $("#emailAddMembro").val();
+				Usuario.enviarConviteMembro(Base.getUrlParameter("id"), email, function(data) {
+					if (data.erro == false) {
+						alert("Convite enviado com sucesso.");
+					} else {
+						if (data.mensagem == "membro") {
+							alert("Usuário já é membro do laboratório.");
+						}
+						if (data.mensagem == "email") {
+							var confirmar = confirm('O e-mail ainda não está cadastrado no Academiq. Deseja realmente enviar um convite?');
+							if (confirmar) {
+								// Envio de e-mail.
+							
+							}
+						}
+					}
+				});
+			}
+		
+		
 			function definirFixoDiscussao(id) {
 				var fixoId = "fixDiscBtn" + id;
 				var valorAtual = document.getElementById(fixoId).value;
@@ -200,6 +221,7 @@
 
 									$('#detalhesLab').append("<a href='detalhesLab.html?id=" + Base.getUrlParameter("id") + "' title='Parceiros e Solicitações'>Parceiros e Solicitações</a>")
 									
+									$("#add-membro").append('<button type="button"><a href="#addMembroModal" rel="modal:open">Adicionar membro</a></button>');
 									
 								}
 									
@@ -306,6 +328,10 @@
 		
 		<!-- Membros -->
 		<h2>Membros</h2>
+		<!-- Botão adicionar membro -->
+		<div id="add-membro"></div>
+		<p class='clear'></p>
+		
 		<p id="membros"></p>
 		<p class='clear'></p>
 		
@@ -347,6 +373,14 @@
 				<p class='clear'></p>
       			<button id= 'btn-addDisc' type= 'button'>Salvar</button>
       		</form>
+		</div>
+		
+		
+		<div id="addMembroModal" class="modal">
+			<h2>Enviar convite</h2>
+			<label for="emailAddMembro">E-mail do convidado:</label>
+			<input name="emailAddMembro" id="emailAddMembro" type="email"><br><br>
+			<button type="button" onclick="enviarConviteMembro()">Salvar</button>
 		</div>
 	
 	</body>

@@ -78,5 +78,18 @@ var Usuario = new function() {
 			"json"
 		);
 	}
+	
+	
+	this.enviarConviteMembro = function (idComunidade, email, callback = function(data) {}) {
+		$.post(
+			this.controladorURL, 
+			{ func: "enviarConviteMembro", idComunidade: idComunidade, email: email }, 
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
+
+	}
 
 }
