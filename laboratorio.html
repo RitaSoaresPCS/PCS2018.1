@@ -19,7 +19,8 @@
 		<script src="AcessoDados/Discussao.js"></script>
 		<script src="AcessoDados/Comunidade.js"></script>
 		<script src="AcessoDados/Usuario.js"></script>
-
+		<script src="AcessoDados/UsuarioVisualizaComunidade.js"></script>
+		
 	
 		<script>
 		
@@ -161,101 +162,127 @@
 			
 				}
 			
-			
 			}
 		
 		
 		
-			// Preenche os dados do laboratório.
-			$(document).ready(function(){
-				Comunidade.getById(Base.getUrlParameter("id"), function(data) {
-					data = JSON.parse(data);
-					Usuario.getById(data.idUsuarioAdministrador, function(dataUs) {
-						var usuarioAdmin = JSON.parse(dataUs);
-						
-						document.getElementById("nomeLab").innerHTML = data.nome;
+		
+			// Verifica se o usuário tem permissão de visualização.
+			UsuarioVisualizaComunidade.verificarPermissao(localStorage.userId, Base.getUrlParameter("id"), function(permissao) {
+				if (permissao.exibir == false) {
+					window.location.assign("laboratorioExterno.html?id=" + Base.getUrlParameter("id"));
+				} else {
 					
-						var dadosLab = "";
-						dadosLab += "Tema: <p id='temaLab'>" + data.tema + "</p><br>";
-						dadosLab += "Descrição: <p id='descricaoLab'>" + data.descricao + "</p><br>";
-						dadosLab += "Admin: <p id='adminLab'>" + usuarioAdmin.username + "</p><br>";
-						
-						document.getElementById("dadosLab").innerHTML = dadosLab;	
-						
-						// Edição de dados do laboratório.
-						if (localStorage.userId == data.idUsuarioAdministrador) {
+					// Preenche os dados do laboratório.
+					$(document).ready(function(){
+						Comunidade.getById(Base.getUrlParameter("id"), function(data) {
+							data = JSON.parse(data);
+							Usuario.getById(data.idUsuarioAdministrador, function(dataUs) {
+								var usuarioAdmin = JSON.parse(dataUs);
+								
+								document.getElementById("nomeLab").innerHTML = data.nome;
+							
+								var dadosLab = "";
+								dadosLab += "Tema: <p id='temaLab'>" + data.tema + "</p><br>";
+								dadosLab += "Descrição: <p id='descricaoLab'>" + data.descricao + "</p><br>";
+								dadosLab += "Admin: <p id='adminLab'>" + usuarioAdmin.username + "</p><br>";
+								
+								document.getElementById("dadosLab").innerHTML = dadosLab;	
+								
+								// Edição de dados do laboratório.
+								if (localStorage.userId == data.idUsuarioAdministrador) {
 
-							$( "<i id='editNomeIcon' class='far fa-edit' onclick='editDadosLab(0,\"nomeLab\", \"editNomeIcon\");'></i>" ).insertAfter( "#nomeLab" );
-							
-							$( "<i id='editTemaIcon' class='far fa-edit' onclick='editDadosLab(0,\"temaLab\", \"editTemaIcon\");'></i>" ).insertAfter( "#temaLab" );
-							
-							$( "<i id='editDescricaoIcon' class='far fa-edit' onclick='editDadosLab(0,\"descricaoLab\", \"editDescricaoIcon\");'></i>" ).insertAfter( "#descricaoLab" );
+									$( "<i id='editNomeIcon' class='far fa-edit' onclick='editDadosLab(0,\"nomeLab\", \"editNomeIcon\");'></i>" ).insertAfter( "#nomeLab" );
+									
+									$( "<i id='editTemaIcon' class='far fa-edit' onclick='editDadosLab(0,\"temaLab\", \"editTemaIcon\");'></i>" ).insertAfter( "#temaLab" );
+									
+									$( "<i id='editDescricaoIcon' class='far fa-edit' onclick='editDadosLab(0,\"descricaoLab\", \"editDescricaoIcon\");'></i>" ).insertAfter( "#descricaoLab" );
 
-							$('#detalhesLab').append("<a href='detalhesLab.html?id=" + Base.getUrlParameter("id") + "' title='Parceiros e Solicitações'>Parceiros e Solicitações</a>")
-							
-							
-						}
-							
-					});
+									$('#detalhesLab').append("<a href='detalhesLab.html?id=" + Base.getUrlParameter("id") + "' title='Parceiros e Solicitações'>Parceiros e Solicitações</a>")
+									
+									
+								}
+									
+							});
 
-				
-				
-					// Carrega as discussões do laboratório.
-					Discussao.getDiscussaoDoLab(Base.getUrlParameter("id"), function(discussoes) {
-						loadDiscussoes(discussoes, data.idUsuarioAdministrador);	
+							
+							// Carrega as discussões do laboratório.
+							Discussao.getDiscussaoDoLab(Base.getUrlParameter("id"), function(discussoes) {
+								loadDiscussoes(discussoes, data.idUsuarioAdministrador);	
+								
+							});
+						});
 						
-					});
-				});
-				
-				
-				ClassicEditor
-					.create( document.querySelector( '#descricao-add' ) )
-					.then( editor => {
-						Discussao.editorDiscussao = editor;
-					} )
-					.catch( error => {
-						console.error( error );
-					} );
-					
-					
-				// Pesquisa.
-				$('#btn-search').click(function(){
-					var searchTxt=$('#search-discussoes').val();
-					var searchType=$('input[name=typeSearch]:checked').val();
-					if (searchTxt!= '') {
-						if (searchType == "titulo") {
-							Discussao.getByTitulo(searchTxt, Base.getUrlParameter("id"), function(discussoes) {
-								if (discussoes.length == 0) {
-									alert("Não foram encontradas discussões.");
+						
+						ClassicEditor
+							.create( document.querySelector( '#descricao-add' ) )
+							.then( editor => {
+								Discussao.editorDiscussao = editor;
+							} )
+							.catch( error => {
+								console.error( error );
+							} );
+							
+							
+						// Pesquisa.
+						$('#btn-search').click(function(){
+							var searchTxt=$('#search-discussoes').val();
+							var searchType=$('input[name=typeSearch]:checked').val();
+							if (searchTxt!= '') {
+								if (searchType == "titulo") {
+									Discussao.getByTitulo(searchTxt, Base.getUrlParameter("id"), function(discussoes) {
+										if (discussoes.length == 0) {
+											alert("Não foram encontradas discussões.");
+										} else {
+											document.getElementById("discussoes").innerHTML = "";
+											Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
+												loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
+											});
+										}
+									});
+								
 								} else {
-									document.getElementById("discussoes").innerHTML = "";
-									Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
-										loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
+									Discussao.getByDescricao(searchTxt, Base.getUrlParameter("id"), function(discussoes) {
+										if (discussoes.length == 0) {
+											alert("Não foram encontradas discussões.");
+										} else {
+											document.getElementById("discussoes").innerHTML = "";
+											Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
+												loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
+											});
+										}
+									
 									});
 								}
-							});
+							}
+						});
 						
-						} else {
-							Discussao.getByDescricao(searchTxt, Base.getUrlParameter("id"), function(discussoes) {
-								if (discussoes.length == 0) {
-									alert("Não foram encontradas discussões.");
-								} else {
-									document.getElementById("discussoes").innerHTML = "";
-									Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
-										loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
-									});
-								}
+						
+						// Membros:
+						Comunidade.getMembros(Base.getUrlParameter("id"), function(dataMembros) {
+							membros = "";
 							
-							});
-						}
-					}
-				});
-			
+							for (var i = 0; i < dataMembros.length; i++) {
+								membro = JSON.parse(dataMembros[i]);
+
+								if (membro.urlImagemPerfil == "") {
+									membro.urlImagemPerfil = "Assets/Imagens/avatar round.png";
+								} 
+							
+								membros += '<div class="membro-lab">';
+								membros += '<img class="img-membro" src="' + membro.urlImagemPerfil + '" title="Imagem de perfil" alt="Imagem de perfil"><br>';
+								membros += '<a href="usuario.html?id=' + membro.id + '" title="' + membro.nome + '">' + membro.nome + '</a>';
+								membros += '</div>';
+							}
+							document.getElementById("membros").innerHTML = membros;
+						});
+				
+					});
+				}
 			
 			});
 		
 		</script>
-	
 	
 	
 	</head>
@@ -276,7 +303,13 @@
 		<p id="detalhesLab"></p>
 		<p class='clear'></p>
 		
-	
+		
+		<!-- Membros -->
+		<h2>Membros</h2>
+		<p id="membros"></p>
+		<p class='clear'></p>
+		
+
 		<!-- Pesquisa de discussões -->
 		<div>
 			<input type='text' id='search-discussoes'></input>
@@ -288,8 +321,10 @@
 		
 		
 		<!-- Discussões -->
+		<h2>Discussões</h2>
 		<div id="discussoes"></div>
 		<p class='clear'></p>
+		
 		
 		<!--Adicionar discussão -->
 		<button class='editDiscBtn' onclick='editarDiscussaoModal(0)'><a href='#editarDiscussaoModal' rel='modal:open'>Adicionar discussão</a></button>

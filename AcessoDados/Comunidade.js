@@ -84,6 +84,7 @@ var Comunidade = new function() {
 			"json"
 		);
 	}
+	
 	this.setAdm= function(labName, admId, callback= function(data){}){
 		$.post(
 			this.controladorURL, {
@@ -97,6 +98,7 @@ var Comunidade = new function() {
 			"json"
 		);
 	}
+	
 	this.removeAdm= function(admId, callback= function(data){}){
 		$.post(
 			this.controladorURL,
@@ -110,7 +112,9 @@ var Comunidade = new function() {
 			"json"
 		);
 	}
-	this.getByNomeOuDescricao= function(nome, descricao, callback= function(data){}){
+	
+	
+	this.getByNomeOuDescricao = function(nome, descricao, callback= function(data){}){
 		$.post(
 			this.controladorURL,
 			{
@@ -125,5 +129,19 @@ var Comunidade = new function() {
 		);
 	}
 
-
+	this.getMembros = function(id, callback = function(data) {} ){
+		$.post(
+			this.controladorURL,
+			{
+				func: 'getMembros' + this.nomeEntidade,
+				id: id
+			},
+			function(data){
+				callback(data);
+			},
+			"json"
+		);
+	}
+	
+	
 }

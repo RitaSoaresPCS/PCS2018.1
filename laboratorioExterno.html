@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="Assets/CSS/laboratorioExterno.css">
+		
+		<!-- Modal jQuery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+		<script src="AcessoDados/Base.js"></script>
+		<script src="AcessoDados/Comunidade.js"></script>
+		<script src="AcessoDados/UsuarioVisualizaComunidade.js"></script>
+	
+		<script>
+		
+			function solicitarAcesso(idUsuario, idComunidade) {
+				UsuarioVisualizaComunidade.solicitarAcesso(idUsuario, idComunidade, $("#justificativa").val(), function(data) {
+					if (data.erro == false) {
+						location.reload();
+					}
+				});
+			}
+			
+		
+			UsuarioVisualizaComunidade.verificarPermissao(localStorage.userId, Base.getUrlParameter("id"), function(permissao) {
+				if (permissao.exibir == true) {
+					window.location.assign("laboratorio.html?id=" + Base.getUrlParameter("id"));
+				} else {
+					
+					$(document).ready(function(){
+						Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
+							dataCom = JSON.parse(dataCom);
+							
+							document.getElementById("nomeLab").innerHTML = dataCom.nome;
+							document.getElementById("descricaoLab").innerHTML = dataCom.descricao;
+							
+							document.getElementById("solicitarLab").innerHTML = '<button type="button"><a href="#solicitarAcessoModal" rel="modal:open">Solicitar acesso</a></button>';
+						
+							document.getElementById("btn-solicitarAcesso").onclick = function() {
+								solicitarAcesso(localStorage.userId, Base.getUrlParameter("id"));
+							};
+						
+							// Membros:
+							Comunidade.getMembros(Base.getUrlParameter("id"), function(dataMembros) {
+								membros = "";
+								
+								for (var i = 0; i < dataMembros.length; i++) {
+									membro = JSON.parse(dataMembros[i]);
+
+									if (membro.urlImagemPerfil == "") {
+										membro.urlImagemPerfil = "Assets/Imagens/avatar round.png";
+									} 
+								
+									membros += '<div class="membro-lab">';
+									membros += '<img class="img-membro" src="' + membro.urlImagemPerfil + '" title="Imagem de perfil" alt="Imagem de perfil"><br>';
+									membros += '<a href="usuario.html?id=' + membro.id + '" title="' + membro.nome + '">' + membro.nome + '</a>';
+									membros += '</div>';
+								}
+								document.getElementById("membros").innerHTML = membros;
+							});
+						});
+					});				
+				}
+			});
+		
+		</script>
+	
+	
+	</head>
+	<body>
+		<!-- Barra de navegação com botão pro perfil -->
+		<nav></nav>
+	
+		<!-- Nome do laboratório -->
+		<h1 id="nomeLab"></h1>
+		<p class='clear'></p>
+		
+		<!-- Botão de solicitar ingresso -->
+		<div id="solicitarLab"></div>
+		<p class='clear'></p>
+
+		<!-- Descrição do laboratório -->	
+		<div id="descricaoLab"></div>
+		<p class='clear'></p>
+	
+		<!-- Membros -->
+		<div id="membros"></div>
+		<p class='clear'></p>
+		
+	
+		<div id="solicitarAcessoModal" class="modal">
+			<form id='form-addDisc'>
+				<h3>Solicitar acesso</h3>
+				<p class='clear'></p>
+				
+      			<label for="justificativa">Justificativa (Opcional)</label><br>
+      			<textarea id='justificativa'></textarea>	
+				<p class='clear'></p>
+			
+      			<button id= 'btn-solicitarAcesso' type= 'button'>Solicitar</button>
+      		</form>
+		</div>
+		
+	</body>
+</html>

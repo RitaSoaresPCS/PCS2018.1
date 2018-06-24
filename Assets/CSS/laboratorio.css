@@ -27,6 +27,15 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 
 
+.membro-lab {
+	float:left;
+}
+
+.img-membro {
+	width: 80px;
+}
+
+
 p.clear {
     clear: both;
 	padding-top:10px;

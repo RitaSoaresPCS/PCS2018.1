@@ -219,6 +219,27 @@
 		$sql = "UPDATE Comunidade SET ativa = 0 WHERE id = $id";
 		echo query_no_result($sql);
 	}
+	
+	
+	function getMembrosComunidade() {
+		$id = $_POST['id'];
+		$sql = "SELECT * FROM Usuario WHERE idComunidadePertence = $id";
+
+		$result = query_result($sql);
+		$return = array();
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				$id = $row["id"];
+				$urlImagemPerfil = $row["urlImagemPerfil"];
+				$nome = $row["nome"];
+
+				$s = "{ 'id': '$id', 'urlImagemPerfil': '$urlImagemPerfil', 'nome': '$nome' }";
+				array_push($return, str_replace("'", "\"", $s));
+			}
+		}
+		echo json_encode($return);
+	}
 
 
 	$func = $_POST['func'];
@@ -260,7 +281,9 @@
 		case "getByNomeOuDescricaoComunidade":
 			getByNomeOuDescricaoComunidade();
 			break;
-
+		case "getMembrosComunidade":
+			getMembrosComunidade();
+			break;
 	}
 
 ?>
