@@ -44,6 +44,22 @@
 	}
 	
 	
+	function query_return_id($sql) {
+		$conn = connect();
+		
+		$last_id = 0;
+		if (mysqli_query($conn, $sql)) {
+			$last_id = mysqli_insert_id($conn);
+		} 
+		
+		close($conn);
+		return $last_id;
+	}
+	
+	
+	
+	
+	
 	function query_result($sql) {
 		$conn = connect();
 		

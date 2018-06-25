@@ -4,7 +4,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 		<script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		
@@ -149,7 +148,7 @@
 					contentD += '<div class="discussao-lab">';
 					contentD += '<div class="topo-discussao">';
 					contentD += '<img src="' + imagemCriador + '" title="Imagem de perfil" alt="Imagem de perfil">';
-					contentD += '<h2>' + discussoes[iterador].titulo + '</h2>';
+					contentD += '<h2><a href="discussao.html?id=' + discussoes[iterador].id + '" title="' + discussoes[iterador].titulo + '">' + discussoes[iterador].titulo + '</a></h2>';
 					contentD += '<p>Criada por ' + discussoes[iterador].username + '</p>';
 					
 					if (localStorage.userId == discussoes[iterador].idUsuarioCriador) {
@@ -336,6 +335,7 @@
 		<p class='clear'></p>
 		
 
+		<h2>Discussões</h2>
 		<!-- Pesquisa de discussões -->
 		<div>
 			<input type='text' id='search-discussoes'></input>
@@ -347,7 +347,6 @@
 		
 		
 		<!-- Discussões -->
-		<h2>Discussões</h2>
 		<div id="discussoes"></div>
 		<p class='clear'></p>
 		

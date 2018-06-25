@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+	
+	
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/anexoDiscussao.css">
+
+    <script src="AcessoDados/Base.js"></script>
+    <script src="AcessoDados/Discussao.js"></script>
+    <script src="AcessoDados/Comunidade.js"></script>
+	<script src="AcessoDados/Anexo.js"></script>
+
+
+	<script type= 'text/javascript'>
+		
+		$(document).ready(function(){
+			Discussao.getById(Base.getUrlParameter("id"), function(dataDisc) {
+				dataDisc = JSON.parse(dataDisc);
+				Comunidade.getById(dataDisc.idComunidadePertence, function(dataCom) {
+					dataCom = JSON.parse(dataCom);
+				
+					document.getElementById("nomeLab").innerHTML = '<a href="laboratorio.html?id=' + dataCom.id + '" title="' + dataCom.nome + '">' + dataCom.nome + '</a>';
+					
+					document.getElementById("nomeDisc").innerHTML = '<a href="discussao.html?id=' + dataDisc.id + '" title="' + dataDisc.titulo + '">' + dataDisc.titulo + '</a>';
+				
+				});
+				
+				Anexo.getAnexoByIdDiscussao(dataDisc.id, function(dataAnex) {
+					anexos = "";
+					for (var i = 0; i < dataAnex.length; i++) {
+						
+						anexos += '<div class="anexo-disc">';
+						anexos += '<img class="anexo-disc-img" src="Assets/Imagens/file.png" title="Imagem de arquivo">';
+						anexos += '<p><a href="' + dataAnex[i].titulo.substring(3) + '" title="' + dataAnex[i].titulo.substring(18) + '" download>' + dataAnex[i].titulo.substring(18) + '</a></p>';
+						anexos += '<p>Adicionado em:<br>' + moment(dataAnex[i].dataEnvio).format('DD/MM/YY') + '</p>';
+						anexos += '</div>';
+						
+					}
+					document.getElementById("anexos").innerHTML = anexos;
+				
+				});
+			
+			
+			});
+				
+			$('#btn-upload').click(function(){
+				var form = new FormData();
+				form.append('fileToUpload', $('#fileToUpload').prop('files')[0]);
+				form.append('func', 'uploadFileDiscussao')
+				form.append('fileId', '1');
+				form.append('idDiscussao', Base.getUrlParameter("id"));
+				form.append('idUsuario', localStorage.userId);
+				Anexo.uploadFileDiscussao(form, function (result) {
+					if (result.erro == false) {
+						location.reload();
+					}
+				});
+			});
+				
+		});
+		
+	</script>
+  
+  </head>
+  <body>
+  
+	<!-- Barra de navegação com botão pro perfil -->
+	<nav></nav>
+	
+	<!-- Nome do laboratório e link -->
+    <h1 id="nomeLab"></h1>
+	<p class='clear'></p>
+
+	<!-- Nome da discussão e link -->
+	<h2 id="nomeDisc"></h2>
+	<p class='clear'></p>
+	
+	<!-- Anexos da discussão -->
+	<h3>Anexos</h3>
+	<input type="file" name="fileToUpload" id="fileToUpload">
+	<button type='button' id='btn-upload'>Anexar arquivo</button><br>
+	<p class='clear'></p>
+	
+	<div id="anexos"></div>  
+	<p class='clear'></p>
+
+	<footer></footer>
+  </body>
+</html>

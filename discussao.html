@@ -20,7 +20,6 @@
     <script src="AcessoDados/Usuario.js"></script>
 	<script src="AcessoDados/MensagemDiscussao.js"></script>
 
-
 	<script type= 'text/javascript'>
 		function mudarFixoDiscussao() {
 			Discussao.mudarFixo(Base.getUrlParameter("id"), $("#fixaDiscussao").attr('value'), function(result){
@@ -48,13 +47,13 @@
 		
 		
 		function editarMsg(id) {
-			document.getElementById("msg-" + id + "-content").disabled = false;
+			document.getElementById("msg-" + id + "-content").contentEditable = true;
 			document.getElementById("salvarEdicaoMsg" + id).style.display = "block";
 		}
 		
 		
 		function salvarEdicaoMsg(id) {
-			conteudo = document.getElementById("msg-" + id + "-content").value;
+			conteudo = document.getElementById("msg-" + id + "-content").innerHTML;
 			MensagemDiscussao.editar(id, conteudo, function(data) {
 				if (data.erro == true) {
 					alert(data.mensagem);
@@ -113,7 +112,7 @@
 										mensagensContent += "<button class='editMsgBtn' onclick='editarMsg(" + msg.id + ")'>Editar</button>";
 									}
 									
-									mensagensContent += "</p><textarea class='msgText' id='msg-" + msg.id + "-content' disabled></textarea>";
+									mensagensContent += "</p><div class='msgText' id='msg-" + msg.id + "-content' contenteditable='false'></div>";
 									
 									if (usuarioLogado == msg.idUsuarioCriador) {
 										mensagensContent += "<button class='hidden' id='salvarEdicaoMsg" + msg.id + "' onclick='salvarEdicaoMsg(" + msg.id + ")'>Salvar</button>";
@@ -169,7 +168,7 @@
 				.catch( error => {
 					console.error( error );
 				} );
-				
+					
 		});
 		
 	</script>
@@ -202,8 +201,7 @@
 	
 	
 	<div id="novaMensagemModal" class="modal">
-		<textarea name="content" id="novaMensagem"></textarea>
-		Anexar arquivos
+		<textarea name="content" id="novaMensagem"></textarea><br>
 		<button id="enviarNovaMsg" onclick='enviarNovaMsg()'>Enviar</button>
 	</div>
 
