@@ -89,20 +89,32 @@
 		$idDiscussao = $_POST['idDiscussao'];
 		$dataEnvio = date('Y-m-d');
 		
-		$target_dir = "../Assets/Uploads/";
-		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-		$fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		$newfilename = round(microtime(true)) . '-' . basename($_FILES["fileToUpload"]["name"], pathinfo($target_file,PATHINFO_EXTENSION));
-		$target_file = $target_dir . $newfilename . $fileType;
+		if (isset($_FILES["fileToUpload"])) {
+			$target_dir = "../Assets/Uploads/";
+			$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+			$fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+			$newfilename = round(microtime(true)) . '-' . basename($_FILES["fileToUpload"]["name"], pathinfo($target_file,PATHINFO_EXTENSION));
+			$target_file = $target_dir . $newfilename . $fileType;
 
-		$result = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-		
-		$sql = "INSERT INTO recurso VALUES(DEFAULT, '$target_file', $idUsuario, '$dataEnvio', null, 1, '')";
-		$idRecurso = query_return_id($sql);
-		
-		$sql2 = "INSERT INTO discussaoacessarecurso VALUES($idDiscussao, $idRecurso)";
-		echo query_no_result($sql2);
+			$result = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+			
+			$sql = "INSERT INTO recurso VALUES(DEFAULT, '$target_file', $idUsuario, '$dataEnvio', null, 1, '')";
+			$idRecurso = query_return_id($sql);
+			
+			$sql2 = "INSERT INTO discussaoacessarecurso VALUES($idDiscussao, $idRecurso)";
+			echo query_no_result($sql2);
+		}
 	}
+	
+	
+	function removerAnexoDiscussao(){
+		$idAnexo = $_POST['idAnexo'];
+		$idDiscussao = $_POST['idDiscussao'];
+		
+		$sql = "delete from discussaoacessarecurso where idDiscussao=$idDiscussao and idRecurso=$idAnexo";
+		echo query_no_result($sql);
+	}
+	
 	
 	
 	$func = $_POST['func'];
@@ -119,6 +131,9 @@
 			break;
 		case "getAnexoByIdDiscussao":
 			getAnexoByIdDiscussao();
+			break;
+		case "removerAnexoDiscussao":
+			removerAnexoDiscussao();
 			break;
 			
 	}

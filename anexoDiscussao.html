@@ -27,25 +27,39 @@
 					
 					document.getElementById("nomeDisc").innerHTML = '<a href="discussao.html?id=' + dataDisc.id + '" title="' + dataDisc.titulo + '">' + dataDisc.titulo + '</a>';
 				
-				});
 				
-				Anexo.getAnexoByIdDiscussao(dataDisc.id, function(dataAnex) {
-					anexos = "";
-					for (var i = 0; i < dataAnex.length; i++) {
+					Anexo.getAnexoByIdDiscussao(dataDisc.id, function(dataAnex) {
+						anexos = "";
+						if (dataAnex.length == 0) {
+							anexos = "Não há anexos nesta discussão.";
+						}
 						
-						anexos += '<div class="anexo-disc">';
-						anexos += '<img class="anexo-disc-img" src="Assets/Imagens/file.png" title="Imagem de arquivo">';
-						anexos += '<p><a href="' + dataAnex[i].titulo.substring(3) + '" title="' + dataAnex[i].titulo.substring(18) + '" download>' + dataAnex[i].titulo.substring(18) + '</a></p>';
-						anexos += '<p>Adicionado em:<br>' + moment(dataAnex[i].dataEnvio).format('DD/MM/YY') + '</p>';
-						anexos += '</div>';
-						
-					}
-					document.getElementById("anexos").innerHTML = anexos;
+						for (var i = 0; i < dataAnex.length; i++) {
+							
+							anexos += '<div class="anexo-disc">';
+							
+							// Se tiver permissão para remover:
+							if (localStorage.userId == dataAnex[i].idUsuarioCriador || 
+								localStorage.userId == dataCom.idUsuarioAdministrador) {
+								anexos += '<button type="button" onclick="Anexo.removerAnexoDiscussao(' + dataAnex[i].idRecurso + ', ' + dataDisc.id + ', function(data) {if (data.erro == false) { location.reload()} })">Remover</button>';
+							}
+							
+							anexos += '<img class="anexo-disc-img" src="Assets/Imagens/file.png" title="Imagem de arquivo">';
+							anexos += '<p><a href="' + dataAnex[i].titulo.substring(3) + '" title="' + dataAnex[i].titulo.substring(18) + '" download>' + dataAnex[i].titulo.substring(18) + '</a></p>';
+							anexos += '<p>Adicionado em:<br>' + moment(dataAnex[i].dataEnvio).format('DD/MM/YY') + '</p>';
+							anexos += '</div>';
+							
+						}
+						document.getElementById("anexos").innerHTML = anexos;
+					
+					});
+				
+				
+				
 				
 				});
-			
-			
 			});
+				
 				
 			$('#btn-upload').click(function(){
 				var form = new FormData();

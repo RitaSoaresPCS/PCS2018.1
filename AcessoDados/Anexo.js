@@ -38,6 +38,19 @@ var Anexo = new function() {
 		);
 	}
 	
+	
+	this.removerAnexoDiscussao = function (idAnexo, idDiscussao, callback = function(data) {}) {
+		$.post(
+			this.controladorURL, 
+			{ func: "removerAnexoDiscussao", idAnexo: idAnexo, idDiscussao: idDiscussao }, 
+			function(data) {
+				callback(data);
+			},
+			"json"
+		);
+	}
+	
+	
 	this.uploadFileDiscussao = function(form, callback = function(data){}){
 		$.ajax({
 			type: 'POST',
