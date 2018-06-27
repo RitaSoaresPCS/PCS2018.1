@@ -7,7 +7,7 @@
 		$nome = $_POST['nome'];
 		$descriptn= $_POST['descricao'];
 
-		$sql = "SELECT * FROM Comunidade WHERE LOWER(nome) LIKE LOWER('%$nome%') OR LOWER(descricao) LIKE LOWER('%$descriptn%')";
+		$sql = "SELECT * FROM Comunidade WHERE (LOWER(nome) LIKE LOWER('%$nome%') OR LOWER(descricao) LIKE LOWER('%$descriptn%')) and ativa = 1";
 
 		$result = query_result($sql);
 		$return = array();
@@ -47,7 +47,7 @@
 	}
 
 	function getLabsDisponiveis(){
-		$sql= "SELECT id, nome FROM comunidade WHERE idUsuarioAdministrador IS NULL AND ativa= 1";
+		$sql= "SELECT id, nome FROM comunidade WHERE idUsuarioAdministrador IS NULL AND ativa = 1";
 		$result = query_result($sql);
 		$return = array();
 		if (mysqli_num_rows($result) > 0)
@@ -154,7 +154,7 @@
 	function getByNomeComunidade() {
 		$nome = $_POST['nome'];
 
-		$sql = "SELECT * FROM Comunidade WHERE LOWER(nome) LIKE LOWER('%$nome%')";
+		$sql = "SELECT * FROM Comunidade WHERE LOWER(nome) LIKE LOWER('%$nome%') and ativa = 1";
 
 		$result = query_result($sql);
 		$return = array();
@@ -178,7 +178,7 @@
 	function getByDescricaoComunidade() {
 		$descricao = $_POST['descricao'];
 
-		$sql = "SELECT * FROM Comunidade WHERE LOWER(descricao) LIKE LOWER('%$descricao%')";
+		$sql = "SELECT * FROM Comunidade WHERE LOWER(descricao) LIKE LOWER('%$descricao%') and ativa = 1";
 
 		$result = query_result($sql);
 		$return = array();

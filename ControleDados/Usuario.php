@@ -3,7 +3,7 @@
 	include_once 'Base.php';
 
 	function verifyAdm($userId) {
-		$sql= "SELECT idUsuarioAdministrador FROM comunidade WHERE idUsuarioAdministrador= $userId";
+		$sql= "SELECT idUsuarioAdministrador FROM comunidade WHERE idUsuarioAdministrador = $userId";
 		$result= query_result($sql);
 		if (mysqli_num_rows($result) > 0) {
 			return 1;
@@ -143,7 +143,7 @@
 	function getByNomeUsuario() {
 		$nome = $_POST['nome'];
 
-		$sql = "SELECT * FROM Usuario WHERE LOWER(nome) LIKE LOWER('%$nome%')";
+		$sql = "SELECT * FROM Usuario WHERE LOWER(nome) LIKE LOWER('%$nome%') and ativo = 1 and banidoSistema = 0";
 
 		$result = query_result($sql);
 		$return = array();
@@ -168,7 +168,7 @@
 	function getByNomeIgualUsuario() {
 		$nome = $_POST['nome'];
 
-		$sql = "SELECT * FROM Usuario WHERE LOWER(nome) = LOWER('$nome')";
+		$sql = "SELECT * FROM Usuario WHERE LOWER(nome) = LOWER('$nome') and ativo = 1 and banidoSistema = 0";
 
 		$result = query_result($sql);
 		$return = array();
@@ -193,7 +193,7 @@
 	function getByUsernameUsuario() {
 		$username = $_POST['username'];
 
-		$sql = "SELECT * FROM Usuario WHERE LOWER(username) = LOWER('$username')";
+		$sql = "SELECT * FROM Usuario WHERE LOWER(username) = LOWER('$username') and ativo = 1 and banidoSistema = 0";
 
 		$result = query_result($sql);
 		$return = array();
@@ -216,7 +216,7 @@
 
 
 	function getIdUsuarioByUsername($username) {
-		$sql = "SELECT id FROM Usuario WHERE LOWER(username) = LOWER('$username')";
+		$sql = "SELECT id FROM Usuario WHERE LOWER(username) = LOWER('$username') and ativo = 1 and banidoSistema = 0";
 
 		$result = query_result($sql);
 
