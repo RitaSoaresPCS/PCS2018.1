@@ -35,6 +35,8 @@ var Comunidade = new function() {
 			this.remover(id, function(data) {
 				if (data.erro == false) {
 					window.location.assign('laboratorios.html');
+				} else {
+					alert(data.mensagem);
 				}
 			});
 		}

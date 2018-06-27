@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset= 'utf-8'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
 
     <script src="AcessoDados/Base.js"></script>
@@ -21,7 +22,7 @@
 				for (i = 0; i < data.length; i++) {
 					// [dataCriacao, descricao, id, nome, tema]
 					conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
-					conteudo += "Criada em: " + data[i]["dataCriacao"].substring(0,10) + "<br>";
+					conteudo += "Criada em: " + moment(data[i]["dataCriacao"].substring(0,10)).format('DD/MM/YY') + "<br>";
 					conteudo += "Tema: " + data[i]["tema"] + "<br>";
 					conteudo += data[i]["descricao"] + "<br>";
 					conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'>Desativar</button>";
@@ -50,7 +51,7 @@
 						for (i = 0; i < dataSize; i++) {
 							// [dataCriacao, descricao, id, nome, tema]
 							conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
-							conteudo += "Criada em: " + data[i]["dataCriacao"].substring(0,10) + "<br>";
+							conteudo += "Criada em: " + moment.data[i]["dataCriacao"].substring(0,10) + "<br>";
 							conteudo += "Tema: " + data[i]["tema"] + "<br>";
 							conteudo += data[i]["descricao"] + "<br>";
 							conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'>Desativar</button>";

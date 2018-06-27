@@ -3,6 +3,13 @@
 	include_once 'Base.php';
 
 
+	function permissaoEdicaoComunidade($id) {
+		return ($_SESSION['isAdminSistema'] == "true" || 
+			($_SESSION['isAdminLab'] == "true" && $_SESSION['idLaboratorioPertence'] == $id));
+		
+	}
+	
+	
 	function getByNomeOuDescricaoComunidade(){
 		$nome = $_POST['nome'];
 		$descriptn= $_POST['descricao'];
@@ -28,15 +35,15 @@
 	}
 
 	function removeAdm(){
-		$admId= $_POST['admId'];
-		$sql= "UPDATE comunidade SET idUsuarioAdministrador= NULL WHERE idUsuarioAdministrador= $admId";
+		$admId = $_POST['admId'];
+		$sql = "UPDATE comunidade SET idUsuarioAdministrador = NULL WHERE idUsuarioAdministrador = $admId";
 		echo query_no_result($sql);
 	}
 
 	function setAdm(){
-		$labName= $_POST['labName'];
-		$admId= $_POST['admId'];
-		$sql= "UPDATE comunidade SET idUsuarioAdministrador= $admId WHERE nome= '$labName'";
+		$labName = $_POST['labName'];
+		$admId = $_POST['admId'];
+		$sql = "UPDATE comunidade SET idUsuarioAdministrador= $admId WHERE nome= '$labName'";
 		echo query_no_result($sql);
 	}
 
@@ -207,21 +214,30 @@
 		$tema = $_POST['tema'];
 		$usernameAdmin = $_POST['usernameAdmin'];
 
-		$_POST['func'] = "";
-		include_once 'Usuario.php';
+		if (permissaoEdicaoComunidade($id)) {
+			$_POST['func'] = "";
+			include_once 'Usuario.php';
 
-		$idUsuarioAdministrador = getIdUsuarioByUsername($usernameAdmin);
+			$idUsuarioAdministrador = getIdUsuarioByUsername($usernameAdmin);
 
-		$sql = "UPDATE Comunidade SET nome = '$nome', descricao = '$descricao', dataUltimaEdicao = '$dataUltimaEdicao', tema = '$tema', idUsuarioAdministrador = $idUsuarioAdministrador WHERE id = $id";
+			$sql = "UPDATE Comunidade SET nome = '$nome', descricao = '$descricao', dataUltimaEdicao = '$dataUltimaEdicao', tema = '$tema', idUsuarioAdministrador = $idUsuarioAdministrador WHERE id = $id";
 
-		echo query_no_result($sql);
+			echo query_no_result($sql);
+		} else {
+			mensagemSemPermissao();
+		}
+		
 	}
 
 
 	function inativarComunidade() {
 		$id = $_POST['id'];
-		$sql = "UPDATE Comunidade SET ativa = 0 WHERE id = $id";
-		echo query_no_result($sql);
+		if (permissaoEdicaoComunidade($id)) {
+			$sql = "UPDATE Comunidade SET ativa = 0 WHERE id = $id";
+			echo query_no_result($sql);
+		} else {
+			mensagemSemPermissao();
+		}
 	}
 	
 	
@@ -245,13 +261,18 @@
 		echo json_encode($return);
 	}
 
+	
 
 	$func = $_POST['func'];
 
 	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
 		switch ($func) {
 			case "adicionarComunidade":
-				adicionarComunidade();
+				if ($_SESSION['isAdminSistema'] == "true") {
+					adicionarComunidade();
+				} else {
+					mensagemSemPermissao();
+				}
 				break;
 			case "listarComunidade":
 				listarComunidade();
@@ -278,10 +299,18 @@
 				getByNomeIgualComunidade();
 				break;
 			case "setAdm":
-				setAdm();
+				if ($_SESSION['isAdminSistema'] == "true") {
+					setAdm();
+				} else {
+					mensagemSemPermissao();
+				}
 				break;
 			case "removeAdm":
-				removeAdm();
+				if ($_SESSION['isAdminSistema'] == "true") {
+					removeAdm();
+				} else {
+					mensagemSemPermissao();
+				}
 				break;
 			case "getByNomeOuDescricaoComunidade":
 				getByNomeOuDescricaoComunidade();

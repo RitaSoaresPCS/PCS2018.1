@@ -157,12 +157,12 @@
 					}
 					
 					if (localStorage.userId == discussoes[iterador].idUsuarioCriador || 
-						localStorage.userId == idUsuarioAdministrador) {
+						localStorage.userId == idUsuarioAdministrador || localStorage.isAdminSistema == "true") {
 						contentD += "<button class='removeDiscBtn' onclick='Discussao.remover(" + discussoes[iterador].id + ", function(data) { location.reload(); });'>Remover</button>";
 					}
 					
 					var fixoId = "fixDiscBtn" + discussoes[iterador].id;
-					if (localStorage.userId == idUsuarioAdministrador) {
+					if (localStorage.userId == idUsuarioAdministrador || localStorage.isAdminSistema == "true") {
 						contentD += "<button id='" + fixoId + "' class='fixDiscBtn' onclick='definirFixoDiscussao(" + discussoes[iterador].id + ");' value='" + discussoes[iterador].fixa + "'></button>";
 						
 					}
@@ -211,7 +211,7 @@
 								document.getElementById("dadosLab").innerHTML = dadosLab;	
 								
 								// Edição de dados do laboratório.
-								if (localStorage.userId == data.idUsuarioAdministrador) {
+								if (localStorage.userId == data.idUsuarioAdministrador || localStorage.isAdminSistema == "true") {
 
 									$( "<i id='editNomeIcon' class='far fa-edit' onclick='editDadosLab(0,\"nomeLab\", \"editNomeIcon\");'></i>" ).insertAfter( "#nomeLab" );
 									

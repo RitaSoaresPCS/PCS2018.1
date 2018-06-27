@@ -14,7 +14,9 @@ $(document).ready(function(){
 			if (result.length == 0) {
 				alert("Senha ou e-mail incorretos.")
 			} else {
-				localStorage.setItem('userId', result);
+				result = JSON.parse(result);
+				localStorage.setItem('userId', result.id);
+				localStorage.setItem('isAdminSistema', result.isAdminSistema);
 				window.location.assign('perfil.html');
 			}	
         }

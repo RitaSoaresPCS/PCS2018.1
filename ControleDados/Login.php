@@ -51,7 +51,9 @@
 					$_SESSION['isAdminSistema'] = "true";
 				}
 				
-				echo $row["id"];
+				$id = $row["id"];
+				$isAdminSistema = $_SESSION['isAdminSistema'];
+				echo json_encode('{"id": "' . $id . '", "isAdminSistema":"' . $isAdminSistema . '"}');
 				return;
 			}
 		} 
