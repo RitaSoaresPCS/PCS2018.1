@@ -116,7 +116,7 @@
 						$return['mensagem'] = "parceiro";	
 					} else {
 						// Envio de e-mail - ainda não implementado.
-						$return['erro'] = false;	
+						$return['erro'] = false;
 					}
 				}
 			}
