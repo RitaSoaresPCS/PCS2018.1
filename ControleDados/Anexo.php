@@ -119,22 +119,24 @@
 	
 	$func = $_POST['func'];
 
-	switch ($func) {
-		case "getAnexoByNomeEIdDiscussao":
-			getAnexoByNomeEIdDiscussao();
-			break;
-		case "getAnexoByNomeEIdComunidade":
-			getAnexoByNomeEIdComunidade();
-			break;
-		case "uploadFileDiscussao":
-			uploadFileDiscussao();
-			break;
-		case "getAnexoByIdDiscussao":
-			getAnexoByIdDiscussao();
-			break;
-		case "removerAnexoDiscussao":
-			removerAnexoDiscussao();
-			break;
-			
+	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
+		switch ($func) {
+			case "getAnexoByNomeEIdDiscussao":
+				getAnexoByNomeEIdDiscussao();
+				break;
+			case "getAnexoByNomeEIdComunidade":
+				getAnexoByNomeEIdComunidade();
+				break;
+			case "uploadFileDiscussao":
+				uploadFileDiscussao();
+				break;
+			case "getAnexoByIdDiscussao":
+				getAnexoByIdDiscussao();
+				break;
+			case "removerAnexoDiscussao":
+				removerAnexoDiscussao();
+				break;
+				
+		}
 	}
 ?>

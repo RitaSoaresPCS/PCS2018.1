@@ -47,13 +47,15 @@
 
 	$func= $_POST['func'];
 
-	switch ($func) {
-		case "verificarPermissaoUsuarioVisualizaComunidade":
-			verificarPermissaoUsuarioVisualizaComunidade();
-			break;
-		case "solicitarAcessoUsuarioVisualizaComunidade":
-			solicitarAcessoUsuarioVisualizaComunidade();
-			break;
+	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
+		switch ($func) {
+			case "verificarPermissaoUsuarioVisualizaComunidade":
+				verificarPermissaoUsuarioVisualizaComunidade();
+				break;
+			case "solicitarAcessoUsuarioVisualizaComunidade":
+				solicitarAcessoUsuarioVisualizaComunidade();
+				break;
+		}
 	}
 
 ?>

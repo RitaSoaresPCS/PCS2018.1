@@ -69,19 +69,21 @@
 	
 	$func = $_POST['func'];
 
-	switch ($func) {
-		case "getByIdDiscussaoMensagemDiscussao":
-			getByIdDiscussaoMensagemDiscussao();
-			break;
-		case "removerMensagemDiscussao":
-			removerMensagemDiscussao();
-			break;
-		case "adicionarMensagemDiscussao":
-			adicionarMensagemDiscussao();
-			break;
-		case "editarMensagemDiscussao":
-			editarMensagemDiscussao();
-			break;
+	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
+		switch ($func) {
+			case "getByIdDiscussaoMensagemDiscussao":
+				getByIdDiscussaoMensagemDiscussao();
+				break;
+			case "removerMensagemDiscussao":
+				removerMensagemDiscussao();
+				break;
+			case "adicionarMensagemDiscussao":
+				adicionarMensagemDiscussao();
+				break;
+			case "editarMensagemDiscussao":
+				editarMensagemDiscussao();
+				break;
+		}
 	}
 
 ?>

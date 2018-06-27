@@ -29,14 +29,28 @@
 		$pass = $_POST['pass'];
 		$hashPass = hash('sha256', $pass);
 		
-		$sql = "SELECT * FROM usuario WHERE email = '$email' and senha = '$hashPass' and banidoSistema = 0";
+		$sql = "SELECT Comunidade.idUsuarioAdministrador as idAdminComunidade, Usuario.* FROM usuario JOIN Comunidade on Usuario.idComunidadePertence = comunidade.id WHERE email = '$email' and senha = '$hashPass' and banidoSistema = 0";
 		
 		$result = query_result($sql);
 		$return = array();
 		
 		if (mysqli_num_rows($result) > 0) {
 			while($row = mysqli_fetch_assoc($result)) {
-				$GLOBALS['userId'] = $row["id"];
+
+				
+				$_SESSION['idUsuarioLogado'] = $row["id"];
+				$_SESSION['idLaboratorioPertence'] = $row["idComunidadePertence"];
+				
+				if ($row["id"] == $row["idAdminComunidade"]) {
+					$_SESSION['isAdminLab'] = "true";
+				} else {
+					$_SESSION['isAdminLab'] = "false";
+				}
+			
+				if ($_SESSION['isAdminLab'] == "true" && $row["idComunidadePertence"] == "1") {
+					$_SESSION['isAdminSistema'] = "true";
+				}
+				
 				echo $row["id"];
 				return;
 			}

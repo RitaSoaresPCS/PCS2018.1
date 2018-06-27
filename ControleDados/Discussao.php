@@ -235,37 +235,39 @@
 
 	$func = $_POST['func'];
 
-	switch ($func) {
-		case "criarDiscussao":
-			criarDiscussao();
-			break;
-		case "listarDiscussao":
-			listarDiscussao();
-			break;
-		case "getByIdDiscussao":
-			getByIdDiscussao();
-			break;
-		case "getByTituloDiscussao":
-			getByTituloDiscussao();
-			break;
-		case "getByDescricaoDiscussao":
-			getByDescricaoDiscussao();
-			break;
-		case "editarDiscussao":
-			editarDiscussao();
-			break;
-		case "inativarDiscussao":
-			inativarDiscussao();
-			break;
-		case "exibirDiscussoesGlobal":
-			exibirDiscussoesGlobal();
-			break;
-		case "getDiscussaoDoLab":
-		 	getDiscussaoDoLab();
-			break;
-		case "mudarFixo":
-			mudarFixo();
-			break;
+	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
+		switch ($func) {
+			case "criarDiscussao":
+				criarDiscussao();
+				break;
+			case "listarDiscussao":
+				listarDiscussao();
+				break;
+			case "getByIdDiscussao":
+				getByIdDiscussao();
+				break;
+			case "getByTituloDiscussao":
+				getByTituloDiscussao();
+				break;
+			case "getByDescricaoDiscussao":
+				getByDescricaoDiscussao();
+				break;
+			case "editarDiscussao":
+				editarDiscussao();
+				break;
+			case "inativarDiscussao":
+				inativarDiscussao();
+				break;
+			case "exibirDiscussoesGlobal":
+				exibirDiscussoesGlobal();
+				break;
+			case "getDiscussaoDoLab":
+				getDiscussaoDoLab();
+				break;
+			case "mudarFixo":
+				mudarFixo();
+				break;
+		}
 	}
 
 ?>

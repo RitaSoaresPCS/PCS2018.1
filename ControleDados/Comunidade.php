@@ -248,46 +248,48 @@
 
 	$func = $_POST['func'];
 
-	switch ($func) {
-		case "adicionarComunidade":
-			adicionarComunidade();
-			break;
-		case "listarComunidade":
-			listarComunidade();
-			break;
-		case "getByIdComunidade":
-			getByIdComunidade();
-			break;
-		case "getByNomeComunidade":
-			getByNomeComunidade();
-			break;
-		case "getByDescricaoComunidade":
-			getByDescricaoComunidade();
-			break;
-		case "editarComunidade":
-			editarComunidade();
-			break;
-		case "inativarComunidade":
-			inativarComunidade();
-			break;
-		case "getLabsDisponiveis":
-			getLabsDisponiveis();
-			break;
-		case "getByNomeIgualComunidade":
-			getByNomeIgualComunidade();
-			break;
-		case "setAdm":
-			setAdm();
-			break;
-		case "removeAdm":
-			removeAdm();
-			break;
-		case "getByNomeOuDescricaoComunidade":
-			getByNomeOuDescricaoComunidade();
-			break;
-		case "getMembrosComunidade":
-			getMembrosComunidade();
-			break;
+	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
+		switch ($func) {
+			case "adicionarComunidade":
+				adicionarComunidade();
+				break;
+			case "listarComunidade":
+				listarComunidade();
+				break;
+			case "getByIdComunidade":
+				getByIdComunidade();
+				break;
+			case "getByNomeComunidade":
+				getByNomeComunidade();
+				break;
+			case "getByDescricaoComunidade":
+				getByDescricaoComunidade();
+				break;
+			case "editarComunidade":
+				editarComunidade();
+				break;
+			case "inativarComunidade":
+				inativarComunidade();
+				break;
+			case "getLabsDisponiveis":
+				getLabsDisponiveis();
+				break;
+			case "getByNomeIgualComunidade":
+				getByNomeIgualComunidade();
+				break;
+			case "setAdm":
+				setAdm();
+				break;
+			case "removeAdm":
+				removeAdm();
+				break;
+			case "getByNomeOuDescricaoComunidade":
+				getByNomeOuDescricaoComunidade();
+				break;
+			case "getMembrosComunidade":
+				getMembrosComunidade();
+				break;
+		}
 	}
 
 ?>

@@ -4,6 +4,22 @@
 	$username = "root";
 	$password = "";
 	$dbname = "redesocial";
+	
+	
+	if(!session_id()) session_start();
+
+	if(!isset($_SESSION['idUsuarioLogado'])) {
+		$_SESSION['idUsuarioLogado'] = "";
+	}
+	if(!isset($_SESSION['idLaboratorioPertence'])) {
+		$_SESSION['idLaboratorioPertence'] = "";
+	}
+	if(!isset($_SESSION['isAdminLab'])) {
+		$_SESSION['isAdminLab'] = "";
+	}
+	if(!isset($_SESSION['isAdminSistema'])) {
+		$_SESSION['isAdminSistema'] = "";
+	}
 
 
 	function connect() {
@@ -55,9 +71,6 @@
 		close($conn);
 		return $last_id;
 	}
-	
-	
-	
 	
 	
 	function query_result($sql) {

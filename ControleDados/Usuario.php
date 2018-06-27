@@ -332,37 +332,39 @@
 	
 
 	$func = $_POST['func'];
-
-	switch ($func) {
-		case "adicionarUsuario":
-			adicionarUsuario();
-			break;
-		case "listarUsuario":
-			listarUsuario();
-			break;
-		case "getByIdUsuario":
-			getByIdUsuario();
-			break;
-		case "getByNomeUsuario":
-			getByNomeUsuario();
-			break;
-		case "getByNomeIgualUsuario":
-			getByNomeIgualUsuario();
-			break;
-		case "getByUsername":
-			getByUsernameUsuario();
-			break;
-		case "editarUsuario":
-			editarUsuario();
-			break;
-		case "inativarUsuario":
-			inativarUsuario();
-			break;
-		case "listarUsuariosPermissao":
-			listarUsuariosPermissao();
-			break;
-		case "enviarConviteMembro":
-			enviarConviteMembro();
-			break;
+	
+	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
+		switch ($func) {
+			case "adicionarUsuario":
+				adicionarUsuario();
+				break;
+			case "listarUsuario":
+				listarUsuario();
+				break;
+			case "getByIdUsuario":
+				getByIdUsuario();
+				break;
+			case "getByNomeUsuario":
+				getByNomeUsuario();
+				break;
+			case "getByNomeIgualUsuario":
+				getByNomeIgualUsuario();
+				break;
+			case "getByUsername":
+				getByUsernameUsuario();
+				break;
+			case "editarUsuario":
+				editarUsuario();
+				break;
+			case "inativarUsuario":
+				inativarUsuario();
+				break;
+			case "listarUsuariosPermissao":
+				listarUsuariosPermissao();
+				break;
+			case "enviarConviteMembro":
+				enviarConviteMembro();
+				break;
+		}
 	}
 ?>

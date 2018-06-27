@@ -132,22 +132,23 @@
 
 	$func= $_POST['func'];
 
-	switch ($func) {
-		case "adicionarUsuarioParceriaComunidade":
-			adicionarUsuarioParceriaComunidade();
-			break;
-		case "removerUsuarioParceriaComunidade":
-			removerUsuarioParceriaComunidade();
-			break;
-		case "getParceiroByIdComunidade":
-			getParceiroByIdComunidade();
-			break;
-		case "getByNomeUsuarioParceriaComunidade":
-			getByNomeUsuarioParceriaComunidade();
-			break;
-		case "enviarConviteParceiro":
-			enviarConviteParceiro();
-			break;
+	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
+		switch ($func) {
+			case "adicionarUsuarioParceriaComunidade":
+				adicionarUsuarioParceriaComunidade();
+				break;
+			case "removerUsuarioParceriaComunidade":
+				removerUsuarioParceriaComunidade();
+				break;
+			case "getParceiroByIdComunidade":
+				getParceiroByIdComunidade();
+				break;
+			case "getByNomeUsuarioParceriaComunidade":
+				getByNomeUsuarioParceriaComunidade();
+				break;
+			case "enviarConviteParceiro":
+				enviarConviteParceiro();
+				break;
+		}
 	}
-
 ?>

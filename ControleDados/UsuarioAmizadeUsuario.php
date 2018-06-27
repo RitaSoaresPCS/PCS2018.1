@@ -53,16 +53,17 @@
 
 	$func= $_POST['func'];
 
-	switch ($func) {
-		case "getAmizade":
-			getAmizade();
-			break;
-		case "removerUsuarioAmizadeUsuario":
-			removerUsuarioAmizadeUsuario();
-			break;
-		case "adicionarUsuarioAmizadeUsuario":
-			adicionarUsuarioAmizadeUsuario();
-			break;
+	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
+		switch ($func) {
+			case "getAmizade":
+				getAmizade();
+				break;
+			case "removerUsuarioAmizadeUsuario":
+				removerUsuarioAmizadeUsuario();
+				break;
+			case "adicionarUsuarioAmizadeUsuario":
+				adicionarUsuarioAmizadeUsuario();
+				break;
+		}
 	}
-
 ?>

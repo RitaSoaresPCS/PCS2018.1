@@ -61,13 +61,14 @@
 
 	$func= $_POST['func'];
 
-	switch ($func) {
-		case "listarSolicitacaoComunidade":
-			listarSolicitacaoComunidade();
-			break;
-		case "getSolicitacaoComunidadeByNomeUsuario":
-			getSolicitacaoComunidadeByNomeUsuario();
-			break;
+	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
+		switch ($func) {
+			case "listarSolicitacaoComunidade":
+				listarSolicitacaoComunidade();
+				break;
+			case "getSolicitacaoComunidadeByNomeUsuario":
+				getSolicitacaoComunidadeByNomeUsuario();
+				break;
+		}
 	}
-
 ?>
