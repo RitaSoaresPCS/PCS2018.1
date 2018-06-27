@@ -32,39 +32,36 @@
 				document.getElementById("conteudo").innerHTML = conteudo;
       });
       $('#btn-search').click(function(){
-        var searchTxt= $('#search-labs').val();
-        if (searchTxt!= '')
-        {
-          Comunidade.getByNomeOuDescricao(searchTxt, searchTxt, function(data){
-            if (data.erro== true)
-            {
-              alert(data.mensagem);
-            }else{
-              if (data[0]== null)
-              {
-                alert('nenhum resultado encontrado');
-              }else{
-                var divConteudo= $('#conteudo');
-                divConteudo.empty();
-                var dataSize= data.length;
-                conteudo = "";
+		  var searchTxt= $('#search-labs').val();
+		  Comunidade.getByNomeOuDescricao(searchTxt, searchTxt, function(data){
+			if (data.erro== true)
+			{
+			  alert(data.mensagem);
+			}else{
+			  if (data[0]== null)
+			  {
+				alert('nenhum resultado encontrado');
+			  }else{
+				var divConteudo= $('#conteudo');
+				divConteudo.empty();
+				var dataSize= data.length;
+				conteudo = "";
 
-        				for (i = 0; i < dataSize; i++) {
-        					// [dataCriacao, descricao, id, nome, tema]
-        					conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
-        					conteudo += "Criada em: " + data[i]["dataCriacao"].substring(0,10) + "<br>";
-        					conteudo += "Tema: " + data[i]["tema"] + "<br>";
-        					conteudo += data[i]["descricao"] + "<br>";
-        					conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'>Desativar</button>";
+						for (i = 0; i < dataSize; i++) {
+							// [dataCriacao, descricao, id, nome, tema]
+							conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
+							conteudo += "Criada em: " + data[i]["dataCriacao"].substring(0,10) + "<br>";
+							conteudo += "Tema: " + data[i]["tema"] + "<br>";
+							conteudo += data[i]["descricao"] + "<br>";
+							conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'>Desativar</button>";
 
-        					conteudo += "</div>";
-        				}
+							conteudo += "</div>";
+						}
 
-        				document.getElementById("conteudo").innerHTML = conteudo;
-              }
-            }
-          });
-        }
+						document.getElementById("conteudo").innerHTML = conteudo;
+			  }
+			}
+		  });
       });
     });
 

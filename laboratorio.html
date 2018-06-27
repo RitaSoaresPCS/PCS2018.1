@@ -250,32 +250,30 @@
 						$('#btn-search').click(function(){
 							var searchTxt=$('#search-discussoes').val();
 							var searchType=$('input[name=typeSearch]:checked').val();
-							if (searchTxt!= '') {
-								if (searchType == "titulo") {
-									Discussao.getByTitulo(searchTxt, Base.getUrlParameter("id"), function(discussoes) {
-										if (discussoes.length == 0) {
-											alert("Não foram encontradas discussões.");
-										} else {
-											document.getElementById("discussoes").innerHTML = "";
-											Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
-												loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
-											});
-										}
-									});
+							if (searchType == "titulo") {
+								Discussao.getByTitulo(searchTxt, Base.getUrlParameter("id"), function(discussoes) {
+									if (discussoes.length == 0) {
+										alert("Não foram encontradas discussões.");
+									} else {
+										document.getElementById("discussoes").innerHTML = "";
+										Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
+											loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
+										});
+									}
+								});
+							
+							} else {
+								Discussao.getByDescricao(searchTxt, Base.getUrlParameter("id"), function(discussoes) {
+									if (discussoes.length == 0) {
+										alert("Não foram encontradas discussões.");
+									} else {
+										document.getElementById("discussoes").innerHTML = "";
+										Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
+											loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
+										});
+									}
 								
-								} else {
-									Discussao.getByDescricao(searchTxt, Base.getUrlParameter("id"), function(discussoes) {
-										if (discussoes.length == 0) {
-											alert("Não foram encontradas discussões.");
-										} else {
-											document.getElementById("discussoes").innerHTML = "";
-											Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
-												loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
-											});
-										}
-									
-									});
-								}
+								});
 							}
 						});
 						

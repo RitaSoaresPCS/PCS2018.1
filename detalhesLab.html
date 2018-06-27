@@ -109,19 +109,16 @@
 				// Pesquisa.
 				$('#btn-search-parceiros').click(function(){
 					var searchTxt=$('#search-parceiros').val();
-					if (searchTxt!= '') {
-					
-						UsuarioParceriaComunidade.getByNome(searchTxt, Base.getUrlParameter("id"), function(parceiros) {
-							if (parceiros.length == 0) {
-								alert("Não foram encontrados parceiros.");
-							} else {
-								document.getElementById("parceiros").innerHTML = "";
-								Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
-									loadParceiros(parceiros, dataCom.idUsuarioAdministrador);	
-								});
-							}
-						});
-					}
+					UsuarioParceriaComunidade.getByNome(searchTxt, Base.getUrlParameter("id"), function(parceiros) {
+						if (parceiros.length == 0) {
+							alert("Não foram encontrados parceiros.");
+						} else {
+							document.getElementById("parceiros").innerHTML = "";
+							Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
+								loadParceiros(parceiros, dataCom.idUsuarioAdministrador);	
+							});
+						}
+					});
 				});
 				
 			

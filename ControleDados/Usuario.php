@@ -143,7 +143,8 @@
 	function getByNomeUsuario() {
 		$nome = $_POST['nome'];
 
-		$sql = "SELECT * FROM Usuario WHERE LOWER(nome) LIKE LOWER('%$nome%') and ativo = 1 and banidoSistema = 0";
+
+		$sql = "select usuario.id, username, urlImagemPerfil, instituicaoOrigem, usuario.nome, idComunidadePertence, titulo, comunidade.nome as nomeComunidade from usuario, comunidade where usuario.idComunidadePertence = comunidade.id and Usuario.ativo = 1 and Usuario.banidoSistema = 0 and LOWER(usuario.nome) LIKE LOWER('%$nome%')";
 
 		$result = query_result($sql);
 		$return = array();
@@ -156,8 +157,15 @@
 				$instituicaoOrigem = $row["instituicaoOrigem"];
 				$nome = $row["nome"];
 				$idComunidadePertence = $row["idComunidadePertence"];
-
-				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence'}";
+				$titulo = $row["titulo"];
+				$nomeComunidade = $row["nomeComunidade"];
+				if ($titulo != 'aluno')
+				{
+					$isAdm= verifyAdm($id);
+				}else{
+					$isAdm= -1;
+				}
+				$s = "{'id': '$id', 'username': '$username', 'urlImagemPerfil': '$urlImagemPerfil', 'instituicaoOrigem': '$instituicaoOrigem', 'nome': '$nome', 'idComunidadePertence': '$idComunidadePertence', 'titulo': '$titulo', 'nomeComunidade': '$nomeComunidade', 'isAdm':'$isAdm' }";
 				array_push($return, str_replace("'", "\"", $s));
 			}
 		}
