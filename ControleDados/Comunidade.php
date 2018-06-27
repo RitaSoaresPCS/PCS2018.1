@@ -75,10 +75,14 @@
 
 		$idUsuarioAdministrador = getIdUsuarioByUsername($usernameAdmin);
 
+		// Adiciona o administrador como membro dessa comunidade.
 		$sql = "INSERT INTO Comunidade VALUES (default, '$nome', '$descricao', '$dataCriacao', null, '$tema', 1, $idUsuarioAdministrador)";
-
-		// Retorna um json com o resultado.
-		echo query_no_result($sql);
+		$last_id = query_return_id($sql);
+		
+		if ($last_id != 0) {
+			$sql2 = "UPDATE Usuario SET idComunidadePertence = $last_id WHERE id = $idUsuarioAdministrador";
+			echo query_no_result($sql2);
+		}	
 	}
 
 
