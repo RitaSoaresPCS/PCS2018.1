@@ -83,4 +83,12 @@
 		return $result;
 	}
 	
+	
+	function mensagemSemPermissao() {
+		$return = array();
+		$return['erro'] = true;
+		$return['mensagem'] = "Você não pode executar esta ação.";
+		echo json_encode($return);
+	}
+	
 ?>
