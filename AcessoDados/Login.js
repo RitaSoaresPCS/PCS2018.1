@@ -24,4 +24,20 @@ $(document).ready(function(){
       });
     }
   });
+	
+	
+  $('#logout').click(function(){
+	  var confirmou = confirm("Deseja realmente sair?");
+	  if (confirmou) { // Usuário confirmou que deseja sair.
+		localStorage.setItem('userId', '-1');
+		$.post(
+			'ControleDados/Logout.php',
+			{ func: "logout" }
+			, function() {
+				window.location.assign('index.html');
+			}
+		);
+	  } 
+  });	
+	
 });
