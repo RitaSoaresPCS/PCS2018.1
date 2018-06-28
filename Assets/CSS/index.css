@@ -1,5 +1,9 @@
+body {
+  margin: 0;
+}
+
 input {
-  width: 65%;
+  width: 100%;
 }
 button {
   display: block;
@@ -11,7 +15,8 @@ button {
   cursor: pointer;
   border-radius: 8px;
   font-weight: bold;
-  align-self: center;
+  margin-left: 42.2%;
+  margin-right: 30%
 }
 
 button:hover{
@@ -20,6 +25,56 @@ button:hover{
   font-weight: bold;
 }
 
+button#pass {
+  margin-top: 25px;
+  margin-left: 44%;
+}
+
+button#pass:hover{
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+button#ok{
+  margin-top: 23px;
+  margin-left: 44.5%;
+  margin-bottom: 27px
+}
+
 form > p {
   font-weight: bold;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+.center {
+  position: absolute;
+  margin: auto;
+  top: 18%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 350px;
+  height: 290px;
+  border-style:solid;
+  border-width:2px;
+  border-radius:15px;
+  background-color:#6259c6;
+  color:white;
+  padding-left: 45px;
+  padding-right: 45px;
+  padding-top: 15px;
+  padding-bottom: 25px;
+}
+
+a {
+  color: white;
+  text-decoration: bold;
+}
+
+a#voltar {
+
 }
