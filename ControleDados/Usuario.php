@@ -235,6 +235,16 @@
 		}
 		return "";
 	}
+	
+	function getByEmailIgualUsuario($email) {
+		$sql = "SELECT nome FROM Usuario WHERE email = LOWER('$email')";
+		$result = query_result($sql);
+		if (mysqli_num_rows($result) > 0) {
+			$row = mysqli_fetch_assoc($result);
+			return $row["nome"];
+		}
+		return;
+	}
 
 
 	function editarUsuario() {
