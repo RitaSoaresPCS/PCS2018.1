@@ -1,0 +1,32 @@
+.container {
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 790px;
+}
+.center {
+  position: absolute;
+  margin: 20%;
+  top: 18%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 350px;
+  height: 290px;
+  border-style:solid;
+  border-width:2px;
+  border-radius:15px;
+  background-color:#6259c6;
+  color:white;
+  padding-left: 45px;
+  padding-right: 45px;
+  padding-top: 15px;
+  padding-bottom: 25px;
+}
+
+header {
+  font-family: Georgia;
+  color:white;
+  background-color:#6259c6;
+  width:100%;
+}

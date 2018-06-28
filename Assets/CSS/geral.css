@@ -69,3 +69,7 @@ li#logout:hover {
 .modal-backdrop.fade.in {
 	z-index: 0;
 }
+
+body {
+	margin: 0;
+}

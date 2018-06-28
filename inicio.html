@@ -3,29 +3,33 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="Assets/CSS/footerLogin.css">
     <link rel="stylesheet" type="text/css" href="Assets/CSS/inicio.css">
+		<link rel="stylesheet" type="text/css" href="Assets/CSS/aside.css">
 		<meta charset="UTF-8">
 		<script type= 'text/javascript' src= 'AcessoDados/Login.js'></script>
 	</head>
 
 	<body>
-    <div id='aside-menu' style="height: 100%; width: auto; position: fixed; z-index: 1; top: 0; left: 0; overflow-x: hidden; padding-top: 20px; background-color:#6259c6;">
-      <img src="https://cdn.pixabay.com/user/2015/01/20/20-56-42-330_250x250.jpg" style=" height: 200px; width: 200px; border-radius:100%; border-style:solid; border-width:2px; background-color:white">
-      <br>
-      <h2>Meu Nome</h2><br>
-      <form class="form-wrapper cf">
-  	     <input type="text" placeholder="Search here..." required>
-	       <button type="submit">lupa</button>
-      </form><br>
-      <br>
-      <a><h3>Meu Perfil</h3></a><hr>
-      <a><h3>Minhas Discussões</h3></a><hr>
-      <a><h3>Meu Laboratório</h3></a><hr>
-      <a><h3>Meu Repositório</h3></a><hr>
-      <a><h3>Mensagens</h3></a><hr>
-      <a><h3>Logout</h3></a><hr>
-    </div>
+		<div id='aside-menu'>
+		  <div id="user-picture" style=" height: 150px; width: 150px; border-radius:100%; border-style:solid; border-width:2px; background-color:white"></div>
+		  <br>
+		  <div id="user-name"></div><br>
+		  <div class="search-container">
+		    <form action="/action_page.php" style="margin: 0px; background-color: white;">
+		      <input type="text" placeholder="Search..." name="search">
+		      <button type="submit"><i class="fa fa-search"></i></button>
+		    </form>
+		  </div><br>
+		  <br>
+		  <a><h3>Meu Perfil</h3></a><hr>
+		  <a><h3>Minhas Discussões</h3></a><hr>
+		  <a><h3>Meu Laboratório</h3></a><hr>
+		  <a><h3>Meu Repositório</h3></a><hr>
+		  <a><h3>Mensagens</h3></a><hr>
+		  <h3><a id="logout">Logout</a></h3><hr>
+		</div>
 		<main>
 			<br><br>
 

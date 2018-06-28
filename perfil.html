@@ -5,39 +5,149 @@
     <meta charset= 'utf-8'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="http://momentjs.com/downloads/moment.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="AcessoDados/Base.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="Assets/CSS/perfil.css">
+    <link rel="stylesheet" type="text/css" href="Assets/CSS/aside.css">
+    <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
     <!-- Carregar apenas se necessário na página: -->
     <script src="AcessoDados/Comunidade.js"></script>
     <script src="AcessoDados/Usuario.js"></script>
     <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
 
-		
+
     <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
 
   </head>
-  <body>
-    <header></header>
+  <style>
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    float: right;
+    margin-right: 15px;
+    margin-left: 91.3%;
+    margin-top:-21px
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
+  <body style="margin:0;">
+    <header>
+      <div id='titulo' align="center"><h1 style="margin-top:0; padding-bottom:15px; padding-top:15px;">Academiq</h1></div>
+      <div id="user-picture" onclick="myFunction()" class="dropbtn" style="position: relative; float: right; border-color: black;height: 37px;width: 37px;border-radius:100%;border-style:solid;border-width:2px;background-color:white;display:block;margin-right: 39px;margin-top: -3.3%; z-index:1000;"> </div>
+      <div id="myDropdown" class="dropdown-content" style="text-align:center"><br>
+        <a href="#home">Home</a>
+        <a href="#about">Perfil</a>
+        <a id="logout" href="#">Logout</a>
+      </div>
+    </header>
     <main>
-      <div id = 'discussoes'>
+
+      <div class="container" style="color: white; background-color:#6259C6;">
+
+        <!-- float left com foto e nome -->
+  			<div style="float: left; height:100px; margin-left:5%; margin-top:3%;">
+          <div id="user-picture" style="height: 200px; width: 200px; border-radius:100%; border-style:solid; border-width:2px; background-color:white; display:block;"></div>
+    		  <br>
+    		  <div id="user-name" align="center" style="display:block;"><h3>nome</h3></div><br>
+  			</div>
+
+        <!-- float right painel -->
+        <div style="display: block; float: right; background-color: white; height:100%; width: 70%;margin-right:57px; margin-top:3%;">
+            <h1>TITULO</h1>
+        </div>
+
+      </div>
+
+      <div id='discussoes'>
       </div>
     </main>
-    <aside>
-      <div id = 'user-picture'></div>
-      <div id = 'user-name'></div>
-      <div id = 'search'></div>
-      <nav>
-        <ul id = 'navigation'>
-          <li id='perfil'>Meu Perfil</li>
-          <li>Minhas Discussões</li>
-          <li>Meu Laboratório</li>
-          <li>Meu Repositório</li>
-          <li>Mensagens</li>
-          <li id='logout'>Sair</li>
-        </ul>
-      </nav>
-    </aside>
     <footer>
     </footer>
   </body>
+  <style>
+    nav {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #6259C6;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #736AD7;
+    }
+
+    .active {
+        background-color: #736AD7;
+    }
+</style>
+  <script>
+    $( "footer" ).load( "footerLogin.html footer" );
+
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
 </html>
