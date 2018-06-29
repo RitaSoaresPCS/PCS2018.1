@@ -45,7 +45,23 @@
 							}
 							
 							anexos += '<img class="anexo-disc-img" src="Assets/Imagens/file.png" title="Imagem de arquivo">';
-							anexos += '<p><a href="' + dataAnex[i].titulo.substring(3) + '" title="' + dataAnex[i].titulo.substring(18) + '" download>' + dataAnex[i].titulo.substring(18) + '</a></p>';
+							
+							// Se o arquivo for um pdf, abre para leitura. Senão, faz download.
+							if (dataAnex[i].titulo.slice(-3) == "pdf") {
+								var pastaServidor = window.location.pathname.split("/")[1];
+								var url = 
+									window.location.origin + 
+									"/" + pastaServidor +
+									"/pdfreader/web/viewer.html?file=/" + 
+									pastaServidor + 
+									"/Assets/Uploads/" + 
+									dataAnex[i].titulo.substring(18);
+								anexos += '<p><a href="' + url + '" title="' + dataAnex[i].titulo.substring(18) + '" target="_blank">' + dataAnex[i].titulo.substring(18) + '</a></p>';
+								
+							} else {
+								anexos += '<p><a href="' + dataAnex[i].titulo.substring(3) + '" title="' + dataAnex[i].titulo.substring(18) + '" download>' + dataAnex[i].titulo.substring(18) + '</a></p>';
+							}
+							
 							anexos += '<p>Adicionado em:<br>' + moment(dataAnex[i].dataEnvio).format('DD/MM/YY') + '</p>';
 							anexos += '</div>';
 							
