@@ -1,4 +1,26 @@
 <?php
+	namespace mailjet;
+	use \Mailjet\Resources;
+	require 'mailjet/vendor/autoload.php';
+
+	Class MailjetMail
+	{
+	public function emailPost($userName, $emailUser, $passUser)
+	{
+		$client = new \Mailjet\Client('308f549a732b5fbd97b43f0b0c6f3054', 'e1400ff82ace61bd86a0a57b1998510b');
+		$email = [
+			'FromName'     => 'Academiq',
+			'FromEmail'    => 'marcos.junior@uniriotec.br',
+			'Text-Part'    => '',
+			'Html-Part'    => '<h2>Olá, Bem vindo ao Academiq!</h2><br><p>Seu e-mail foi confirmado. Seguem as informações sobre sua conta: </p><br><p>Seu nome de usuário é '. $userName .'</p><br><p>Sua senha é:' . $passUser . '</p><br><p>           Equipe Academiq</p>',
+			'Subject'      => 'Academiq - Criação de conta',
+			'Recipients'   => [['Email' => $emailUser]],
+		];
+
+		$ret = $client->post(Resources::$Email, ['body' => $email]);
+
+	}
+	}
 	header('Content-Type: text/html; charset=utf-8');
 	include_once 'Base.php';
 
@@ -73,7 +95,8 @@
 		//$return['erro'] = true;
 		//$return['mensagem'] = "E-mail inválido."; ou $return['mensagem'] = "Não foi possível enviar e-mail, usuário não criado";
 		// Somente salva o arquivo se o e-mail for enviado com sucesso.
-
+		$emailSender= new MailjetMail();
+		$emailSender->emailPost($username, $email, $senha);
 		$sql = "INSERT INTO Usuario VALUES (default, '$username', '$email', '$senhaHash', '', 1, '$instituicaoOrigem', '$titulo', '$cpf', '$nome', 0, $idComunidadePertence)";
 
 		// Retorna um json com o resultado.
