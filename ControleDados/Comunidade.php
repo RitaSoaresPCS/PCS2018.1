@@ -243,7 +243,7 @@
 	
 	function getMembrosComunidade() {
 		$id = $_POST['id'];
-		$sql = "SELECT * FROM Usuario WHERE idComunidadePertence = $id";
+		$sql = "SELECT * FROM Usuario WHERE idComunidadePertence = $id and ativo = 1 and banidoSistema = 0";
 
 		$result = query_result($sql);
 		$return = array();
