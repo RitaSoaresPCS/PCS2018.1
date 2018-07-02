@@ -5,7 +5,8 @@
     <meta charset= 'utf-8'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/laboratorios.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     <script src="AcessoDados/Base.js"></script>
 
@@ -22,10 +23,10 @@
 				for (i = 0; i < data.length; i++) {
 					// [dataCriacao, descricao, id, nome, tema]
 					conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
+					conteudo += "<button class='inativar' type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'><i class='fas fa-power-off'></i>Desativar</button><p class='clear-float'></p>";
 					conteudo += "Criada em: " + moment(data[i]["dataCriacao"].substring(0,10)).format('DD/MM/YY') + "<br>";
-					conteudo += "Tema: " + data[i]["tema"] + "<br>";
-					conteudo += data[i]["descricao"] + "<br>";
-					conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'>Desativar</button>";
+					conteudo += "Tema: " + data[i]["tema"] + "<br><br>";
+					conteudo += "<div class='descricao'>" + data[i]["descricao"] + "</div><br>";
 
 					conteudo += "</div>";
 				}
@@ -51,11 +52,11 @@
 						for (i = 0; i < dataSize; i++) {
 							// [dataCriacao, descricao, id, nome, tema]
 							conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
-							conteudo += "Criada em: " + moment.data[i]["dataCriacao"].substring(0,10) + "<br>";
-							conteudo += "Tema: " + data[i]["tema"] + "<br>";
-							conteudo += data[i]["descricao"] + "<br>";
-							conteudo += "<button type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'>Desativar</button>";
-
+							conteudo += "<button class='inativar' type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'><i class='fas fa-power-off'></i>Desativar</button><p class='clear-float'></p>";
+							conteudo += "Criada em: " + moment(data[i]["dataCriacao"].substring(0,10)).format('DD/MM/YY') + "<br>";
+							conteudo += "Tema: " + data[i]["tema"] + "<br><br>";
+							conteudo += "<div class='descricao'>" + data[i]["descricao"] + "</div><br>";
+							
 							conteudo += "</div>";
 						}
 
@@ -64,6 +65,16 @@
 			}
 		  });
       });
+	  
+	  
+		// Submete a pesquisa quando o usuário pressiona ENTER.
+		$('#search-labs').on('keyup', function(e) {
+			if (e.keyCode === 13) {
+				$('#btn-search').click();
+			}
+		});
+	  
+	  
     });
 
 	</script>
@@ -72,16 +83,24 @@
   <body>
 
     <header><!-- logo do academiq --></header>
-	<h2>Laboratórios</h2>
-  <div>
-  </div>
-	<button type="button"><a href="criarLaboratorio.html">Criar laboratório</a></button>
-  <div>
-    <input type= 'text' id= 'search-labs' placeholder='search'></input>
-    <button type= 'button' id= 'btn-search'>search</button>
-  </div>
 
-	<div id="conteudo"></div>
+	<main id="content">
+		<div id="topo-labs">
+			<button id="btn-create-lab" type="button" onclick="window.location.assign('criarLaboratorio.html')"><i class="fas fa-plus"></i>Criar laboratório</button>
+			
+			<div id="search-box">
+				<i class="fas fa-search"></i>
+				<input type= 'text' id= 'search-labs' placeholder='pesquisar por nome'></input>
+				<button type= 'button' id= 'btn-search'>search</button>
+			</div>
+		</div>
+		<p class="clear"></p>
 
+		<div id="conteudo"></div>
+	</main>
+	<footer></footer>
   </body>
+  <script>
+		$( "footer" ).load( "footerLogin.html footer" );
+	</script>
 </html>
