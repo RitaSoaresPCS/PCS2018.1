@@ -1,20 +1,28 @@
 #logo{
   display: inline;
+  margin-left: 39%;
 }
 
 #titulo{
+  float: right;
+  margin-right: 34%;
+  margin-top: 1%;
 }
 
 #title-wrap {
   width: auto;
   height: auto;
   color:white;
+  text-align: center;
+  margin-top: 3%;
+
 }
 
 header {
-  font-family: Georgia;
   color:white;
   background-color:#6259c6;
   width:100%;
   height:300px;
+  position: fixed;
+  font-family: 'Roboto', sans-serif;
 }

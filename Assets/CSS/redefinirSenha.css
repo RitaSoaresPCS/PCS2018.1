@@ -9,10 +9,15 @@
     border-radius: 8px;
     font-weight: bold;
     align-self: center;
+    margin-top: 6%;
   }
 
   button:hover{
     background-color: #4CAF50;
     color: white;
     font-weight: bold;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
   }
