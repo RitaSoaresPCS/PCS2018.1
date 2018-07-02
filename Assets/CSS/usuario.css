@@ -16,3 +16,58 @@ p.clear {
 #imgPerfilUser {
 	width:150px;
 }
+
+footer h3 {
+	font-size: 1.17em;
+}
+
+main#conteudo {
+	width:80%;
+	margin:0px auto;
+	border-style: solid;
+	border-color:grey;
+	border-width:2px;
+	background-color:#6259C6;
+	margin-bottom: 100px;
+	color:white;
+	padding-top:35px;
+}
+
+#dados-right {
+	background-color:white;
+	height:100%;
+	width: 73%;
+}
+
+#dados-left {
+	width:25%;
+	text-align:center;
+}
+
+#dados-left a {
+	text-decoration:none;
+	color:white;
+}
+
+#dados-left a:hover {
+	text-decoration:underline;
+}
+
+.menu-left {
+	text-align:left;
+	width:80%;
+	margin:0px auto;
+	border-bottom:2px solid white;
+} 
+
+#botaoAmizade {
+	float: right;
+    margin: 20px;
+	background-color:#009E0F;
+	padding-left:15px;
+	padding-right:15px;
+}
+
+#botaoAmizade i {
+	padding-right:5px;
+}

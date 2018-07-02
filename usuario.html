@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
 
 	<script src="AcessoDados/Base.js"></script>
@@ -33,12 +34,12 @@
 							data.urlImagemPerfil = "Assets\\Imagens\\avatar round.png";
 						}
 					
-						conteudo += '<img id="imgPerfilUser" src="' + data.urlImagemPerfil + '" title="Imagem de perfil" alt="Imagem de perfil">';
+						conteudo += '<img id="imgPerfilUser" src="' + data.urlImagemPerfil + '" title="Imagem de perfil" alt="Imagem de perfil"><br><br>';
 						conteudo += '<p>' + data.username + '</p>';
-						conteudo += '<p>Laboratório: ' + dataCom.nome + '</p>';
+						conteudo += '<p>Laboratório: ' + dataCom.nome + '</p><br>';
 					
-						conteudo += '<div id="discussoes-user-' + data.id + '"><a href="#" title="Discussões">Discussões</a></div>';
-						conteudo += '<div id="repositorio-user-' + data.id + '"><a href="#" title="Repositório">Repositório</a></div>';
+						conteudo += '<div class="menu-left" id="discussoes-user-' + data.id + '"><a href="#" title="Discussões">Discussões</a></div>';
+						conteudo += '<div class="menu-left" id="repositorio-user-' + data.id + '"><a href="#" title="Repositório">Repositório</a></div>';
 						document.getElementById('dados-left').innerHTML = conteudo;
 		
 					});
@@ -48,14 +49,15 @@
 						botao = document.getElementById("botaoAmizade");
 						if (dataAmigo.length > 0) {
 							amigo = dataAmigo[0];
-							botao.innerHTML = "Remover este amigo";
+							botao.innerHTML = "<i class='fas fa-user-times'></i>Remover amigo";
 							botao.onclick = function(){
 								UsuarioAmizadeUsuario.remover(localStorage.userId, userId, function(resposta) {
 									if (resposta.erro == false) {
 										location.reload();
 									}
 								});
-							}	
+							}
+							botao.style.backgroundColor = "#CF2A27";						
 						} else {
 							botao.onclick = function(){
 								UsuarioAmizadeUsuario.adicionar(localStorage.userId, userId, function(resposta) {
@@ -83,12 +85,16 @@
   </head>
   <body>
     <header></header>
-    <main>
+    <main id="conteudo">
 		<div id="dados-usuario">
 			<div id="dados-left"></div>
-			<div id="dados-right"><button id='botaoAmizade' type='button'>Enviar solicitação de amizade</button></div>
+			<div id="dados-right"><button id='botaoAmizade' type='button'><i class="fas fa-user-plus"></i>Adicionar amigo</button></div>
 		</div>
+		<p class="clear"></p>
     </main>
     <footer></footer>
   </body>
+  <script>
+		$( "footer" ).load( "footerLogin.html footer" );
+	</script>
 </html>

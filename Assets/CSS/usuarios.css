@@ -99,6 +99,10 @@ div#topo-usuarios {
 	display: inherit;
 }
 
+.PicnName a:hover {
+	text-decoration:underline;
+}
+
 .div-user-details {
 	width:25%;
 	float: left;
