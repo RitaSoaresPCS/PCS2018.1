@@ -77,9 +77,6 @@
 		$tema = $_POST['tema'];
 		$usernameAdmin = $_POST['usernameAdmin'];
 
-		$_POST['func'] = "";
-		include_once 'Usuario.php';
-
 		$idUsuarioAdministrador = getIdUsuarioByUsername($usernameAdmin);
 
 		// Adiciona o administrador como membro dessa comunidade.
@@ -215,8 +212,6 @@
 		$usernameAdmin = $_POST['usernameAdmin'];
 
 		if (permissaoEdicaoComunidade($id)) {
-			$_POST['func'] = "";
-			include_once 'Usuario.php';
 
 			$idUsuarioAdministrador = getIdUsuarioByUsername($usernameAdmin);
 
@@ -229,6 +224,20 @@
 		
 	}
 
+	
+	function getIdUsuarioByUsername($username) {
+		$sql = "SELECT id FROM Usuario WHERE LOWER(username) = LOWER('$username') and ativo = 1 and banidoSistema = 0";
+
+		$result = query_result($sql);
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				return $row["id"];
+			}
+		}
+		return "";
+	}
+	
 
 	function inativarComunidade() {
 		$id = $_POST['id'];

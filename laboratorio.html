@@ -117,7 +117,7 @@
 				if (toggle == 0) {
 					document.getElementById(elementId).contentEditable = "true"; 
 					document.getElementById(iconId).className = 'far fa-save';
-					document.getElementById(elementId).style.backgroundColor = "#cccccc";
+					document.getElementById(elementId).style.backgroundColor = "rgb(230, 230, 230)";
 					document.getElementById(iconId).onclick = function() { editDadosLab(1, elementId, iconId) };
 				} else {
 					document.getElementById(elementId).contentEditable = "false"; 
@@ -168,7 +168,7 @@
 					}
 					
 					contentD += '</div><p class="clear"></p>';
-					contentD += '<div id="conteudo-discussao-' + discussoes[iterador].id + '"></div>';
+					contentD += '<div class="conteudo-discussao" id="conteudo-discussao-' + discussoes[iterador].id + '"></div>';
 					contentD += '</div><p class="clear"></p>';
 
 					document.getElementById("discussoes").innerHTML += contentD;
@@ -204,9 +204,9 @@
 								document.getElementById("nomeLab").innerHTML = data.nome;
 							
 								var dadosLab = "";
-								dadosLab += "Tema: <p id='temaLab'>" + data.tema + "</p><br>";
-								dadosLab += "Descrição: <p id='descricaoLab'>" + data.descricao + "</p><br>";
-								dadosLab += "Admin: <p id='adminLab'>" + usuarioAdmin.username + "</p><br>";
+								dadosLab += "<span class='dadosLabTitle'>Tema:</span> <p id='temaLab'>" + data.tema + "</p><br>";
+								dadosLab += "<span class='dadosLabTitle'>Descrição:</span> <p id='descricaoLab'>" + data.descricao + "</p><br>";
+								dadosLab += "<span class='dadosLabTitle'>Admin:</span> <p id='adminLab'>" + usuarioAdmin.username + "</p><br>";
 								
 								document.getElementById("dadosLab").innerHTML = dadosLab;	
 								
@@ -219,7 +219,7 @@
 									
 									$( "<i id='editDescricaoIcon' class='far fa-edit' onclick='editDadosLab(0,\"descricaoLab\", \"editDescricaoIcon\");'></i>" ).insertAfter( "#descricaoLab" );
 
-									$('#detalhesLab').append("<a href='detalhesLab.html?id=" + Base.getUrlParameter("id") + "' title='Parceiros e Solicitações'>Parceiros e Solicitações</a>")
+									$('#detalhesLab').append("<a id='link-parceiros' href='detalhesLab.html?id=" + Base.getUrlParameter("id") + "' title='Parceiros e Solicitações'><h2>Parceiros e Solicitações</h2></a>")
 									
 									$("#add-membro").append('<button type="button"><a href="#addMembroModal" rel="modal:open">Adicionar membro</a></button>');
 									
@@ -295,6 +295,7 @@
 								membros += '</div>';
 							}
 							document.getElementById("membros").innerHTML = membros;
+							$( "div.membro-lab" ).last().css( "border-right", "none" );
 						});
 				
 					});
@@ -307,79 +308,84 @@
 	
 	</head>
 	<body>
-		<!-- Barra de navegação com botão pro perfil -->
-		<nav></nav>
-	
-		<!-- Nome do laboratório -->
-		<h1 id="nomeLab"></h1>
-		<p class='clear'></p>
+		<main id="content">
+			<!-- Nome do laboratório -->
+			<div class="center">
+				<h1 id="nomeLab"></h1>
+			</div>
+			<p class='clear'></p>
 
-		<!-- Tema, descrição, username do admin, edição dos dados... -->	
-		<div id="dadosLab"></div>
-		<p class='clear'></p>
-	
-	
-		<!-- Links para parceiros e solicitações -->
-		<p id="detalhesLab"></p>
-		<p class='clear'></p>
+			<!-- Tema, descrição, username do admin, edição dos dados... -->	
+			<div id="dadosLab"></div>
+			<p class='clear'></p>
 		
 		
-		<!-- Membros -->
-		<h2>Membros</h2>
-		<!-- Botão adicionar membro -->
-		<div id="add-membro"></div>
-		<p class='clear'></p>
-		
-		<p id="membros"></p>
-		<p class='clear'></p>
-		
+			<!-- Links para parceiros e solicitações -->
+			<p id="detalhesLab"></p>
+			<p class='clear'></p>
+			
+			
+			<!-- Membros -->
+			<h2>Membros</h2>
+			<!-- Botão adicionar membro -->
+			<div id="add-membro"></div>
+			<p class='clear'></p>
+			
+			<p id="membros"></p>
+			<p class='clear'></p>
+			
 
-		<h2>Discussões</h2>
-		<!-- Pesquisa de discussões -->
-		<div>
-			<input type='text' id='search-discussoes'></input>
-			<input type="radio" name="typeSearch" value="titulo" checked>Por título
-			<input type="radio" name="typeSearch" value="conteudo">Por conteúdo<br>
-			<button type='button' id='btn-search'>Pesquisar discussões</button>
-		</div>
-		<p class='clear'></p>
+			<h2>Discussões</h2>
+			<!-- Pesquisa de discussões -->
+			<div>
+				<input type='text' id='search-discussoes'></input>
+				<input type="radio" name="typeSearch" value="titulo" checked>Por título
+				<input type="radio" name="typeSearch" value="conteudo">Por conteúdo<br>
+				<button type='button' id='btn-search'>Pesquisar discussões</button>
+			</div>
+			<p class='clear'></p>
+			
+			
+			<!-- Discussões -->
+			<div id="discussoes"></div>
+			<p class='clear'></p>
+			
+			
+			<!--Adicionar discussão -->
+			<button class='editDiscBtn' onclick='editarDiscussaoModal(0)'><a href='#editarDiscussaoModal' rel='modal:open'>Adicionar discussão</a></button>
 		
+			<div id="editarDiscussaoModal" class="modal">
+				<form id='form-addDisc'>
+					<label for="titulo-add">Título</label><br>
+					<input id='titulo-add' type='text'>
+					
+					<p class='clear'></p>
+					<label for="descricao-add">Descrição</label><br>
+					<textarea id= 'descricao-add'></textarea>
+					
+					<p class='clear'></p>
+					<label for="publica-add">Pública</label><br>
+					<select id="publica-add">
+						<option value="1">Sim</option>
+						<option value="0">Não</option>
+					</select>
+					<p class='clear'></p>
+					<button id= 'btn-addDisc' type= 'button'>Salvar</button>
+				</form>
+			</div>
+			
+			
+			<div id="addMembroModal" class="modal">
+				<h2>Enviar convite</h2>
+				<label for="emailAddMembro">E-mail do convidado:</label>
+				<input name="emailAddMembro" id="emailAddMembro" type="email"><br><br>
+				<button type="button" onclick="enviarConviteMembro()">Salvar</button>
+			</div>
+		</main>
 		
-		<!-- Discussões -->
-		<div id="discussoes"></div>
-		<p class='clear'></p>
-		
-		
-		<!--Adicionar discussão -->
-		<button class='editDiscBtn' onclick='editarDiscussaoModal(0)'><a href='#editarDiscussaoModal' rel='modal:open'>Adicionar discussão</a></button>
-	
-		<div id="editarDiscussaoModal" class="modal">
-			<form id='form-addDisc'>
-      			<label for="titulo-add">Título</label><br>
-      			<input id='titulo-add' type='text'>
-				
-				<p class='clear'></p>
-				<label for="descricao-add">Descrição</label><br>
-      			<textarea id= 'descricao-add'></textarea>
-				
-				<p class='clear'></p>
-				<label for="publica-add">Pública</label><br>
-				<select id="publica-add">
-					<option value="1">Sim</option>
-					<option value="0">Não</option>
-				</select>
-				<p class='clear'></p>
-      			<button id= 'btn-addDisc' type= 'button'>Salvar</button>
-      		</form>
-		</div>
-		
-		
-		<div id="addMembroModal" class="modal">
-			<h2>Enviar convite</h2>
-			<label for="emailAddMembro">E-mail do convidado:</label>
-			<input name="emailAddMembro" id="emailAddMembro" type="email"><br><br>
-			<button type="button" onclick="enviarConviteMembro()">Salvar</button>
-		</div>
-	
+		<footer></footer>
 	</body>
+	<script>
+		$( "footer" ).load( "footerLogin.html footer" );
+	</script>
 </html>

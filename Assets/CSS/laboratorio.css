@@ -1,4 +1,11 @@
-body {font-family: Arial, Helvetica, sans-serif;}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color:#F7F7FF;
+}
+
+footer h3 {
+	font-size: 1.17em;
+}
 
 .topo-discussao img {
 	width:100px;
@@ -40,4 +47,135 @@ p.clear {
     clear: both;
 	padding-top:10px;
 	padding-bottom:10px;
+}
+
+p.clear-float {
+    clear: both;
+}
+
+main#content {
+	width:80%;
+	margin:0px auto;
+	margin-bottom: 100px;
+	padding:50px;
+	box-sizing: border-box;
+	background-color:white;
+}
+
+#nomeLab {
+	color:#6259C6;
+}
+
+#nomeLab, #temaLab, #descricaoLab, #adminLab {
+	padding-left:15px;
+	padding-right:15px;
+	display:inline-block;
+}
+
+.center {
+	width:100%;
+	text-align:center;
+	margin:0px auto;
+}
+
+#editNomeIcon, #editTemaIcon, #editDescricaoIcon {
+	font-size:150%;
+	vertical-align:middle;
+}
+
+
+.dadosLabTitle {
+	font-weight:bold;
+	font-size:140%;
+}
+
+
+.membro-lab a {
+	text-decoration:none;
+	color:black;
+}
+
+.membro-lab a:hover {
+	text-decoration:underline;
+}
+
+
+.membro-lab {
+	width:150px;
+	text-align:center;
+	overflow-wrap: break-word;
+	border-right:2px dotted #6259C6;
+}
+
+#link-parceiros {
+	text-decoration:none;
+	color:black;
+}
+
+#link-parceiros:hover {
+	text-decoration:underline;
+}
+
+.discussao-lab {
+	background-color:#6259C6;
+	padding-bottom: 30px;
+}
+
+.conteudo-discussao {
+	background-color:white;
+	width:93%;
+	margin:0px auto;
+	height: 150px;
+    overflow: hidden;
+	padding:10px;
+	box-sizing: border-box;
+}
+
+.topo-discussao {
+	color:white;
+	box-sizing: border-box;
+    padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 30px;
+}
+
+.topo-discussao h2 a {
+	text-decoration:none;
+	color:white;
+}
+
+.topo-discussao h2 a:hover {
+	text-decoration:underline;
+}
+
+.editDiscBtn, .removeDiscBtn, .fixDiscBtn {
+	float:right;
+	width:100px;
+	position:relative;
+}
+
+.removeDiscBtn {
+	top:40px;
+	right:-100px;
+}
+
+.fixDiscBtn {
+	top:80px;
+	right:-200px;
+}
+
+.topo-discussao img, .topo-discussao h2, .topo-discussao p {
+	float:left;
+}
+
+.topo-discussao h2 {
+    position: relative;
+    top: 16px;
+	left: 16px;
+}
+
+.topo-discussao p {
+	position: relative;
+    left: 45px;
+    top: 25px;
 }
