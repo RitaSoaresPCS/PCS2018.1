@@ -10,6 +10,8 @@
 		<!-- Modal jQuery -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
 		<script src="AcessoDados/Base.js"></script>
 		<script src="AcessoDados/Comunidade.js"></script>
@@ -38,7 +40,7 @@
 							document.getElementById("nomeLab").innerHTML = dataCom.nome;
 							document.getElementById("descricaoLab").innerHTML = dataCom.descricao;
 							
-							document.getElementById("solicitarLab").innerHTML = '<button type="button"><a href="#solicitarAcessoModal" rel="modal:open">Solicitar acesso</a></button>';
+							document.getElementById("solicitarLab").innerHTML = '<button type="button"><i class="fas fa-plus"></i><a href="#solicitarAcessoModal" rel="modal:open">Solicitar ingresso</a></button>';
 						
 							document.getElementById("btn-solicitarAcesso").onclick = function() {
 								solicitarAcesso(localStorage.userId, Base.getUrlParameter("id"));
@@ -61,6 +63,7 @@
 									membros += '</div>';
 								}
 								document.getElementById("membros").innerHTML = membros;
+								$( "div.membro-lab" ).last().css( "border-right", "none" );
 							});
 						});
 					});				
@@ -72,38 +75,40 @@
 	
 	</head>
 	<body>
-		<!-- Barra de navegação com botão pro perfil -->
-		<nav></nav>
+		<main id="conteudo">
 	
-		<!-- Nome do laboratório -->
-		<h1 id="nomeLab"></h1>
-		<p class='clear'></p>
-		
-		<!-- Botão de solicitar ingresso -->
-		<div id="solicitarLab"></div>
-		<p class='clear'></p>
-
-		<!-- Descrição do laboratório -->	
-		<div id="descricaoLab"></div>
-		<p class='clear'></p>
-	
-		<!-- Membros -->
-		<div id="membros"></div>
-		<p class='clear'></p>
-		
-	
-		<div id="solicitarAcessoModal" class="modal">
-			<form id='form-addDisc'>
-				<h3>Solicitar acesso</h3>
-				<p class='clear'></p>
+			<div id="lab-topo">
+				<!-- Nome do laboratório -->
+				<h1 id="nomeLab"></h1>
 				
-      			<label for="justificativa">Justificativa (Opcional)</label><br>
-      			<textarea id='justificativa'></textarea>	
+				<!-- Botão de solicitar ingresso -->
+				<div id="solicitarLab"></div>
 				<p class='clear'></p>
-			
-      			<button id= 'btn-solicitarAcesso' type= 'button'>Solicitar</button>
-      		</form>
-		</div>
+			</div>
+
+			<!-- Descrição do laboratório -->	
+			<div id="descricaoLab"></div>
+			<p class='clear'></p>
 		
+			<!-- Membros -->
+			<h2>Membros</h2>
+			<div id="membros"></div>
+			<p class='clear'></p>
+			
+		
+			<div id="solicitarAcessoModal" class="modal">
+				<form id='form-addDisc'>
+					<br>
+					<label for="justificativa">Justificativa (Opcional)</label><br>
+					<textarea id='justificativa'></textarea><br><br>
+				
+					<div class="center"><button id= 'btn-solicitarAcesso' type= 'button'><i class="far fa-envelope"></i>Solicitar</button></div>
+				</form>
+			</div>
+		</main>
+		<footer></footer>
 	</body>
+	<script>
+		$( "footer" ).load( "footerLogin.html footer" );
+	</script>
 </html>
