@@ -90,7 +90,13 @@ div#topo-usuarios {
 	float: left;
 	text-align: center;
     margin-top: 15px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.PicnName a {
+	text-decoration:none;
+	color:white;
+	display: inherit;
 }
 
 .div-user-details {

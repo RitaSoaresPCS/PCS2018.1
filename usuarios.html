@@ -17,6 +17,12 @@
 		
 			function preencherInformacoesUsuarios(usuarios, divUsuarios) {
 				usuariosSize = usuarios.length;
+				
+				var pastaServidor = window.location.pathname.split("/")[1];
+				var url = 
+					window.location.origin + 
+					"/" + pastaServidor;
+				
 				for (var iterator = 0; iterator < usuariosSize; iterator++)
 				{
 					var currentUser = usuarios[iterator];
@@ -38,9 +44,9 @@
 						.attr('src', userPicture)
 						.attr('alt', 'Photo of '+userName)
 						.appendTo(divUserPicnName);
-					$('<p />')
-						.text(userUsername)
-						.appendTo(divUserPicnName);
+						
+					$('<a href="' + url + '/usuario.html?id=' + usuarios[iterator].id + '">' + userUsername + '</a>').appendTo(divUserPicnName);
+					
 					var divUserMainInfo= $('<div class="MainInfo"></div>').appendTo(divUserInfo);
 					 $('<p />')
 						.text(userName)
