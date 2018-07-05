@@ -6,8 +6,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="http://momentjs.com/downloads/moment.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="AcessoDados/Base.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="AcessoDados/Base.js"></script>
     <link rel="stylesheet" type="text/css" href="Assets/CSS/perfil.css">
     <link rel="stylesheet" type="text/css" href="Assets/CSS/aside.css">
     <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
@@ -21,49 +21,49 @@
 
   </head>
   <style>
-    .dropbtn {
-        background-color: #3498DB;
-        color: white;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-    }
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
 
-    .dropbtn:hover, .dropbtn:focus {
-        background-color: #2980B9;
-    }
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
+}
 
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
 
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f1f1f1;
-        min-width: 160px;
-        overflow: auto;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-        float: right;
-        margin-right: 15px;
-        margin-left: 91.3%;
-        margin-top:-21px
-    }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    float: right;
+    margin-right: 15px;
+    margin-left: 91.3%;
+    margin-top:-21px
+}
 
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 
-    .dropdown a:hover {background-color: #ddd;}
+.dropdown a:hover {background-color: #ddd;}
 
-    .show {display: block;}
-  </style>
+.show {display: block;}
+</style>
   <body style="margin:0;">
     <header style="position: fixed; top: 0;width: 100%; height: 6.5%;">
       <div id='titulo' align="center"><h1 style="margin-top:0; padding-bottom:15px; padding-top:15px;">Academiq</h1></div>
@@ -79,24 +79,18 @@
       <div class="container" style="color: white; background-color:#6259C6;">
 
         <!-- float left com foto e nome -->
-  			<div style="float: left; height:100px; margin-left:5%; margin-top:3%; text-align: center;">
+  			<div style="float: left; height:100px; margin-left:5%; margin-top:3%;">
           <div id="user-picture" style="height: 200px; width: 200px; border-radius:100%; border-style:solid; border-width:2px; background-color:white; display:block;"></div>
-          <br><a align="center">Mudar Foto</a>
     		  <br>
-    		  <div id="user-name" align="center" style="display:block;"><h3>Meu Nome</h3></div>
-          <div id="user-lab" align="center" style="display:block;"><h3>Bio</h3></div><br>
+    		  <div id="user-name" align="center" style="display:block;"><h3>Nome</h3></div>
+          <div id="user-lab" align="center" style="display:block;"><h3>Membro do Lab A</h3></div><br>
+         <a><h3>Discussões</h3></a><hr>
+         <a><h3>Repositório</h3></a><hr>
   			</div>
 
         <!-- float right painel -->
-        <div style="display: block; float: right; background-color: white; height:88%; width: 70%;margin-right:57px; margin-top:3%; color: Black;">
-          <ul id="nav-perfil" style="list-style-type: none;margin: 0;padding: 0;width:100%; background-Color:white">
-            <li style=""><a href="#home">Mural</a></li>
-            <li style=""><a href="#news">Dados</a></li>
-            <li style=""><a href="#contact">Amigos</a></li>
-            <li style=""><a href="#about">Notificações</a></li>
-            <li style=""><a href="#about">Mensagens</a></li>
-            <li style=""><a href="#about">Arquivos</a></li>
-          </ul>
+        <div style="display: block; float: right; background-color: white; height:88%; width: 70%;margin-right:57px; margin-top:3%;">
+            <h1>TITULO</h1>
         </div>
 
       </div>
@@ -116,11 +110,11 @@
         background-color: #6259C6;
     }
 
-    #myDropdown li {
+    li {
         float: left;
     }
 
-    #myDropdown li a {
+    li a {
         display: block;
         color: white;
         text-align: center;
@@ -128,38 +122,8 @@
         text-decoration: none;
     }
 
-    #myDropdown li a:hover:not(.active) {
+    li a:hover:not(.active) {
         background-color: #736AD7;
-    }
-
-    #nav-perfil {
-      border: 1px;
-      border-style: solid;
-      border-color: black;
-    }
-
-    #nav-perfil li {
-        float: left;
-        display: inline;
-        border: 1px;
-        border-style: solid;
-        border-color: black;
-
-
-    }
-
-    #nav-perfil li a {
-        display: block;
-        color: black;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        width:139px;
-    }
-
-    #nav-perfil li a:hover:not(.active) {
-        background-color: gray;
-        color:white;
     }
 
     .active {

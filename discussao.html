@@ -6,11 +6,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 	<script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
-	
+
 	<!-- Modal jQuery -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-	
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/discussao.css">
 
     <script src="AcessoDados/Base.js"></script>
@@ -32,7 +32,7 @@
 				}
 			});
 		}
-	
+
 		function enviarNovaMsg() {
 			conteudo = MensagemDiscussao.novaMensagem.getData();
 			MensagemDiscussao.adicionar(localStorage.userId, Base.getUrlParameter("id"), conteudo, function(data) {
@@ -44,14 +44,14 @@
 				}
 			});
 		}
-		
-		
+
+
 		function editarMsg(id) {
 			document.getElementById("msg-" + id + "-content").contentEditable = true;
 			document.getElementById("salvarEdicaoMsg" + id).style.display = "block";
 		}
-		
-		
+
+
 		function salvarEdicaoMsg(id) {
 			conteudo = document.getElementById("msg-" + id + "-content").innerHTML;
 			MensagemDiscussao.editar(id, conteudo, function(data) {
@@ -63,103 +63,103 @@
 				}
 			});
 		}
-		
-	
+
+
 		// Preenche os dados da discussão.
 		$(document).ready(function(){
 			Discussao.getById(Base.getUrlParameter("id"), function(data) {
 				data = JSON.parse(data);
 				var conteudo = "";
-	
+
 				Usuario.getById(data.idUsuarioCriador, function(dataUs) {
 					var usuarioCriador = JSON.parse(dataUs);
-					
+
 					Comunidade.getById(data.idComunidadePertence, function(dataCom) {
 						var comunidadePertence = JSON.parse(dataCom);
 						var usuarioLogado = localStorage.userId;
-						
-						document.getElementById("nomeLab").innerHTML = 
-						"<a href='laboratorio.html?id=" + comunidadePertence.id + 
+
+						document.getElementById("nomeLab").innerHTML =
+						"<a href='laboratorio.html?id=" + comunidadePertence.id +
 						"' title='" + comunidadePertence.nome + "' >" + comunidadePertence.nome + "</a>";
-						
-						
+
+
 						// Mensagens da discussão.
 						MensagemDiscussao.getByIdDiscussao(data.id, function(dataMsg) {
 							if (dataMsg.length > 0) {
 								for (cont = 0; cont < dataMsg.length; cont++) {
-									
+
 									var mensagensContent = "";
 									var msg = dataMsg[cont];
-									
+
 									var imagemCriador = msg.urlImagemPerfil;
 									if (imagemCriador == "") {
 										imagemCriador = "Assets/Imagens/avatar round.png";
-									} 
-									
+									}
+
 									mensagensContent += "<div class='msg-left'>";
 									mensagensContent += "<img class='msg-profile' src='" + imagemCriador + "' title='Imagem de perfil' alt='Imagem de perfil'>";
 									mensagensContent += "<p class='msg-username'>" + msg.username + "</p></div>";
 									mensagensContent += "<div class='msg-right'>";
 									mensagensContent += "<p>" + moment(msg.dataCriacao).format('DD/MM/YY');
-									
-									
+
+
 									if (usuarioLogado == msg.idUsuarioCriador || usuarioLogado == comunidadePertence.idUsuarioAdministrador) {
 										mensagensContent += "<button class='removeMsgBtn' onclick='MensagemDiscussao.remover(" + msg.id + ", function(data) { location.reload(); });'>Remover</button>";
 									}
-									
-									
+
+
 									if (usuarioLogado == msg.idUsuarioCriador) {
 										mensagensContent += "<button class='editMsgBtn' onclick='editarMsg(" + msg.id + ")'>Editar</button>";
 									}
-									
+
 									mensagensContent += "</p><div class='msgText' id='msg-" + msg.id + "-content' contenteditable='false'></div>";
-									
+
 									if (usuarioLogado == msg.idUsuarioCriador) {
 										mensagensContent += "<button class='hidden' id='salvarEdicaoMsg" + msg.id + "' onclick='salvarEdicaoMsg(" + msg.id + ")'>Salvar</button>";
 									}
-									
-									
+
+
 									mensagensContent += "</div><p class='clear'></p>";
-								
+
 									document.getElementById('msgDiscussao').innerHTML += mensagensContent;
 									$("#msg-" + msg.id + "-content").append($.parseHTML(msg.conteudo));
 								}
 							}
 						});
-						
-						
+
+
 						// Discussão fixa ou não.
 						if (data.fixa == "1") {
 							$("#fixaDiscussao").attr('value', "0");
 							$("#fixaDiscussao").text("Desafixar");
-						} 
-						
+						}
+
 						if (usuarioLogado != comunidadePertence.idUsuarioAdministrador) {
 							$("#fixaDiscussao").hide();
 						}
-					
+
 					});
-					
+
 					var imagemCriador = usuarioCriador.urlImagemPerfil;
 					if (imagemCriador == "") {
 						imagemCriador = "Assets/Imagens/avatar round.png";
-					} 
-					
-					
-					conteudo = "<div id='head-discussao'><img src='" + imagemCriador + 
-					"' title='Imagem de perfil' alt='Imagem de perfil' /><h3 id='nomeDiscussao'>" + data.titulo + 
+					}
+
+
+					conteudo = "<div id='head-discussao'><img src='" + imagemCriador +
+					"' title='Imagem de perfil' alt='Imagem de perfil' /><h3 id='nomeDiscussao'>" + data.titulo +
 					"</h3><p>Criado por " + usuarioCriador.nome + " em " + moment(data.dataCriacao).format('DD/MM/YY') + "</p></div><div id='content-discussao'></div>";
-						
+
 					document.getElementById("conteudo").innerHTML = conteudo;
 					$('#content-discussao').append($.parseHTML(data.descricao));
-					
-				});	
-				
-				document.getElementById("anexosDiscussao").innerHTML = 
+
+				});
+
+				document.getElementById("anexosDiscussao").innerHTML =
 				"<a href='anexoDiscussao.html?id=" + data.id + "' title='Anexos da discussão'>Visualizar anexos</a>";
-				
+
 			});
-			
+
 			ClassicEditor
 				.create( document.querySelector( '#novaMensagem' ) )
 				.then( editor => {
@@ -168,38 +168,38 @@
 				.catch( error => {
 					console.error( error );
 				} );
-					
+
 		});
-		
+
 	</script>
-  
+
   </head>
   <body>
-  
+
 	<!-- Barra de navegação com botão pro perfil -->
 	<nav></nav>
-	
+
 	<!-- Nome do laboratório e link -->
     <h2 id="nomeLab"></h2>
 	<p class='clear'></p>
 
 	<!-- Conteúdo inicial da discussão -->
 	<button id="fixaDiscussao" value="1" onclick="mudarFixoDiscussao()">Fixar</button>
-	<div id="conteudo"></div>  
+	<div id="conteudo"></div>
 	<p class='clear'></p>
-	
+
 	<!-- Link para anexos da discussão -->
 	<div id="anexosDiscussao"></div>
 	<p class='clear'></p>
-	
+
 	<!-- Mensagens da discussão -->
-	<div id="msgDiscussao"></div>  
+	<div id="msgDiscussao"></div>
 	<p class='clear'></p>
-	
+
 	<!-- Botão pra responder -->
 	<a href="#novaMensagemModal" rel="modal:open">Responder</a>
-	
-	
+
+
 	<div id="novaMensagemModal" class="modal">
 		<textarea name="content" id="novaMensagem"></textarea><br>
 		<button id="enviarNovaMsg" onclick='enviarNovaMsg()'>Enviar</button>

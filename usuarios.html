@@ -1,4 +1,4 @@
-<!DOCKTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,20 +9,20 @@
 		<!--link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css"-->
 		<link rel="stylesheet" type="text/css" href="Assets/CSS/usuarios.css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		<script src="AcessoDados/Base.js"></script>
 		<script src="AcessoDados/Usuario.js"></script>
 		<script src="AcessoDados/Comunidade.js"></script>
 		<script type= 'text/javascript'>
-		
+
 			function preencherInformacoesUsuarios(usuarios, divUsuarios) {
 				usuariosSize = usuarios.length;
-				
+
 				var pastaServidor = window.location.pathname.split("/")[1];
-				var url = 
-					window.location.origin + 
+				var url =
+					window.location.origin +
 					"/" + pastaServidor;
-				
+
 				for (var iterator = 0; iterator < usuariosSize; iterator++)
 				{
 					var currentUser = usuarios[iterator];
@@ -44,9 +44,9 @@
 						.attr('src', userPicture)
 						.attr('alt', 'Photo of '+userName)
 						.appendTo(divUserPicnName);
-						
+
 					$('<a href="' + url + '/usuario.html?id=' + usuarios[iterator].id + '">' + userUsername + '</a>').appendTo(divUserPicnName);
-					
+
 					var divUserMainInfo= $('<div class="MainInfo"></div>').appendTo(divUserInfo);
 					 $('<p />')
 						.text(userName)
@@ -86,15 +86,15 @@
 						.attr('data-toggle', 'modal')
 						.attr('data-target', '#my-modal')
 						.appendTo(divUserDetails);
-						
+
 					button.append('<i class="fas fa-search"></i>');
 					button.append('<p>Detalhes</p>');
 					divUsuarios.append('<p class="clear"></p>');
 				}
-			
+
 
 			}
-		
+
 			$(document).ready(function(){
 				var bool = 0;
 				function acao(userUsername, userMail, userInstit, userTtl, userCpf, userName){
@@ -162,7 +162,7 @@
 							var labsSize= labs.length;
 							var selectLab= $('#select-lab');
 				selectLab.html("");
-	
+
 							for (var iterador= 0; iterador< labsSize; iterador++)
 							{
 								var currentLab= labs[iterador];
@@ -234,7 +234,7 @@
 		Usuario.listarUsuariosPermissao(function(usuarios){
 			var divUsuarios = $('#usuarios');
 			preencherInformacoesUsuarios(usuarios, divUsuarios);
-			
+
 		});
 
 		$('#btn-search').click(function(){
@@ -253,14 +253,14 @@
 				}
 			});
 		});
-		
+
 		// Submete a pesquisa quando o usuário pressiona ENTER.
 		$('#search-users').on('keyup', function(e) {
 			if (e.keyCode === 13) {
 				$('#btn-search').click();
 			}
 		});
-		
+
 		});
 		</script>
 
@@ -268,10 +268,10 @@
 	<body>
 		<header></header>
 		<main id="conteudo">
-		
+
 			<div id="topo-usuarios">
 				<button id='btn-create-user' type= 'button' data-toggle= 'modal' data-target= '#my-modal'><i class="fas fa-user-plus"></i><span id="texto-criar-usuario">Criar um novo usuário</span></button>
-			
+
 				<div id="search-box">
 					<i class="fas fa-search"></i>
 					<input type= 'text' id= 'search-users' placeholder='pesquisar por nome'></input>
@@ -280,7 +280,7 @@
 			</div>
 			<p class="clear"></p>
 
-			
+
 			<div id= 'usuarios'></div>
 
 			<!-- Modal -->
@@ -304,7 +304,7 @@
 				</div>
 			</div>
 
-		
+
 
 			<!-- Modal -->
 			<div class="modal fade" id="my-modal" role="dialog">
@@ -342,8 +342,8 @@
 				</div>
 			</div>
 
-			
-			
+
+
 		</main>
 		<footer></footer>
 	</body>

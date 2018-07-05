@@ -5,8 +5,8 @@
 	<meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
-	
-	
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/anexoDiscussao.css">
 
     <script src="AcessoDados/Base.js"></script>
@@ -16,67 +16,67 @@
 
 
 	<script type= 'text/javascript'>
-		
+
 		$(document).ready(function(){
 			Discussao.getById(Base.getUrlParameter("id"), function(dataDisc) {
 				dataDisc = JSON.parse(dataDisc);
 				Comunidade.getById(dataDisc.idComunidadePertence, function(dataCom) {
 					dataCom = JSON.parse(dataCom);
-				
+
 					document.getElementById("nomeLab").innerHTML = '<a href="laboratorio.html?id=' + dataCom.id + '" title="' + dataCom.nome + '">' + dataCom.nome + '</a>';
-					
+
 					document.getElementById("nomeDisc").innerHTML = '<a href="discussao.html?id=' + dataDisc.id + '" title="' + dataDisc.titulo + '">' + dataDisc.titulo + '</a>';
-				
-				
+
+
 					Anexo.getAnexoByIdDiscussao(dataDisc.id, function(dataAnex) {
 						anexos = "";
 						if (dataAnex.length == 0) {
 							anexos = "Não há anexos nesta discussão.";
 						}
-						
+
 						for (var i = 0; i < dataAnex.length; i++) {
-							
+
 							anexos += '<div class="anexo-disc">';
-							
+
 							// Se tiver permissão para remover:
-							if (localStorage.userId == dataAnex[i].idUsuarioCriador || 
+							if (localStorage.userId == dataAnex[i].idUsuarioCriador ||
 								localStorage.userId == dataCom.idUsuarioAdministrador) {
 								anexos += '<button type="button" onclick="Anexo.removerAnexoDiscussao(' + dataAnex[i].idRecurso + ', ' + dataDisc.id + ', function(data) {if (data.erro == false) { location.reload()} })">Remover</button>';
 							}
-							
+
 							anexos += '<img class="anexo-disc-img" src="Assets/Imagens/file.png" title="Imagem de arquivo">';
-							
+
 							// Se o arquivo for um pdf, abre para leitura. Senão, faz download.
 							if (dataAnex[i].titulo.slice(-3) == "pdf") {
 								var pastaServidor = window.location.pathname.split("/")[1];
-								var url = 
-									window.location.origin + 
+								var url =
+									window.location.origin +
 									"/" + pastaServidor +
-									"/pdfreader/web/viewer.html?file=/" + 
-									pastaServidor + 
-									"/Assets/Uploads/" + 
+									"/pdfreader/web/viewer.html?file=/" +
+									pastaServidor +
+									"/Assets/Uploads/" +
 									dataAnex[i].titulo.substring(18);
 								anexos += '<p><a href="' + url + '" title="' + dataAnex[i].titulo.substring(18) + '" target="_blank">' + dataAnex[i].titulo.substring(18) + '</a></p>';
-								
+
 							} else {
 								anexos += '<p><a href="' + dataAnex[i].titulo.substring(3) + '" title="' + dataAnex[i].titulo.substring(18) + '" download>' + dataAnex[i].titulo.substring(18) + '</a></p>';
 							}
-							
+
 							anexos += '<p>Adicionado em:<br>' + moment(dataAnex[i].dataEnvio).format('DD/MM/YY') + '</p>';
 							anexos += '</div>';
-							
+
 						}
 						document.getElementById("anexos").innerHTML = anexos;
-					
+
 					});
-				
-				
-				
-				
+
+
+
+
 				});
 			});
-				
-				
+
+
 			$('#btn-upload').click(function(){
 				var form = new FormData();
 				form.append('fileToUpload', $('#fileToUpload').prop('files')[0]);
@@ -90,17 +90,17 @@
 					}
 				});
 			});
-				
+
 		});
-		
+
 	</script>
-  
+
   </head>
   <body>
-  
+
 	<!-- Barra de navegação com botão pro perfil -->
 	<nav></nav>
-	
+
 	<!-- Nome do laboratório e link -->
     <h1 id="nomeLab"></h1>
 	<p class='clear'></p>
@@ -108,14 +108,14 @@
 	<!-- Nome da discussão e link -->
 	<h2 id="nomeDisc"></h2>
 	<p class='clear'></p>
-	
+
 	<!-- Anexos da discussão -->
 	<h3>Anexos</h3>
 	<input type="file" name="fileToUpload" id="fileToUpload">
 	<button type='button' id='btn-upload'>Anexar arquivo</button><br>
 	<p class='clear'></p>
-	
-	<div id="anexos"></div>  
+
+	<div id="anexos"></div>
 	<p class='clear'></p>
 
 	<footer></footer>

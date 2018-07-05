@@ -1,4 +1,4 @@
-<!DOCKTYPE HTML>
+<!DOCTYPE HTML>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +8,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
-
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<script src="AcessoDados/Base.js"></script>
 	<script src="AcessoDados/Usuario.js"></script>
 	<script src="AcessoDados/Comunidade.js"></script>
 	<script src="AcessoDados/UsuarioAmizadeUsuario.js"></script>
-	
+
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/usuario.css">
-	
+
     <script type= 'text/javascript'>
 		$(document).ready(function(){
 			var userId = Base.getUrlParameter("id");
@@ -24,27 +24,27 @@
 			} else {
 				Usuario.getById(Base.getUrlParameter("id"), function(data) {
 					data = JSON.parse(data);
-				
+
 					Comunidade.getById(data.idComunidadePertence, function(dataCom) {
 						dataCom = JSON.parse(dataCom);
-						
+
 						conteudo = "";
-					
+
 						if (data.urlImagemPerfil == "") {
 							data.urlImagemPerfil = "Assets\\Imagens\\avatar round.png";
 						}
-					
+
 						conteudo += '<img id="imgPerfilUser" src="' + data.urlImagemPerfil + '" title="Imagem de perfil" alt="Imagem de perfil"><br><br>';
 						conteudo += '<p>' + data.username + '</p>';
 						conteudo += '<p>Laboratório: ' + dataCom.nome + '</p><br>';
-					
+
 						conteudo += '<div class="menu-left" id="discussoes-user-' + data.id + '"><a href="#" title="Discussões">Discussões</a></div>';
 						conteudo += '<div class="menu-left" id="repositorio-user-' + data.id + '"><a href="#" title="Repositório">Repositório</a></div>';
 						document.getElementById('dados-left').innerHTML = conteudo;
-		
+
 					});
-					
-					
+
+
 					UsuarioAmizadeUsuario.getAmizade(localStorage.userId, userId, function(dataAmigo) {
 						botao = document.getElementById("botaoAmizade");
 						if (dataAmigo.length > 0) {
@@ -57,7 +57,7 @@
 									}
 								});
 							}
-							botao.style.backgroundColor = "#CF2A27";						
+							botao.style.backgroundColor = "#CF2A27";
 						} else {
 							botao.onclick = function(){
 								UsuarioAmizadeUsuario.adicionar(localStorage.userId, userId, function(resposta) {
@@ -67,18 +67,18 @@
 								});
 							}
 						}
-					
-						
+
+
 					});
-					
-					
+
+
 					// Preenchimento do mural fora do escopo.
-					
+
 				});
-				
-			
+
+
 			}
-			
+
 		});
     </script>
 

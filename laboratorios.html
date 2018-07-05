@@ -7,7 +7,7 @@
 	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/laboratorios.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="AcessoDados/Base.js"></script>
 
     <!-- Carregar apenas se necessário na página: -->
@@ -56,7 +56,7 @@
 							conteudo += "Criada em: " + moment(data[i]["dataCriacao"].substring(0,10)).format('DD/MM/YY') + "<br>";
 							conteudo += "Tema: " + data[i]["tema"] + "<br><br>";
 							conteudo += "<div class='descricao'>" + data[i]["descricao"] + "</div><br>";
-							
+
 							conteudo += "</div>";
 						}
 
@@ -65,16 +65,16 @@
 			}
 		  });
       });
-	  
-	  
+
+
 		// Submete a pesquisa quando o usuário pressiona ENTER.
 		$('#search-labs').on('keyup', function(e) {
 			if (e.keyCode === 13) {
 				$('#btn-search').click();
 			}
 		});
-	  
-	  
+
+
     });
 
 	</script>
@@ -87,7 +87,7 @@
 	<main id="content">
 		<div id="topo-labs">
 			<button id="btn-create-lab" type="button" onclick="window.location.assign('criarLaboratorio.html')"><i class="fas fa-plus"></i>Criar laboratório</button>
-			
+
 			<div id="search-box">
 				<i class="fas fa-search"></i>
 				<input type= 'text' id= 'search-labs' placeholder='pesquisar por nome'></input>
