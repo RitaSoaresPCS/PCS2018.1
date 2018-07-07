@@ -3,27 +3,41 @@
 	use \Mailjet\Resources;
 	require 'mailjet/vendor/autoload.php';
 
-	Class MailjetMail
+	Class MailjetMailUser
 	{
-	public function emailPost($userName, $emailUser, $passUser)
-	{
-		$client = new \Mailjet\Client('308f549a732b5fbd97b43f0b0c6f3054', 'e1400ff82ace61bd86a0a57b1998510b');
-		$email = [
-			'FromName'     => 'Academiq',
-			'FromEmail'    => 'marcos.junior@uniriotec.br',
-			'Text-Part'    => '',
-			'Html-Part'    => '<h2>Olá, Bem vindo ao Academiq!</h2><br><p>Seu e-mail foi confirmado. Seguem as informações sobre sua conta: </p><br><p>Seu nome de usuário é '. $userName .'</p><br><p>Sua senha é:' . $passUser . '</p><br><p>           Equipe Academiq</p>',
-			'Subject'      => 'Academiq - Criação de conta',
-			'Recipients'   => [['Email' => $emailUser]],
-		];
+		public function emailPostWelcome($userName, $emailUser, $passUser)
+		{
+		  $client = new \Mailjet\Client('308f549a732b5fbd97b43f0b0c6f3054', 'e1400ff82ace61bd86a0a57b1998510b');
+		  $email = [
+		    'FromName'     => 'Academiq',
+		    'FromEmail'    => 'marcos.junior@uniriotec.br',
+		    'Text-Part'    => '',
+		    'Html-Part'    => '<h2>Olá, Bem vindo ao Academiq!</h2><br><p>Seu e-mail foi confirmado. Seguem as informações sobre sua conta: </p><br><p>Seu nome de usuário é '. $userName .'</p><br><p>Sua senha é:' . $passUser . '</p><br><p>           Equipe Academiq</p>',
+		    'Subject'      => 'Academiq - Criação de conta',
+		    'Recipients'   => [['Email' => $emailUser]],
+		  ];
 
-		$ret = $client->post(Resources::$Email, ['body' => $email]);
+		  $ret = $client->post(Resources::$Email, ['body' => $email]);
 
-	}
+		}
+		public function emailPostMember($nameUser, $emailUser, $comunidade)
+		{
+		    $client = new \Mailjet\Client('308f549a732b5fbd97b43f0b0c6f3054', 'e1400ff82ace61bd86a0a57b1998510b');
+		    $email = [
+		      'FromName'     => 'Academiq',
+		      'FromEmail'    => 'marcos.junior@uniriotec.br',
+		      'Text-Part'    => '',
+		      'Html-Part'    => '<h2>Olá, ' . $nameUser .'</h2><br><p>Você foi adicionado à comunidade' . $comunidade .' como membro.</p><br><p>           Equipe Academiq</p>',
+		      'Subject'      => 'Academiq - Notificação de Parceria',
+		      'Recipients'   => [['Email' => $emailUser]],
+		    ];
+
+		    $ret = $client->post(Resources::$Email, ['body' => $email]);
+
+		}
 	}
 	header('Content-Type: text/html; charset=utf-8');
 	include_once 'Base.php';
-
 	function verifyAdm($userId) {
 		$sql= "SELECT idUsuarioAdministrador FROM comunidade WHERE idUsuarioAdministrador = $userId";
 		$result= query_result($sql);
@@ -95,8 +109,8 @@
 		//$return['erro'] = true;
 		//$return['mensagem'] = "E-mail inválido."; ou $return['mensagem'] = "Não foi possível enviar e-mail, usuário não criado";
 		// Somente salva o arquivo se o e-mail for enviado com sucesso.
-		$emailSender= new MailjetMail();
-		$emailSender->emailPost($username, $email, $senha);
+		$emailSender= new MailjetMailUser();
+		$emailSender->emailPostWelcome($username, $email, $senha);
 		$sql = "INSERT INTO Usuario VALUES (default, '$username', '$email', '$senhaHash', '', 1, '$instituicaoOrigem', '$titulo', '$cpf', '$nome', 0, $idComunidadePertence)";
 
 		// Retorna um json com o resultado.
@@ -137,7 +151,7 @@
 	function getByIdUsuario() {
 		$id = $_POST['id'];
 		$sql = "select usuario.id, username, urlImagemPerfil, instituicaoOrigem, usuario.nome, idComunidadePertence, titulo, comunidade.nome as nomeComunidade, email, cpf FROM usuario, comunidade where usuario.idComunidadePertence = comunidade.id and usuario.id = $id";
-		
+
 		$result = query_result($sql);
 		$return = array();
 
@@ -258,7 +272,7 @@
 		}
 		return "";
 	}
-	
+
 	function getByEmailIgualUsuario($email) {
 		$sql = "SELECT nome FROM Usuario WHERE email = LOWER('$email')";
 		$result = query_result($sql);
@@ -327,45 +341,50 @@
 		return false;
 	}
 
-	
+
 	function enviarConviteMembro() {
 		$idComunidade = $_POST['idComunidade'];
 		$email = $_POST['email'];
-		
+
 		$sql = "SELECT * FROM Usuario WHERE email = '$email'";
-		
+
 		$result = query_result($sql);
 		$return = array();
-		
+
 		if (mysqli_num_rows($result) > 0) {
 			while($row = mysqli_fetch_assoc($result)) {
 				$id = $row["id"];
-				
+
 				// Verifica se o usuário já não é membro.
 				$sql2 = "select * from usuario where id = $id AND idComunidadePertence = $idComunidade";
 				$result2 = query_result($sql2);
-	
+
 				if (mysqli_num_rows($result2) > 0) {
 					$return['erro'] = true;
-					$return['mensagem'] = "membro";	
+					$return['mensagem'] = "membro";
 				} else {
 					// Envio de e-mail - ainda não implementado.
-					$return['erro'] = false;	
+					$sql3 = "SELECT nome FROM comunidade WHERE id= $idComunidade";
+					$result3= query_result($sql3);
+					$row = mysqli_fetch_assoc($result3);
+					$emailSender= new MailjetMailUser();
+					$emailSender->emailPostMember($nomeUsuario, $email, $row);
+					$return['erro'] = false;
 				}
-				
+
 			}
 		} else {
-			// Não existe usuário com o e-mail digitado. Pergunta se quer convidar mesmo assim. 
+			// Não existe usuário com o e-mail digitado. Pergunta se quer convidar mesmo assim.
 			$return['erro'] = true;
-			$return['mensagem'] = "email";	
+			$return['mensagem'] = "email";
 		}
 		echo json_encode($return);
 	}
-	
-	
+
+
 
 	$func = $_POST['func'];
-	
+
 	if ($_SESSION['idUsuarioLogado'] != "") { // Usuário no mínimo deve estar logado.
 		switch ($func) {
 			case "adicionarUsuario":
