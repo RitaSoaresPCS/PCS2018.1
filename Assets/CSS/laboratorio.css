@@ -49,6 +49,11 @@ p.clear {
 	padding-bottom:10px;
 }
 
+p.padb5 {
+	clear:both;
+	padding-bottom:5px;
+}
+
 p.clear-float {
     clear: both;
 }
@@ -80,7 +85,6 @@ main#content {
 
 #editNomeIcon, #editTemaIcon, #editDescricaoIcon {
 	font-size:150%;
-	vertical-align:middle;
 }
 
 
@@ -148,20 +152,24 @@ main#content {
 	text-decoration:underline;
 }
 
-.editDiscBtn, .removeDiscBtn, .fixDiscBtn {
-	float:right;
+
+.botoes-discussao .editDiscBtn,
+.botoes-discussao .removeDiscBtn,
+.botoes-discussao .fixDiscBtn {
 	width:100px;
-	position:relative;
+	margin-bottom: 20px;
+	background-color: white;
+    border: 2px solid grey;
 }
 
-.removeDiscBtn {
-	top:40px;
-	right:-100px;
+.botoes-discussao .editDiscBtn a {
+	color: black;
+	text-decoration:none;
 }
-
-.fixDiscBtn {
-	top:80px;
-	right:-200px;
+	
+.botoes-discussao {
+	float: right;
+    max-width: 100px;
 }
 
 .topo-discussao img, .topo-discussao h2, .topo-discussao p {
@@ -178,4 +186,75 @@ main#content {
 	position: relative;
     left: 45px;
     top: 25px;
+}
+
+
+#add-membro a {
+	text-decoration:none;
+	color:black;
+}
+
+#add-membro a button, #add-disc-link button {
+	background-color: white;
+    border: 2px solid grey;
+	padding: 5px;
+}
+
+#add-membro a button i, #add-disc-link i {
+	padding-right: 5px;
+}
+
+#btn-search {
+	display:none;
+}
+
+
+#search-discussoes {
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	padding-left:10px;
+	padding-right:10px;
+	width:300px;
+}
+
+#search-discussoes::placeholder { 
+    color: #a0a0a0;
+}
+
+
+#add-disc-link {
+	text-decoration:none;
+	color:black;
+	float:right;
+}
+
+#add-disc-link button {
+	padding:10px;
+}
+
+#emailAddMembro {
+	width:100%;
+}
+
+#salvarMembro, #btn-addDisc {
+	background-color:#6AA84F;
+	color:white;
+	float:right;
+	padding:10px;
+	border-radius:5px;
+}
+
+#salvarMembro i, #btn-addDisc i {
+	padding:0px;
+	padding-right:5px;
+	font-size:150%;
+}
+
+#titulo-add {
+	width:100%;
+}
+
+#publica-add {
+	width:200px;
 }
