@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
 
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/anexoDiscussao.css">
 
@@ -13,7 +13,8 @@
     <script src="AcessoDados/Discussao.js"></script>
     <script src="AcessoDados/Comunidade.js"></script>
 	<script src="AcessoDados/Anexo.js"></script>
-
+  <link rel="stylesheet" type="text/css" href="media-player-start/style.css">
+  <script type= 'text/javascript' src='media-player-start/custom-player.js'></script>
 
 	<script type= 'text/javascript'>
 
@@ -43,31 +44,73 @@
 								localStorage.userId == dataCom.idUsuarioAdministrador) {
 								anexos += '<button type="button" onclick="Anexo.removerAnexoDiscussao(' + dataAnex[i].idRecurso + ', ' + dataDisc.id + ', function(data) {if (data.erro == false) { location.reload()} })">Remover</button>';
 							}
+							if ((dataAnex[i].titulo.slice(-3) == "mp4") || (dataAnex[i].titulo.slice(-3) == "wav") || (dataAnex[i].titulo.slice(-3) == "ebm") || (dataAnex[i].titulo.slice(-3) == "ogg"))
+              {
+                alert('entrou');
+                var divVideo= $('<div />');
+                var divPlayer= $('<div />').attr('class', 'player').appendTo(divVideo);
+                var video= $('<video />').attr('controls', 'controls').attr('width', '320').attr('height', '240').appendTo(divPlayer);
+                var videoType= dataAnex[i].titulo.substr(dataAnex[i].titulo.lastIndexOf(".") + 1);
+                $('<source />')
+                  .attr('src', 'Uploads/' + dataAnex[i].titulo)
+                  .attr('type', 'video/' + videoType)
+                  .appendTo(video);
+                var divControls= $('<div />').attr('class', 'controls').appendTo(divPlayer);
+                $('<button />')
+                  .attr('class', 'play')
+                  .attr('data-icon', 'P')
+                  .attr('aria-label', 'play pause toggle')
+                  .appendTo(divControls);
+                  $('<button />')
+                    .attr('class', 'stop')
+                    .attr('data-icon', 'S')
+                    .attr('aria-label', 'stop')
+                    .appendTo(divControls);
+                  var divTimer= $('<div />').attr('class', 'timer').appendTo(divControls);
+                  $('<div />').appendTo(divTimer);
+                  $('<span />')
+                    .attr('aria-label', 'timer')
+                    .text('00:00')
+                    .appendTo(divTimer);
+                  $('<button />')
+                    .attr('class', 'rwd')
+                    .attr('data-icon', 'B')
+                    .attr('aria-label', 'rewind')
+                    .appendTo(divControls);
+                  $('<button />')
+                    .attr('class', 'fwd')
+                    .attr('data-icon', 'F')
+                    .attr('aria-label', 'fast forward')
+                    .appendTo(divControls);
+                  anexos+= divVideo.html();
 
-							anexos += '<img class="anexo-disc-img" src="Assets/Imagens/file.png" title="Imagem de arquivo">';
 
-							// Se o arquivo for um pdf, abre para leitura. Senão, faz download.
-							if (dataAnex[i].titulo.slice(-3) == "pdf") {
-								var pastaServidor = window.location.pathname.split("/")[1];
-								var url =
-									window.location.origin +
-									"/" + pastaServidor +
-									"/pdfreader/web/viewer.html?file=/" +
-									pastaServidor +
-									"/Assets/Uploads/" +
-									dataAnex[i].titulo.substring(18);
-								anexos += '<p><a href="' + url + '" title="' + dataAnex[i].titulo.substring(18) + '" target="_blank">' + dataAnex[i].titulo.substring(18) + '</a></p>';
+              }else{
+                anexos += '<img class="anexo-disc-img" src="Assets/Imagens/file.png" title="Imagem de arquivo">';
 
-							} else {
-								anexos += '<p><a href="' + dataAnex[i].titulo.substring(3) + '" title="' + dataAnex[i].titulo.substring(18) + '" download>' + dataAnex[i].titulo.substring(18) + '</a></p>';
-							}
+  							// Se o arquivo for um pdf, abre para leitura. Senão, faz download.
+  							if (dataAnex[i].titulo.slice(-3) == "pdf") {
+  								var pastaServidor = window.location.pathname.split("/")[1];
+  								var url =
+  									window.location.origin +
+  									"/" + pastaServidor +
+  									"/pdfreader/web/viewer.html?file=/" +
+  									pastaServidor +
+  									"/Assets/Uploads/" +
+  									dataAnex[i].titulo.substring(18);
+  								anexos += '<p><a href="' + url + '" title="' + dataAnex[i].titulo.substring(18) + '" target="_blank">' + dataAnex[i].titulo.substring(18) + '</a></p>';
+
+  							} else {
+  								anexos += '<p><a href="' + dataAnex[i].titulo.substring(3) + '" title="' + dataAnex[i].titulo.substring(18) + '" download>' + dataAnex[i].titulo.substring(18) + '</a></p>';
+  							}
+              }
 
 							anexos += '<p>Adicionado em:<br>' + moment(dataAnex[i].dataEnvio).format('DD/MM/YY') + '</p>';
 							anexos += '</div>';
 
 						}
 						document.getElementById("anexos").innerHTML = anexos;
-
+            videoPlayer();
 					});
 
 
