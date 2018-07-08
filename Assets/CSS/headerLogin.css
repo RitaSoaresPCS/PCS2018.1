@@ -1,11 +1,12 @@
 #logo{
   display: inline;
-  margin-left: 39%;
+  margin-left: -15%;
+  position: fixed;
 }
 
 #titulo{
   float: right;
-  margin-right: 34%;
+  margin-right: 28%;
   margin-top: 1%;
 }
 

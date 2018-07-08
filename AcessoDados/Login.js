@@ -17,15 +17,15 @@ $(document).ready(function(){
 				result = JSON.parse(result);
 				localStorage.setItem('userId', result.id);
 				localStorage.setItem('isAdminSistema', result.isAdminSistema);
-				window.location.assign('perfil.html');
-			}	
+				window.location.assign('inicio.html');
+			}
         }
-		
+
       });
     }
   });
-	
-	
+
+
   $('#logout').click(function(){
 	  var confirmou = confirm("Deseja realmente sair?");
 	  if (confirmou) { // Usuário confirmou que deseja sair.
@@ -37,7 +37,7 @@ $(document).ready(function(){
 				window.location.assign('index.html');
 			}
 		);
-	  } 
-  });	
-	
+	  }
+  });
+
 });

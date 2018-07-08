@@ -1,4 +1,4 @@
-  button {
+ #btn-redefinir-senha {
     display: block;
     background-color: white;
     border: none;
@@ -9,7 +9,7 @@
     border-radius: 8px;
     font-weight: bold;
     align-self: center;
-    margin-top: 6%;
+    margin-top: 20px;
   }
 
   button:hover{
