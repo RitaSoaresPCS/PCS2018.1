@@ -25,7 +25,7 @@ $(document).ready(function(){
 		var divUserPicture = $('#user-picture');
 		var divUserName = $('#user-name');
 		$('<p />')
-			.text(dadosUsuario.username)
+			.text(dadosUsuario.nome)
 			.appendTo(divUserName);
 		$('<img />')
 			.attr('src', dadosUsuario.urlImagemPerfil)
