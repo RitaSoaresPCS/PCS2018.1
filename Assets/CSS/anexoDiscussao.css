@@ -16,3 +16,12 @@ p.clear {
 	margin-left:10px;
 	margin-right:10px;
 }
+
+.anexo-disc p {
+	position: inherit;
+    top: 0px;
+}
+
+#btn-upload, .anexo-disc button {
+	background:none;
+}

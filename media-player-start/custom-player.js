@@ -2,6 +2,10 @@ function videoPlayer(){
   //criação de variáveis para contorlar os elementos do vídeo que iremos alterar
   var media = document.querySelector('video');
   var controls = document.querySelector('.controls');
+  
+  if (media == null || controls == null || media == undefined || controls == undefined) {
+	 return;
+  }
 
   var play = document.querySelector('.play');
   var stop = document.querySelector('.stop');
@@ -12,6 +16,7 @@ function videoPlayer(){
   var timer = document.querySelector('.timer span');
   var timerBar = document.querySelector('.timer div');
   //remoção dos controles default do player HTML para inserção dos customizados
+  
   media.removeAttribute('controls');
   controls.style.visibility = 'visible';
   //event listener para quando apertarem o botão de play, a função playpausemedia executar

@@ -27,7 +27,7 @@
 		      'FromName'     => 'Academiq',
 		      'FromEmail'    => 'marcos.junior@uniriotec.br',
 		      'Text-Part'    => '',
-		      'Html-Part'    => '<h2>Olá, ' . $nameUser .'</h2><br><p>Você foi adicionado à comunidade' . $comunidade .' como membro.</p><br><p>           Equipe Academiq</p>',
+		      'Html-Part'    => '<h2>Olá, ' . $nameUser .'</h2><br><p>Você foi adicionado à comunidade ' . $comunidade .' como membro.</p><br><p>           Equipe Academiq</p>',
 		      'Subject'      => 'Academiq - Notificação de Parceria',
 		      'Recipients'   => [['Email' => $emailUser]],
 		    ];
@@ -363,12 +363,14 @@
 					$return['erro'] = true;
 					$return['mensagem'] = "membro";
 				} else {
+					$nomeUsuario = $row["nome"];
+					
 					// Envio de e-mail - ainda não implementado.
 					$sql3 = "SELECT nome FROM comunidade WHERE id= $idComunidade";
 					$result3= query_result($sql3);
 					$row = mysqli_fetch_assoc($result3);
 					$emailSender= new MailjetMailUser();
-					$emailSender->emailPostMember($nomeUsuario, $email, $row);
+					$emailSender->emailPostMember($nomeUsuario, $email, $row["nome"]);
 					$return['erro'] = false;
 				}
 

@@ -85,6 +85,9 @@
 	
 	
 	function uploadFileDiscussao(){
+		// Não mostra warnings pro usuário.
+		error_reporting(E_ALL ^ E_WARNING);
+		
 		$idUsuario = $_POST['idUsuario'];
 		$idDiscussao = $_POST['idDiscussao'];
 		$dataEnvio = date('Y-m-d');
