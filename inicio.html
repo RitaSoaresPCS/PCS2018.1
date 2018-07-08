@@ -10,20 +10,22 @@
 		<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		<meta charset="UTF-8">
-		<script type= 'text/javascript' src= 'AcessoDados/Login.js'></script>
+		<!-- Carregar apenas se necessário na página: -->
+    <script src="AcessoDados/Comunidade.js"></script>
+    <script src="AcessoDados/Usuario.js"></script>
+    <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
 	</head>
 
 	<body>
 		<div id='aside-menu'>
 		  <div id="user-picture" style=" height: 150px; width: 150px; border-radius:100%; border-style:solid; border-width:2px; background-color:white; margin-left: 25%;"></div>
-		  <br>
-		  <div id="user-name"></div><br>
+		  <div id="user-name" style="text-align: center;"></div>
 		  <div class="search-container">
 		    <form action="/action_page.php" style="margin: 0px; background-color: white;">
 		      <input type="text" placeholder="Search..." name="search">
 		      <button type="submit"><i class="fa fa-search"></i></button>
 		    </form>
-		  </div><br>
+		  </div>
 		  <br>
 		  <a href="perfil.html" style="text-decoration: none;"><h3>Meu Perfil</h3></a><hr>
 		  <a><h3>Minhas Discussões</h3></a><hr>

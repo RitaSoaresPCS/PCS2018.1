@@ -1,4 +1,7 @@
-body {font-family: Arial, Helvetica, sans-serif;}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+}
 
 footer h3 {
 	font-size: 1.17em;
@@ -14,6 +17,80 @@ p.clear-float {
     clear: both;
 }
 
+.container {
+  margin-top: 10%;
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 790px;
+}
+.center {
+  position: absolute;
+  margin: 20%;
+  top: 18%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 350px;
+  height: 290px;
+  border-style:solid;
+  border-width:2px;
+  border-radius:15px;
+  background-color:#6259c6;
+  color:white;
+  padding-left: 45px;
+  padding-right: 45px;
+  padding-top: 15px;
+  padding-bottom: 25px;
+}
+
+header {
+  font-family: "Roboto", sans-serif;
+  color:white;
+  background-color:#6259c6;
+  width:100%;
+}
+
+#nav-perfil {
+	border: 1px;
+	border-style: solid;
+	border-color: black;
+}
+
+#nav-perfil li {
+		float: left;
+		display: inline;
+		border: 1px;
+		border-style: solid;
+		border-color: black;
+}
+
+#nav-perfil li a {
+		display: block;
+		color: black;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		width: 93.1px;
+}
+
+#nav-perfil li a:hover:not(.active) {
+		background-color: gray;
+		color:white;
+}
+
+.active {
+		background-color: #736AD7;
+}
+
+#titulo{
+	font-size: 190%;
+	margin-top:0;
+	padding-top:15px;
+	position: static;
+	margin-left: 6.5%;
+	float:left;
+	display:inline;
+}
 
 main#content {
 	width:80%;
@@ -23,6 +100,7 @@ main#content {
 	border-width:2px;
 	background-color:#F7F7F7;
 	margin-bottom: 100px;
+	margin-top: 112px;
 }
 
 
@@ -60,7 +138,7 @@ main#content {
 	width:300px;
 }
 
-#search-labs::placeholder { 
+#search-labs::placeholder {
     color: #a0a0a0;
 }
 
@@ -104,7 +182,7 @@ div#topo-labs {
 	margin:0px auto;
 	color:black;
 	padding-left:15px;
-	padding-right:15px;	
+	padding-right:15px;
 }
 
 .comunidade h3 {
