@@ -178,7 +178,22 @@
   <body>
 
 	<!-- Barra de navegação com botão pro perfil -->
-	<nav></nav>
+  <header style="position: fixed; top: 0;width: 100%; height: 60px;">
+    <nav id="barra-navegacao" style="text-align: center;">
+    	<ul>
+    		<li><a style="color:white;" href="inicio.html" title="Início">Início</a></li>
+    		<li><a style="color:white;" href="laboratorios.html" title="Início">Laboratórios</a></li>
+    		<li><a style="color:white;" href="usuarios.html" title="Início">Usuários</a></li>
+    	</ul>
+    	<h1 id='titulo' align="center" style="font-size: 190%;margin-top:0;padding-top:15px;position: static;">Academiq</h1>
+    	<div id="dropdown">
+    		<div id="user-picture" onclick="myFunction()" class="dropbtn" style="margin-left: 45.5px;"></div>
+    		<div id="myDropdown" class="dropdown-content" style="text-align:center; padding-top:17px;"><br>
+    			<a href="Perfil.html">Perfil</a>
+    			<a id="logout" href="#">Logout</a>
+    		</div>
+    </nav>
+  </header>
 
 	<!-- Nome do laboratório e link -->
     <h2 id="nomeLab"></h2>
@@ -210,6 +225,25 @@
   </body>
 	<script>
 		$( "footer" ).load( "footerLogin.html footer" );
-		$( "nav" ).load( "menuNavegacao.html nav" );
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
 	</script>
 </html>

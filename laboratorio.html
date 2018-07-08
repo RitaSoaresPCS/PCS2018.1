@@ -7,11 +7,11 @@
 		<script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-		
+
 		<!-- Modal jQuery -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-		
+
 		<link rel="stylesheet" type="text/css" href="Assets/CSS/laboratorio.css">
 		<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
 
@@ -21,10 +21,10 @@
 		<script src="AcessoDados/Comunidade.js"></script>
 		<script src="AcessoDados/Usuario.js"></script>
 		<script src="AcessoDados/UsuarioVisualizaComunidade.js"></script>
-		
-	
+
+
 		<script>
-		
+
 			function enviarConviteMembro() {
 				var email = $("#emailAddMembro").val();
 				Usuario.enviarConviteMembro(Base.getUrlParameter("id"), email, function(data) {
@@ -45,8 +45,8 @@
 					}
 				});
 			}
-		
-		
+
+
 			function definirFixoDiscussao(id) {
 				var fixoId = "fixDiscBtn" + id;
 				var valorAtual = document.getElementById(fixoId).value;
@@ -54,7 +54,7 @@
 				if (valorAtual == "1") {
 					novoValor = "0";
 				}
-				
+
 				Discussao.mudarFixo(id, novoValor, function(result) {
 					if (result.erro == true) {
 						alert(result.mensagem);
@@ -62,26 +62,26 @@
 						alert('Discussao alterada.');
 						location.reload();
 					}
-				});			
+				});
 			}
-			
-			
+
+
 			function editarDiscussaoModal(id) {
 				// Modal para edição dos dados num form.
 				var modal = document.getElementById('novaMensagemModal');
-				
+
 				if (id != 0) {
 					Discussao.getById(id, function(disc) {
 						var disc = JSON.parse(disc);
 						document.getElementById('titulo-add').value = disc.titulo;
 						Discussao.editorDiscussao.setData(disc.descricao);
 						document.getElementById('publica-add').value = disc.publica;
-					
+
 						document.getElementById("btn-addDisc").onclick = function() {
-							Discussao.editar(id, 
-								document.getElementById('titulo-add').value, 
-								Discussao.editorDiscussao.getData(), 
-								document.getElementById('publica-add').value, 
+							Discussao.editar(id,
+								document.getElementById('titulo-add').value,
+								Discussao.editorDiscussao.getData(),
+								document.getElementById('publica-add').value,
 								function(data) {
 									if (data.erro == false) {
 										alert('Discussão alterada com sucesso.');
@@ -91,17 +91,17 @@
 							)
 						};
 					});
-				
+
 				} else {
 					document.getElementById('titulo-add').value = "";
 					Discussao.editorDiscussao.setData("");
 					document.getElementById('publica-add').value = "1";
-				
+
 					document.getElementById("btn-addDisc").onclick = function() {
-						Discussao.adicionar(Base.getUrlParameter("id"), 
-							document.getElementById('titulo-add').value, 
-							Discussao.editorDiscussao.getData(), 
-							document.getElementById('publica-add').value, 
+						Discussao.adicionar(Base.getUrlParameter("id"),
+							document.getElementById('titulo-add').value,
+							Discussao.editorDiscussao.getData(),
+							document.getElementById('publica-add').value,
 							localStorage.userId,
 							function(data) {
 								if (data.erro == false) {
@@ -113,133 +113,133 @@
 					};
 				}
 			}
-			
-			
-			function editDadosLab(toggle, elementId, iconId) { 
+
+
+			function editDadosLab(toggle, elementId, iconId) {
 				if (toggle == 0) {
-					document.getElementById(elementId).contentEditable = "true"; 
+					document.getElementById(elementId).contentEditable = "true";
 					document.getElementById(iconId).className = 'far fa-save';
 					document.getElementById(elementId).style.backgroundColor = "rgb(230, 230, 230)";
 					document.getElementById(iconId).onclick = function() { editDadosLab(1, elementId, iconId) };
 				} else {
-					document.getElementById(elementId).contentEditable = "false"; 
+					document.getElementById(elementId).contentEditable = "false";
 					document.getElementById(iconId).className = 'far fa-edit';
 					document.getElementById(elementId).style.backgroundColor = "#ffffff";
 					document.getElementById(iconId).onclick = function() { editDadosLab(0, elementId, iconId) };
-					
+
 					// Salva os dados no BD:
 					Comunidade.editar(
-						Base.getUrlParameter("id"), 
-						document.getElementById("nomeLab").innerHTML, 
-						document.getElementById("descricaoLab").innerHTML, 
-						document.getElementById("temaLab").innerHTML, 
+						Base.getUrlParameter("id"),
+						document.getElementById("nomeLab").innerHTML,
+						document.getElementById("descricaoLab").innerHTML,
+						document.getElementById("temaLab").innerHTML,
 						document.getElementById("adminLab").innerHTML
 					);
 				}
 			}
-		
-		
+
+
 			function loadDiscussoes(discussoes, idUsuarioAdministrador) {
-			
+
 				for (var iterador = 0; iterador < discussoes.length; iterador++) {
 					var contentD = "";
 					var imagemCriador = discussoes[iterador].urlImagemPerfil;
 					if (imagemCriador == "") {
 						imagemCriador = "Assets/Imagens/avatar round.png";
-					} 
-				
+					}
+
 					contentD += '<div class="discussao-lab">';
 					contentD += '<div class="topo-discussao">';
 					contentD += '<img src="' + imagemCriador + '" title="Imagem de perfil" alt="Imagem de perfil">';
 					contentD += '<h2><a href="discussao.html?id=' + discussoes[iterador].id + '" title="' + discussoes[iterador].titulo + '">' + discussoes[iterador].titulo + '</a></h2>';
 					contentD += '<p>Criada por ' + discussoes[iterador].username + '</p>';
-					
+
 					contentD += '<div class="botoes-discussao">';
 					if (localStorage.userId == discussoes[iterador].idUsuarioCriador) {
 						contentD += "<a href='#editarDiscussaoModal' rel='modal:open'><button class='editDiscBtn' onclick='editarDiscussaoModal(" + discussoes[iterador].id +")'>Editar</button></a>";
 					}
-					
-					if (localStorage.userId == discussoes[iterador].idUsuarioCriador || 
+
+					if (localStorage.userId == discussoes[iterador].idUsuarioCriador ||
 						localStorage.userId == idUsuarioAdministrador || localStorage.isAdminSistema == "true") {
 						contentD += "<button class='removeDiscBtn' onclick='Discussao.remover(" + discussoes[iterador].id + ", function(data) { location.reload(); });'>Remover</button>";
 					}
-					
+
 					var fixoId = "fixDiscBtn" + discussoes[iterador].id;
 					if (localStorage.userId == idUsuarioAdministrador || localStorage.isAdminSistema == "true") {
 						contentD += "<button id='" + fixoId + "' class='fixDiscBtn' onclick='definirFixoDiscussao(" + discussoes[iterador].id + ");' value='" + discussoes[iterador].fixa + "'></button>";
-						
+
 					}
 					contentD += '</div>';
-					
+
 					contentD += '</div><p class="clear"></p>';
 					contentD += '<div class="conteudo-discussao" id="conteudo-discussao-' + discussoes[iterador].id + '"></div>';
 					contentD += '</div><p class="clear"></p>';
 
 					document.getElementById("discussoes").innerHTML += contentD;
 					$('#conteudo-discussao-' + discussoes[iterador].id).append($.parseHTML(discussoes[iterador].descricao));
-					
-					
+
+
 					if (discussoes[iterador].fixa == "1" && document.getElementById(fixoId) != undefined) {
 						document.getElementById(fixoId).innerHTML = "Desafixar";
 					} else if (discussoes[iterador].fixa == "0" && document.getElementById(fixoId) != undefined){
 						document.getElementById(fixoId).innerHTML = "Fixar";
 					}
-			
+
 				}
-			
+
 			}
-		
-		
-		
-		
+
+
+
+
 			// Verifica se o usuário tem permissão de visualização.
 			UsuarioVisualizaComunidade.verificarPermissao(localStorage.userId, Base.getUrlParameter("id"), function(permissao) {
 				if (permissao.exibir == false) {
 					window.location.assign("laboratorioExterno.html?id=" + Base.getUrlParameter("id"));
 				} else {
-					
+
 					// Preenche os dados do laboratório.
 					$(document).ready(function(){
 						Comunidade.getById(Base.getUrlParameter("id"), function(data) {
 							data = JSON.parse(data);
 							Usuario.getById(data.idUsuarioAdministrador, function(dataUs) {
 								var usuarioAdmin = JSON.parse(dataUs);
-								
+
 								document.getElementById("nomeLab").innerHTML = data.nome;
-							
+
 								var dadosLab = "";
 								dadosLab += "<span class='dadosLabTitle'>Tema:</span> <p id='temaLab'>" + data.tema + "</p><br>";
 								dadosLab += "<span class='dadosLabTitle'>Descrição:</span> <p id='descricaoLab'>" + data.descricao + "</p><br>";
 								dadosLab += "<span class='dadosLabTitle'>Admin:</span> <p id='adminLab'>" + usuarioAdmin.username + "</p><br>";
-								
-								document.getElementById("dadosLab").innerHTML = dadosLab;	
-								
+
+								document.getElementById("dadosLab").innerHTML = dadosLab;
+
 								// Edição de dados do laboratório.
 								if (localStorage.userId == data.idUsuarioAdministrador || localStorage.isAdminSistema == "true") {
 
 									$( "<i id='editNomeIcon' class='far fa-edit' onclick='editDadosLab(0,\"nomeLab\", \"editNomeIcon\");'></i>" ).insertAfter( "#nomeLab" );
-									
+
 									$( "<i id='editTemaIcon' class='far fa-edit' onclick='editDadosLab(0,\"temaLab\", \"editTemaIcon\");'></i>" ).insertAfter( "#temaLab" );
-									
+
 									$( "<i id='editDescricaoIcon' class='far fa-edit' onclick='editDadosLab(0,\"descricaoLab\", \"editDescricaoIcon\");'></i>" ).insertAfter( "#descricaoLab" );
 
 									$('#detalhesLab').append("<a id='link-parceiros' href='detalhesLab.html?id=" + Base.getUrlParameter("id") + "' title='Parceiros e Solicitações'><h2>Parceiros e Solicitações</h2></a>")
-									
+
 									$("#add-membro").append('<a href="#addMembroModal" rel="modal:open"><button type="button"><i class="fas fa-user-plus"></i>Adicionar membro</button></a>');
-									
+
 								}
-									
+
 							});
 
-							
+
 							// Carrega as discussões do laboratório.
 							Discussao.getDiscussaoDoLab(Base.getUrlParameter("id"), function(discussoes) {
-								loadDiscussoes(discussoes, data.idUsuarioAdministrador);	
-								
+								loadDiscussoes(discussoes, data.idUsuarioAdministrador);
+
 							});
 						});
-						
-						
+
+
 						ClassicEditor
 							.create( document.querySelector( '#descricao-add' ) )
 							.then( editor => {
@@ -248,8 +248,8 @@
 							.catch( error => {
 								console.error( error );
 							} );
-							
-							
+
+
 						// Pesquisa.
 						$('#btn-search').click(function(){
 							var searchTxt=$('#search-discussoes').val();
@@ -261,11 +261,11 @@
 									} else {
 										document.getElementById("discussoes").innerHTML = "";
 										Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
-											loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
+											loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);
 										});
 									}
 								});
-							
+
 							} else {
 								Discussao.getByDescricao(searchTxt, Base.getUrlParameter("id"), function(discussoes) {
 									if (discussoes.length == 0) {
@@ -273,26 +273,26 @@
 									} else {
 										document.getElementById("discussoes").innerHTML = "";
 										Comunidade.getById(Base.getUrlParameter("id"), function(dataCom) {
-											loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);	
+											loadDiscussoes(discussoes, dataCom.idUsuarioAdministrador);
 										});
 									}
-								
+
 								});
 							}
 						});
-						
-						
+
+
 						// Membros:
 						Comunidade.getMembros(Base.getUrlParameter("id"), function(dataMembros) {
 							membros = "";
-							
+
 							for (var i = 0; i < dataMembros.length; i++) {
 								membro = JSON.parse(dataMembros[i]);
 
 								if (membro.urlImagemPerfil == "") {
 									membro.urlImagemPerfil = "Assets/Imagens/avatar round.png";
-								} 
-							
+								}
+
 								membros += '<div class="membro-lab">';
 								membros += '<img class="img-membro" src="' + membro.urlImagemPerfil + '" title="Imagem de perfil" alt="Imagem de perfil"><br>';
 								membros += '<a href="usuario.html?id=' + membro.id + '" title="' + membro.nome + '">' + membro.nome + '</a>';
@@ -301,13 +301,13 @@
 							document.getElementById("membros").innerHTML = membros;
 							$( "div.membro-lab" ).last().css( "border-right", "none" );
 						});
-				
+
 					});
 				}
-				
-			
+
+
 			});
-			
+
 			$(document).ready(function(){
 				// Submete a pesquisa quando o usuário pressiona ENTER.
 				$('#search-discussoes').on('keyup', function(e) {
@@ -315,13 +315,28 @@
 						$('#btn-search').click();
 					}
 				});
-			});	
+			});
 		</script>
-	
-	
+
+
 	</head>
 	<body>
-		<nav></nav>
+		<header style="position: fixed; top: 0;width: 100%; height: 60px;">
+	    <nav id="barra-navegacao" style="text-align: center;">
+	    	<ul>
+	    		<li><a style="color:white;" href="inicio.html" title="Início">Início</a></li>
+	    		<li><a style="color:white;" href="laboratorios.html" title="Início">Laboratórios</a></li>
+	    		<li><a style="color:white;" href="usuarios.html" title="Início">Usuários</a></li>
+	    	</ul>
+	    	<h1 id='titulo' align="center" style="font-size: 190%;margin-top:0;padding-top:15px;position: static;">Academiq</h1>
+	    	<div id="dropdown">
+	    		<div id="user-picture" onclick="myFunction()" class="dropbtn" style="margin-left: 45.5px;"></div>
+	    		<div id="myDropdown" class="dropdown-content" style="text-align:center; padding-top:17px;"><br>
+	    			<a href="Perfil.html">Perfil</a>
+	    			<a id="logout" href="#">Logout</a>
+	    		</div>
+	    </nav>
+	  </header>
 		<main id="content">
 			<!-- Nome do laboratório -->
 			<div class="center">
@@ -329,25 +344,25 @@
 			</div>
 			<p class='clear'></p>
 
-			<!-- Tema, descrição, username do admin, edição dos dados... -->	
+			<!-- Tema, descrição, username do admin, edição dos dados... -->
 			<div id="dadosLab"></div>
 			<p class='clear'></p>
-		
-		
+
+
 			<!-- Links para parceiros e solicitações -->
 			<p id="detalhesLab"></p>
 			<p class='clear'></p>
-			
-			
+
+
 			<!-- Membros -->
 			<h2>Membros</h2>
 			<!-- Botão adicionar membro -->
 			<div id="add-membro"></div>
 			<p class='clear'></p>
-			
+
 			<p id="membros"></p>
 			<p class='clear'></p>
-			
+
 
 			<h2>Discussões</h2>
 			<!-- Pesquisa de discussões -->
@@ -358,24 +373,24 @@
 				<button type='button' id='btn-search'>Pesquisar discussões</button>
 			</div>
 			<p class='clear'></p>
-			
-			
+
+
 			<!-- Discussões -->
 			<div id="discussoes"></div>
-			
-			
+
+
 			<!--Adicionar discussão -->
 			<a href='#editarDiscussaoModal' rel='modal:open' id="add-disc-link"><button class='editDiscBtn' onclick='editarDiscussaoModal(0)'><i class="fas fa-comments"></i>Adicionar discussão</button></a>
-		
+
 			<p class='clear'></p>
-		
+
 			<div id="editarDiscussaoModal" class="modal">
 				<form id='form-addDisc'>
 					<p class='padb5'></p>
 					<label for="titulo-add">Título</label><br>
 					<input id='titulo-add' type='text'>
 					<p class='padb5'></p>
-					
+
 					<label for="descricao-add">Descrição</label><br>
 					<textarea id= 'descricao-add'></textarea>
 					<p class='padb5'></p>
@@ -388,8 +403,8 @@
 					<button id= 'btn-addDisc' type= 'button'><i class="far fa-save"></i>Salvar</button>
 				</form>
 			</div>
-			
-			
+
+
 			<div id="addMembroModal" class="modal">
 				<h2>Enviar convite</h2>
 				<label for="emailAddMembro">E-mail do convidado:</label>
@@ -397,11 +412,30 @@
 				<button type="button" id="salvarMembro" onclick="enviarConviteMembro()"><i class="far fa-save"></i>Salvar</button>
 			</div>
 		</main>
-		
+
 		<footer></footer>
 	</body>
 	<script>
 		$( "footer" ).load( "footerLogin.html footer" );
-		$( "nav" ).load( "menuNavegacao.html nav" );
+		/* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
 	</script>
 </html>
