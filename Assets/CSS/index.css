@@ -52,7 +52,6 @@ form > p {
   justify-content: center;
 }
 .center {
-  position: absolute;
   margin: auto;
   top: 18%;
   right: 0;
@@ -69,8 +68,9 @@ form > p {
   padding-right: 45px;
   padding-top: 15px;
   padding-bottom: 25px;
-  text-align:center;margin-bottom: 14%;
+  text-align:center;
   margin-left: 38.5%;
+  margin-top: 18%;
 }
 
 a {

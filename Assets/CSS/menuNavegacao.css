@@ -1,14 +1,67 @@
 body {
-	margin:0px;
+	font-family: 'Roboto', sans-serif;
 }
 
+.dropbtn {
+		padding: 16px;
+		font-size: 16px;
+		border: none;
+		cursor: pointer;
+		color:white;
+		font-size: 0px;
+}
+
+.dropbtn :hover, .dropbtn :focus {
+		background-color: #2980B9;
+}
+
+.dropdown {
+		position: relative;
+		display: inline-block;
+		text-decoration: none;
+
+}
+
+.dropdown-content {
+		display: none;
+		background-color: #f1f1f1;
+		min-width: 160px;
+		overflow: auto;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		z-index: 1;
+		float: right;
+		margin-right: 15px;
+		margin-top:36.5px;
+		color: darkgray;
+		position: absolute;
+		text-decoration: none;
+}
+
+.dropdown-content a {
+		padding: 12px 16px;
+		text-decoration: none;
+		display: block;
+
+}
+
+.dropdown-content a:visited {
+	color: #545454;
+	text-decoration: none;
+}
+
+.dropdown-content a:hover {
+	background-color: darkgray;
+	text-decoration: none;
+}
+
+.show {display: block;}
+
 #barra-navegacao {
-	color:white;
 	background-color:#6259C6;
+
 }
 
 #barra-navegacao a {
-	color:white;
 	text-decoration:none;
 }
 
@@ -18,11 +71,9 @@ body {
 
 #barra-navegacao ul {
 	list-style-type: none;
-	padding-bottom: 10px;
-    padding-top: 10px;
-	width: 90%;
-    margin: 0px auto;
-    margin-bottom: 10px;
+		display: inline;
+		float: left;
+		margin-top: 23px;
 }
 
 #barra-navegacao ul li {
@@ -34,4 +85,78 @@ body {
 
 #barra-navegacao ul li:first-child {
 	border-left:2px solid white;
+}
+
+#barra-navegacao h1 {
+	display: inline;
+}
+
+#user-picture {
+	border-color: black;
+	height: 37px;
+	width: 37px;
+	border-radius:100%;
+	border-style:solid;
+	border-width:2px;
+	background-color:white;
+	z-index:1000;
+}
+
+#dropdown {
+	position: fixed;
+	display: inline-flex;
+	text-align: center;
+	margin-left: 264px;
+  margin-top: 38px;
+	color:darkgray;
+}
+
+nav {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: #6259C6;
+}
+
+#nav-perfil {
+	border: 1px;
+	border-style: solid;
+	border-color: black;
+}
+
+#nav-perfil li {
+		float: left;
+		display: inline;
+		border: 1px;
+		border-style: solid;
+		border-color: black;
+}
+
+#nav-perfil li a {
+		display: block;
+		color: black;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		width:139px;
+}
+
+#nav-perfil li a:hover:not(.active) {
+		background-color: gray;
+		color:white;
+}
+
+.active {
+		background-color: #736AD7;
+}
+
+#titulo{
+	font-size: 190%;
+	margin-top:0;
+	padding-top:15px;
+	position: static;
+	margin-left: 17.5%;
+	float:left;
+	display:inline;
 }
