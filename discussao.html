@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/discussao.css">
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
 
     <script src="AcessoDados/Base.js"></script>
     <!-- Carregar apenas se necessário na página: -->
@@ -207,4 +208,8 @@
 
 	<footer></footer>
   </body>
+	<script>
+		$( "footer" ).load( "footerLogin.html footer" );
+		$( "nav" ).load( "menuNavegacao.html nav" );
+	</script>
 </html>

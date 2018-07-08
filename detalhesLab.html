@@ -15,6 +15,7 @@
 
 
 		<link rel="stylesheet" type="text/css" href="Assets/CSS/detalhesLab.css">
+		<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
 
 		<script src="AcessoDados/Base.js"></script>
 		<!-- Carregar apenas se necessário na página: -->
@@ -174,6 +175,10 @@
 			<input name="emailAddParc" id="emailAddParc" type="email"><br><br>
 			<button type="button" onclick="enviarConviteParceiro()">Salvar</button>
 		</div>
-
+		<footer></footer>
 	</body>
+	<script>
+		$( "footer" ).load( "footerLogin.html footer" );
+		$( "nav" ).load( "menuNavegacao.html nav" );
+	</script>
 </html>

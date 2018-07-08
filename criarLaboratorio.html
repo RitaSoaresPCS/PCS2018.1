@@ -5,6 +5,7 @@
     <meta charset= 'utf-8'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="AcessoDados/Base.js"></script>
 
@@ -38,6 +39,7 @@
   <body>
 
     <header><!-- logo do academiq --></header>
+	<nav></nav>
 	<h2>Novo laboratório</h2>
 	<form>
 		Nome:<br>
@@ -55,8 +57,10 @@
 		<button id= 'btn-criar-lab' type= 'button'>Criar</button>
 
 	</form>
-
-
-
+	<footer></footer>
   </body>
+	<script>
+		$( "footer" ).load( "footerLogin.html footer" );
+		$( "nav" ).load( "menuNavegacao.html nav" );
+	</script>
 </html>

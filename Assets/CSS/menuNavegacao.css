@@ -1,0 +1,37 @@
+body {
+	margin:0px;
+}
+
+#barra-navegacao {
+	color:white;
+	background-color:#6259C6;
+}
+
+#barra-navegacao a {
+	color:white;
+	text-decoration:none;
+}
+
+#barra-navegacao a:hover {
+	text-decoration:underline;
+}
+
+#barra-navegacao ul {
+	list-style-type: none;
+	padding-bottom: 10px;
+    padding-top: 10px;
+	width: 90%;
+    margin: 0px auto;
+    margin-bottom: 10px;
+}
+
+#barra-navegacao ul li {
+	display: inline;
+	padding-right:50px;
+	border-right:2px solid white;
+	padding-left:50px;
+}
+
+#barra-navegacao ul li:first-child {
+	border-left:2px solid white;
+}

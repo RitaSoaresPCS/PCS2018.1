@@ -13,6 +13,16 @@
   background-color:#6259c6;
 }
 
+
+#aside-menu a {
+	text-decoration:none;
+	color:white;
+}
+
+#aside-menu a:hover {
+	text-decoration:underline;
+}
+
 .search-container {
 }
 
