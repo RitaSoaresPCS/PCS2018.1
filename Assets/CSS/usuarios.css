@@ -14,6 +14,55 @@ p.clear-float {
     clear: both;
 }
 
+header {
+  font-family: "Roboto", sans-serif;
+  color:white;
+  background-color:#6259c6;
+  width:100%;
+}
+
+#nav-perfil {
+	border: 1px;
+	border-style: solid;
+	border-color: black;
+}
+
+#nav-perfil li {
+		float: left;
+		display: inline;
+		border: 1px;
+		border-style: solid;
+		border-color: black;
+}
+
+#nav-perfil li a {
+		display: block;
+		color: black;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		width: 93.1px;
+}
+
+#nav-perfil li a:hover:not(.active) {
+		background-color: gray;
+		color:white;
+}
+
+.active {
+		background-color: #736AD7;
+}
+
+#titulo{
+	font-size: 190%;
+	margin-top:0;
+	padding-top:15px;
+	position: static;
+	margin-left: 6.5%;
+	float:left;
+	display:inline;
+}
+
 main#conteudo {
 	width:80%;
 	margin:0px auto;
@@ -22,6 +71,7 @@ main#conteudo {
 	border-width:2px;
 	background-color:#F7F7F7;
 	margin-bottom: 100px;
+	margin-top: 90px;
 }
 
 #btn-create-user {
@@ -56,7 +106,7 @@ main#conteudo {
 	width:300px;
 }
 
-#search-users::placeholder { 
+#search-users::placeholder {
     color: #a0a0a0;
 }
 
@@ -108,7 +158,7 @@ div#topo-usuarios {
 	float: left;
 	text-align: center;
     margin-top: 30px;
-	
+
 }
 
 .div-user-details button {
