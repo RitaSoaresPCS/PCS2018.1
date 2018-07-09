@@ -42,14 +42,16 @@
 							// Se tiver permissão para remover:
 							if (localStorage.userId == dataAnex[i].idUsuarioCriador ||
 								localStorage.userId == dataCom.idUsuarioAdministrador) {
-								anexos += '<button type="button" onclick="Anexo.removerAnexoDiscussao(' + dataAnex[i].idRecurso + ', ' + dataDisc.id + ', function(data) {if (data.erro == false) { location.reload()} })">Remover</button>';
+                anexos += '<div class= "div-anexoheader">';
+                anexos += '<p>Adicionado em:<br>' + moment(dataAnex[i].dataEnvio).format('DD/MM/YY') + '</p>';
+								anexos += '<button class= "btn-btnremove btn-btnanexo" type="button" onclick="Anexo.removerAnexoDiscussao(' + dataAnex[i].idRecurso + ', ' + dataDisc.id + ', function(data) {if (data.erro == false) { location.reload()} })">Remover</button>';
+                anexos += '</div>'
 							}
 							if ((dataAnex[i].titulo.slice(-3) == "mp4") || (dataAnex[i].titulo.slice(-3) == "wav") || (dataAnex[i].titulo.slice(-3) == "ebm") || (dataAnex[i].titulo.slice(-3) == "ogg"))
               {
-                //alert('entrou');
                 var divVideo= $('<div />');
                 var divPlayer= $('<div />').attr('class', 'player').appendTo(divVideo);
-                var video= $('<video />').attr('controls', 'controls').attr('width', '320').attr('height', '240').appendTo(divPlayer);
+                var video= $('<video />').attr('controls', 'controls').attr('width', '400').attr('height', '240').appendTo(divPlayer);
                 var videoType= dataAnex[i].titulo.substr(dataAnex[i].titulo.lastIndexOf(".") + 1);
                 $('<source />')
                   .attr('src', 'Uploads/' + dataAnex[i].titulo)
@@ -61,28 +63,28 @@
                   .attr('data-icon', 'P')
                   .attr('aria-label', 'play pause toggle')
                   .appendTo(divControls);
-                  $('<button />')
-                    .attr('class', 'stop')
-                    .attr('data-icon', 'S')
-                    .attr('aria-label', 'stop')
-                    .appendTo(divControls);
-                  var divTimer= $('<div />').attr('class', 'timer').appendTo(divControls);
-                  $('<div />').appendTo(divTimer);
-                  $('<span />')
-                    .attr('aria-label', 'timer')
-                    .text('00:00')
-                    .appendTo(divTimer);
-                  $('<button />')
-                    .attr('class', 'rwd')
-                    .attr('data-icon', 'B')
-                    .attr('aria-label', 'rewind')
-                    .appendTo(divControls);
-                  $('<button />')
-                    .attr('class', 'fwd')
-                    .attr('data-icon', 'F')
-                    .attr('aria-label', 'fast forward')
-                    .appendTo(divControls);
-                  anexos+= divVideo.html();
+                $('<button />')
+                  .attr('class', 'stop')
+                  .attr('data-icon', 'S')
+                  .attr('aria-label', 'stop')
+                  .appendTo(divControls);
+                var divTimer= $('<div />').attr('class', 'timer').appendTo(divControls);
+                $('<div />').appendTo(divTimer);
+                $('<span />')
+                  .attr('aria-label', 'timer')
+                  .text('00:00')
+                  .appendTo(divTimer);
+                $('<button />')
+                  .attr('class', 'rwd')
+                  .attr('data-icon', 'B')
+                  .attr('aria-label', 'rewind')
+                  .appendTo(divControls);
+                $('<button />')
+                  .attr('class', 'fwd')
+                  .attr('data-icon', 'F')
+                  .attr('aria-label', 'fast forward')
+                  .appendTo(divControls);
+                anexos+= divVideo.html();
 
 
               }else{
@@ -105,7 +107,7 @@
   							}
               }
 
-							anexos += '<p>Adicionado em:<br>' + moment(dataAnex[i].dataEnvio).format('DD/MM/YY') + '</p>';
+
 							anexos += '</div>';
 
 						}
@@ -170,7 +172,7 @@
 	<!-- Anexos da discussão -->
 	<h3>Anexos</h3>
 	<input type="file" name="fileToUpload" id="fileToUpload">
-	<button type='button' id='btn-upload'>Anexar arquivo</button><br>
+	<button class= 'btn-btnanexo' type='button' id='btn-upload'>Anexar</button><br>
 	<p class='clear'></p>
 
 	<div id="anexos"></div>
