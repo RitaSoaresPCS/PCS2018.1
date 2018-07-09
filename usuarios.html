@@ -14,6 +14,7 @@
 		<script src="AcessoDados/Base.js"></script>
 		<script src="AcessoDados/Usuario.js"></script>
 		<script src="AcessoDados/Comunidade.js"></script>
+		<script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
 		<script type= 'text/javascript'>
 
 			function preencherInformacoesUsuarios(usuarios, divUsuarios) {
@@ -267,22 +268,7 @@
 
 	</head>
 	<body>
-		<header style="position: fixed; top: 0;width: 100%; height: 60px;">
-	    <nav id="barra-navegacao" style="text-align: center;">
-	    	<ul>
-	    		<li><a style="color:white;" href="inicio.html" title="Início">Início</a></li>
-	    		<li><a style="color:white;" href="laboratorios.html" title="Início">Laboratórios</a></li>
-	    		<li><a style="color:white;" href="usuarios.html" title="Início">Usuários</a></li>
-	    	</ul>
-	    	<h1 id='titulo' align="center" style="font-size: 190%;margin-top:0;padding-top:15px;position: static;">Academiq</h1>
-	    	<div id="dropdown">
-	    		<div id="user-picture" onclick="myFunction()" class="dropbtn" style="margin-left: 45.5px;"></div>
-	    		<div id="myDropdown" class="dropdown-content" style="text-align:center; padding-top:17px;"><br>
-	    			<a href="Perfil.html">Perfil</a>
-	    			<a id="logout" href="#">Logout</a>
-	    		</div>
-	    </nav>
-	  </header>
+		<header></header>
 		<main id="conteudo">
 
 			<div id="topo-usuarios">
@@ -294,8 +280,8 @@
 					<button type= 'button' id= 'btn-search'>search</button>
 				</div>
 			</div>
-			<p class="clear"></p>
 
+			<p class="clear"></p>
 
 			<div id= 'usuarios'></div>
 
@@ -304,23 +290,20 @@
 				<div class="modal-dialog">
 
 				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<p>Selecione um laboratório</p>
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<p>Selecione um laboratório</p>
+						</div>
+						<div id= 'modal-body' class="modal-body">
+							<select id= 'select-lab'></select>
+						</div>
+						<div class="modal-footer">
+							<button id= 'confirm-adm' type="button" class="btn btn-default" data-dismiss="modal">Confirmar</button>
+						</div>
 					</div>
-					<div id= 'modal-body' class="modal-body">
-						<select id= 'select-lab'></select>
-					</div>
-					<div class="modal-footer">
-						<button id= 'confirm-adm' type="button" class="btn btn-default" data-dismiss="modal">Confirmar</button>
-					</div>
-				</div>
-
 				</div>
 			</div>
-
-
 
 			<!-- Modal -->
 			<div class="modal fade" id="my-modal" role="dialog">
@@ -346,7 +329,6 @@
 								<label class="detalhes-label" for="user-cpf">CPF:</label><input id='user-cpf' type= 'text'><br><br>
 								<label class="detalhes-label" for="user-instit">Instituição:</label><input id='user-instit' type= 'text'><br><br>
 								<label class="detalhes-label" for="user-email">E-mail:</label><input id='user-email' type= 'text'><br><br>
-
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -359,9 +341,10 @@
 		</main>
 		<footer></footer>
 	</body>
+
 	<script>
 		$( "footer" ).load( "footerLogin.html footer" );
-		$( "nav" ).load( "menuNavegacao.html nav" );
+		$( "header" ).load( "menuNavegação.html header" );
 
 		/* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
