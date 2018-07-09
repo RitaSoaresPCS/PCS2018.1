@@ -1,3 +1,20 @@
+body
+{
+  width: 100%;
+  height: 100%;
+}
+aside
+{
+  position:relative;
+  float: left;
+}
+main
+{
+  float:right;
+  position: relative;
+  height: 100%;
+  width: 70%;
+}
 .form-wrapper {
       width: 350px;
       background: #444;
