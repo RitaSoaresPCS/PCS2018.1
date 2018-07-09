@@ -74,3 +74,13 @@ body {
 	margin: 0;
 	font-family: 'Roboto', sans-serif;
 }
+
+main#content {
+	width:80%;
+	margin:0px auto;
+	margin-bottom: 100px;
+	padding:50px;
+	box-sizing: border-box;
+	background-color:white;
+	margin-top: 112px;
+}

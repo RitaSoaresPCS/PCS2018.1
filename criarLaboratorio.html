@@ -6,6 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
 	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/criarLaboratorio.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="AcessoDados/Base.js"></script>
 
@@ -38,26 +39,29 @@
 
   </head>
   <body>
+  <header></header>
+  <main id="content">
+  <div class="container">
+    <div class="center">
+      <h2>Novo laboratório</h2>
+    	<form>
+    		Nome:<br>
+    		<input type="text" name="nome" id="nome"><br>
+        <br>
+    		Descrição:<br>
+    		<input type="text" name="descricao" id="descricao"><br>
+        <br>
+    		Tema:<br>
+    		<input type="text" name="tema" id="tema"><br>
+        <br>
+    		Usuário do administrador:<br>
+    		<input type="text" name="userAdmin" id="userAdmin"><br><br>
 
-    <header></header>
-
-	<h2>Novo laboratório</h2>
-	<form>
-		Nome:<br>
-		<input type="text" name="nome" id="nome"><br>
-
-		Descrição:<br>
-		<input type="text" name="descricao" id="descricao"><br>
-
-		Tema:<br>
-		<input type="text" name="tema" id="tema"><br>
-
-		Usuário do administrador:<br>
-		<input type="text" name="userAdmin" id="userAdmin"><br><br>
-
-		<button id= 'btn-criar-lab' type= 'button'>Criar</button>
-
-	</form>
+    		<button id= 'btn-criar-lab' type= 'button'>Criar</button>
+    	</form>
+    </div>
+  </div>
+  </main>
 	<footer></footer>
   </body>
 	<script>

@@ -58,7 +58,7 @@ main#conteudo {
 	width:80%;
 	margin:0px auto;
 	border-bottom:2px solid white;
-} 
+}
 
 #botaoAmizade {
 	float: right;
@@ -70,4 +70,53 @@ main#conteudo {
 
 #botaoAmizade i {
 	padding-right:5px;
+}
+
+header {
+  font-family: "Roboto", sans-serif;
+  color:white;
+  background-color:#6259c6;
+  width:100%;
+}
+
+#nav-perfil {
+	border: 1px;
+	border-style: solid;
+	border-color: black;
+}
+
+#nav-perfil li {
+		float: left;
+		display: inline;
+		border: 1px;
+		border-style: solid;
+		border-color: black;
+}
+
+#nav-perfil li a {
+		display: block;
+		color: black;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		width: 93.1px;
+}
+
+#nav-perfil li a:hover:not(.active) {
+		background-color: gray;
+		color:white;
+}
+
+.active {
+		background-color: #736AD7;
+}
+
+#titulo{
+	font-size: 190%;
+	margin-top:0;
+	padding-top:15px;
+	position: static;
+	margin-left: 6.5%;
+	float:left;
+	display:inline;
 }
