@@ -363,14 +363,16 @@
 					$return['erro'] = true;
 					$return['mensagem'] = "membro";
 				} else {
-					$nomeUsuario = $row["nome"];
-					
 					// Envio de e-mail - ainda não implementado.
 					$sql3 = "SELECT nome FROM comunidade WHERE id= $idComunidade";
 					$result3= query_result($sql3);
-					$row = mysqli_fetch_assoc($result3);
+					$row2 = mysqli_fetch_assoc($result3);
+					$comunidade= $row2["nome"];
+					$nomeUsuario= $row["nome"];
 					$emailSender= new MailjetMailUser();
-					$emailSender->emailPostMember($nomeUsuario, $email, $row["nome"]);
+					$emailSender->emailPostMember($nomeUsuario, $email, $comunidade);
+					$sql4= "UPDATE usuario SET idComunidadePertence= $idComunidade where id= $id";
+					$result4 = query_no_result($sql4);
 					$return['erro'] = false;
 				}
 
