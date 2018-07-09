@@ -1,239 +1,244 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
-	<script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
 
-	<!-- Modal jQuery -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <!-- Modal jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="Assets/CSS/laboratorio.css">
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/discussao.css">
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/discussao.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
+  <script src="AcessoDados/Base.js"></script>
 
-    <script src="AcessoDados/Base.js"></script>
-    <!-- Carregar apenas se necessário na página: -->
-    <script src="AcessoDados/Discussao.js"></script>
-    <script src="AcessoDados/Comunidade.js"></script>
-    <script src="AcessoDados/Usuario.js"></script>
-	<script src="AcessoDados/MensagemDiscussao.js"></script>
+  <!-- Carregar apenas se necessário na página: -->
+  <script src="AcessoDados/Discussao.js"></script>
+  <script src="AcessoDados/Comunidade.js"></script>
+  <script src="AcessoDados/Usuario.js"></script>
+  <script src="AcessoDados/MensagemDiscussao.js"></script>
   <script src= 'AcessoDados/Perfil.js'></script>
 
-	<script type= 'text/javascript'>
-		function mudarFixoDiscussao() {
-			Discussao.mudarFixo(Base.getUrlParameter("id"), $("#fixaDiscussao").attr('value'), function(result){
-				if (result.erro== true)
-				{
-					alert(result.mensagem);
-				}else{
-					alert('Discussao alterada.');
-					location.reload();
-				}
-			});
-		}
+  <script type= 'text/javascript'>
+  function mudarFixoDiscussao() {
+    Discussao.mudarFixo(Base.getUrlParameter("id"), $("#fixaDiscussao").attr('value'), function(result){
+      if (result.erro== true)
+      {
+        alert(result.mensagem);
+      }else{
+        alert('Discussao alterada.');
+        location.reload();
+      }
+    });
+  }
 
-		function enviarNovaMsg() {
-			conteudo = MensagemDiscussao.novaMensagem.getData();
-			MensagemDiscussao.adicionar(localStorage.userId, Base.getUrlParameter("id"), conteudo, function(data) {
-				if (data.erro == true) {
-					alert(data.mensagem);
-				} else {
-					alert("Adicionada com sucesso.");
-					location.reload();
-				}
-			});
-		}
-
-
-		function editarMsg(id) {
-			document.getElementById("msg-" + id + "-content").contentEditable = true;
-			document.getElementById("salvarEdicaoMsg" + id).style.display = "block";
-		}
+  function enviarNovaMsg() {
+    conteudo = MensagemDiscussao.novaMensagem.getData();
+    MensagemDiscussao.adicionar(localStorage.userId, Base.getUrlParameter("id"), conteudo, function(data) {
+      if (data.erro == true) {
+        alert(data.mensagem);
+      } else {
+        alert("Adicionada com sucesso.");
+        location.reload();
+      }
+    });
+  }
 
 
-		function salvarEdicaoMsg(id) {
-			conteudo = document.getElementById("msg-" + id + "-content").innerHTML;
-			MensagemDiscussao.editar(id, conteudo, function(data) {
-				if (data.erro == true) {
-					alert(data.mensagem);
-				} else {
-					alert("Editada com sucesso.");
-					location.reload();
-				}
-			});
-		}
+  function editarMsg(id) {
+    document.getElementById("msg-" + id + "-content").contentEditable = true;
+    document.getElementById("salvarEdicaoMsg" + id).style.display = "block";
+  }
 
 
-		// Preenche os dados da discussão.
-		$(document).ready(function(){
-			Discussao.getById(Base.getUrlParameter("id"), function(data) {
-				data = JSON.parse(data);
-				var conteudo = "";
-
-				Usuario.getById(data.idUsuarioCriador, function(dataUs) {
-					var usuarioCriador = JSON.parse(dataUs);
-
-					Comunidade.getById(data.idComunidadePertence, function(dataCom) {
-						var comunidadePertence = JSON.parse(dataCom);
-						var usuarioLogado = localStorage.userId;
-
-						document.getElementById("nomeLab").innerHTML =
-						"<a href='laboratorio.html?id=" + comunidadePertence.id +
-						"' title='" + comunidadePertence.nome + "' >" + comunidadePertence.nome + "</a>";
+  function salvarEdicaoMsg(id) {
+    conteudo = document.getElementById("msg-" + id + "-content").innerHTML;
+    MensagemDiscussao.editar(id, conteudo, function(data) {
+      if (data.erro == true) {
+        alert(data.mensagem);
+      } else {
+        alert("Editada com sucesso.");
+        location.reload();
+      }
+    });
+  }
 
 
-						// Mensagens da discussão.
-						MensagemDiscussao.getByIdDiscussao(data.id, function(dataMsg) {
-							if (dataMsg.length > 0) {
-								for (cont = 0; cont < dataMsg.length; cont++) {
+  // Preenche os dados da discussão.
+  $(document).ready(function(){
+    Discussao.getById(Base.getUrlParameter("id"), function(data) {
+      data = JSON.parse(data);
+      var conteudo = "";
 
-									var mensagensContent = "";
-									var msg = dataMsg[cont];
+      Usuario.getById(data.idUsuarioCriador, function(dataUs) {
+        var usuarioCriador = JSON.parse(dataUs);
 
-									var imagemCriador = msg.urlImagemPerfil;
-									if (imagemCriador == "") {
-										imagemCriador = "Assets/Imagens/avatar round.png";
-									}
+        Comunidade.getById(data.idComunidadePertence, function(dataCom) {
+          var comunidadePertence = JSON.parse(dataCom);
+          var usuarioLogado = localStorage.userId;
 
-									mensagensContent += "<div class='msg-left'>";
-									mensagensContent += "<img class='msg-profile' src='" + imagemCriador + "' title='Imagem de perfil' alt='Imagem de perfil'>";
-									mensagensContent += "<p class='msg-username'>" + msg.username + "</p></div>";
-									mensagensContent += "<div class='msg-right'>";
-									mensagensContent += "<p>" + moment(msg.dataCriacao).format('DD/MM/YY');
+          document.getElementById("nomeLab").innerHTML =
+          "<a href='laboratorio.html?id=" + comunidadePertence.id +
+          "' title='" + comunidadePertence.nome + "' >" + comunidadePertence.nome + "</a>";
 
 
-									if (usuarioLogado == msg.idUsuarioCriador || usuarioLogado == comunidadePertence.idUsuarioAdministrador) {
-										mensagensContent += "<button class='removeMsgBtn' onclick='MensagemDiscussao.remover(" + msg.id + ", function(data) { location.reload(); });'>Remover</button>";
-									}
+          // Mensagens da discussão.
+          MensagemDiscussao.getByIdDiscussao(data.id, function(dataMsg) {
+            if (dataMsg.length > 0) {
+              for (cont = 0; cont < dataMsg.length; cont++) {
+
+                var mensagensContent = "";
+                var msg = dataMsg[cont];
+
+                var imagemCriador = msg.urlImagemPerfil;
+                if (imagemCriador == "") {
+                  imagemCriador = "Assets/Imagens/avatar round.png";
+                }
+
+                mensagensContent += "<div class='msg-left'>";
+                mensagensContent += "<img class='msg-profile' src='" + imagemCriador + "' title='Imagem de perfil' alt='Imagem de perfil'>";
+                mensagensContent += "<p class='msg-username'>" + msg.username + "</p></div>";
+                mensagensContent += "<div class='msg-right'>";
+                mensagensContent += "<p>" + moment(msg.dataCriacao).format('DD/MM/YY');
 
 
-									if (usuarioLogado == msg.idUsuarioCriador) {
-										mensagensContent += "<button class='editMsgBtn' onclick='editarMsg(" + msg.id + ")'>Editar</button>";
-									}
-
-									mensagensContent += "</p><div class='msgText' id='msg-" + msg.id + "-content' contenteditable='false'></div>";
-
-									if (usuarioLogado == msg.idUsuarioCriador) {
-										mensagensContent += "<button class='hidden' id='salvarEdicaoMsg" + msg.id + "' onclick='salvarEdicaoMsg(" + msg.id + ")'>Salvar</button>";
-									}
+                if (usuarioLogado == msg.idUsuarioCriador || usuarioLogado == comunidadePertence.idUsuarioAdministrador) {
+                  mensagensContent += "<button class='removeMsgBtn' onclick='MensagemDiscussao.remover(" + msg.id + ", function(data) { location.reload(); });'>Remover</button>";
+                }
 
 
-									mensagensContent += "</div><p class='clear'></p>";
+                if (usuarioLogado == msg.idUsuarioCriador) {
+                  mensagensContent += "<button class='editMsgBtn' onclick='editarMsg(" + msg.id + ")'>Editar</button>";
+                }
 
-									document.getElementById('msgDiscussao').innerHTML += mensagensContent;
-									$("#msg-" + msg.id + "-content").append($.parseHTML(msg.conteudo));
-								}
-							}
-						});
+                mensagensContent += "</p><div class='msgText' id='msg-" + msg.id + "-content' contenteditable='false'></div>";
 
-
-						// Discussão fixa ou não.
-						if (data.fixa == "1") {
-							$("#fixaDiscussao")
-                .attr('value', "0")
-                .attr('class', 'btn-btndiscuss')
-						    .text("Desafixar");
-						}
-
-						if (usuarioLogado != comunidadePertence.idUsuarioAdministrador) {
-							$("#fixaDiscussao").hide();
-						}
-
-					});
-
-					var imagemCriador = usuarioCriador.urlImagemPerfil;
-					if (imagemCriador == "") {
-						imagemCriador = "Assets/Imagens/avatar round.png";
-					}
+                if (usuarioLogado == msg.idUsuarioCriador) {
+                  mensagensContent += "<button class='hidden' id='salvarEdicaoMsg" + msg.id + "' onclick='salvarEdicaoMsg(" + msg.id + ")'>Salvar</button>";
+                }
 
 
-					conteudo = "<div class= 'discussao-lab'><div id='head-discussao'><img src='" + imagemCriador +
-					"' title='Imagem de perfil' alt='Imagem de perfil' /><h3 id='nomeDiscussao'>" + data.titulo +
-					"</h3><p>Criado por " + usuarioCriador.nome + " em " + moment(data.dataCriacao).format('DD/MM/YY') + "</p></div><div class= 'conteudo-discussao' id='content-discussao'></div></div>";
+                mensagensContent += "</div><p class='clear'></p>";
 
-					document.getElementById("conteudo").innerHTML = conteudo;
-					$('#content-discussao').append($.parseHTML(data.descricao));
+                document.getElementById('msgDiscussao').innerHTML += mensagensContent;
+                $("#msg-" + msg.id + "-content").append($.parseHTML(msg.conteudo));
+              }
+            }
+          });
 
-				});
 
-				document.getElementById("anexosDiscussao").innerHTML =
-				"<a class= 'a-btnlike' href='anexoDiscussao.html?id=" + data.id + "' title='Anexos da discussão'>Visualizar anexos</a>";
+          // Discussão fixa ou não.
+          if (data.fixa == "1") {
+            $("#fixaDiscussao")
+            .attr('value', "0")
+            .attr('class', 'btn-btndiscuss')
+            .text("Desafixar");
+          }
 
-			});
+          if (usuarioLogado != comunidadePertence.idUsuarioAdministrador) {
+            $("#fixaDiscussao").hide();
+          }
 
-			ClassicEditor
-				.create( document.querySelector( '#novaMensagem' ) )
-				.then( editor => {
-					MensagemDiscussao.novaMensagem = editor;
-				} )
-				.catch( error => {
-					console.error( error );
-				} );
+        });
 
-		});
+        var imagemCriador = usuarioCriador.urlImagemPerfil;
+        if (imagemCriador == "") {
+          imagemCriador = "Assets/Imagens/avatar round.png";
+        }
 
-	</script>
 
-  </head>
-  <body>
+        conteudo = "<div class= 'discussao-lab'><div id='head-discussao'><img src='" + imagemCriador +
+        "' title='Imagem de perfil' alt='Imagem de perfil' /><h3 id='nomeDiscussao'>" + data.titulo +
+        "</h3><p>Criado por " + usuarioCriador.nome + " em " + moment(data.dataCriacao).format('DD/MM/YY') + "</p></div><div class= 'conteudo-discussao' id='content-discussao'></div></div>";
 
-	<!-- Barra de navegação com botão pro perfil -->
+        document.getElementById("conteudo").innerHTML = conteudo;
+        $('#content-discussao').append($.parseHTML(data.descricao));
+
+      });
+
+      document.getElementById("anexosDiscussao").innerHTML =
+      "<a class= 'a-btnlike' href='anexoDiscussao.html?id=" + data.id + "' title='Anexos da discussão'>Visualizar anexos</a>";
+
+    });
+
+    ClassicEditor
+    .create( document.querySelector( '#novaMensagem' ) )
+    .then( editor => {
+      MensagemDiscussao.novaMensagem = editor;
+    } )
+    .catch( error => {
+      console.error( error );
+    } );
+
+  });
+
+  </script>
+
+</head>
+<body>
+
+  <!-- Barra de navegação com botão pro perfil -->
   <header></header>
 
-	<!-- Nome do laboratório e link -->
-    <h2 id="nomeLab"></h2>
-	<p class='clear'></p>
+  <!-- Nome do laboratório e link -->
+  <h2 id="nomeLab"></h2>
+  <p class='clear'></p>
 
-	<!-- Conteúdo inicial da discussão -->
-	<button id="fixaDiscussao" value="1" onclick="mudarFixoDiscussao()">Fixar</button>
-	<div id="conteudo"></div>
-	<p class='clear'></p>
+  <!-- Conteúdo inicial da discussão -->
+  <button id="fixaDiscussao" value="1" onclick="mudarFixoDiscussao()">Fixar</button>
+  <div id="conteudo"></div>
+  <p class='clear'></p>
 
-	<!-- Link para anexos da discussão -->
-	<div id="anexosDiscussao"></div>
-	<p class='clear'></p>
+  <!-- Link para anexos da discussão -->
+  <div id="anexosDiscussao"></div>
+  <p class='clear'></p>
 
-	<!-- Mensagens da discussão -->
-	<div class= 'msg-discussao' id="msgDiscussao"></div>
-	<p class='clear'></p>
+  <!-- Mensagens da discussão -->
+  <div class= 'msg-discussao' id="msgDiscussao"></div>
+  <p class='clear'></p>
 
-	<!-- Botão pra responder -->
-	<a class= 'a-btnlike' href="#novaMensagemModal" rel="modal:open">Responder</a>
+  <!-- Botão pra responder -->
+  <a class= 'a-btnlike' href="#novaMensagemModal" rel="modal:open">Responder</a>
 
 
-	<div id="novaMensagemModal" class="modal">
-		<textarea name="content" id="novaMensagem"></textarea><br>
-		<button id="enviarNovaMsg" onclick='enviarNovaMsg()'>Enviar</button>
-	</div>
+  <div id="novaMensagemModal" class="modal">
+    <textarea name="content" id="novaMensagem"></textarea><br>
+    <button id="enviarNovaMsg" onclick='enviarNovaMsg()'>Enviar</button>
+  </div>
 
-	<footer></footer>
-  </body>
-	<script>
-		$( "footer" ).load( "footerLogin.html footer" );
-    $( "header" ).load( "menuNavegação.html header" );
-    /* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
+  <footer></footer>
+</body>
+<script>
 
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
+/* Gets the html segment from de .load parameter */
+$( "footer" ).load( "footerLogin.html footer" );
+$( "header" ).load( "menuNavegação.html header" );
 
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function showDropdown() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
     }
-	</script>
+  }
+}
+
+
+</script>
 </html>

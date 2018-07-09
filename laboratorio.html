@@ -139,7 +139,6 @@
 				}
 			}
 
-
 			function loadDiscussoes(discussoes, idUsuarioAdministrador) {
 
 				for (var iterador = 0; iterador < discussoes.length; iterador++) {
@@ -168,10 +167,9 @@
 					var fixoId = "fixDiscBtn" + discussoes[iterador].id;
 					if (localStorage.userId == idUsuarioAdministrador || localStorage.isAdminSistema == "true") {
 						contentD += "<button id='" + fixoId + "' class='fixDiscBtn' onclick='definirFixoDiscussao(" + discussoes[iterador].id + ");' value='" + discussoes[iterador].fixa + "'></button>";
-
 					}
-					contentD += '</div>';
 
+					contentD += '</div>';
 					contentD += '</div><p class="clear"></p>';
 					contentD += '<div class="conteudo-discussao" id="conteudo-discussao-' + discussoes[iterador].id + '"></div>';
 					contentD += '</div><p class="clear"></p>';
@@ -179,19 +177,13 @@
 					document.getElementById("discussoes").innerHTML += contentD;
 					$('#conteudo-discussao-' + discussoes[iterador].id).append($.parseHTML(discussoes[iterador].descricao));
 
-
 					if (discussoes[iterador].fixa == "1" && document.getElementById(fixoId) != undefined) {
 						document.getElementById(fixoId).innerHTML = "Desafixar";
 					} else if (discussoes[iterador].fixa == "0" && document.getElementById(fixoId) != undefined){
 						document.getElementById(fixoId).innerHTML = "Fixar";
 					}
-
 				}
-
 			}
-
-
-
 
 			// Verifica se o usuário tem permissão de visualização.
 			UsuarioVisualizaComunidade.verificarPermissao(localStorage.userId, Base.getUrlParameter("id"), function(permissao) {
@@ -217,29 +209,19 @@
 
 								// Edição de dados do laboratório.
 								if (localStorage.userId == data.idUsuarioAdministrador || localStorage.isAdminSistema == "true") {
-
 									$( "<i id='editNomeIcon' class='far fa-edit' onclick='editDadosLab(0,\"nomeLab\", \"editNomeIcon\");'></i>" ).insertAfter( "#nomeLab" );
-
 									$( "<i id='editTemaIcon' class='far fa-edit' onclick='editDadosLab(0,\"temaLab\", \"editTemaIcon\");'></i>" ).insertAfter( "#temaLab" );
-
 									$( "<i id='editDescricaoIcon' class='far fa-edit' onclick='editDadosLab(0,\"descricaoLab\", \"editDescricaoIcon\");'></i>" ).insertAfter( "#descricaoLab" );
-
 									$('#detalhesLab').append("<a id='link-parceiros' href='detalhesLab.html?id=" + Base.getUrlParameter("id") + "' title='Parceiros e Solicitações'><h2>Parceiros e Solicitações</h2></a>")
-
 									$("#add-membro").append('<a href="#addMembroModal" rel="modal:open"><button type="button"><i class="fas fa-user-plus"></i>Adicionar membro</button></a>');
-
 								}
-
 							});
-
 
 							// Carrega as discussões do laboratório.
 							Discussao.getDiscussaoDoLab(Base.getUrlParameter("id"), function(discussoes) {
 								loadDiscussoes(discussoes, data.idUsuarioAdministrador);
-
 							});
 						});
-
 
 						ClassicEditor
 							.create( document.querySelector( '#descricao-add' ) )
@@ -249,7 +231,6 @@
 							.catch( error => {
 								console.error( error );
 							} );
-
 
 						// Pesquisa.
 						$('#btn-search').click(function(){
@@ -282,7 +263,6 @@
 							}
 						});
 
-
 						// Membros:
 						Comunidade.getMembros(Base.getUrlParameter("id"), function(dataMembros) {
 							membros = "";
@@ -302,11 +282,8 @@
 							document.getElementById("membros").innerHTML = membros;
 							$( "div.membro-lab" ).last().css( "border-right", "none" );
 						});
-
 					});
 				}
-
-
 			});
 
 			$(document).ready(function(){
@@ -318,12 +295,15 @@
 				});
 			});
 		</script>
-
-
 	</head>
+
 	<body>
+
+		<!-- Barra de navegação com botão pro perfil -->
 		<header></header>
+
 		<main id="content" style="border-width: 1px; border-color: darkgray; border-style: solid; border-radius: 5px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);">
+
 			<!-- Nome do laboratório -->
 			<div class="center">
 				<h1 id="nomeLab"></h1>
@@ -342,13 +322,13 @@
 
 			<!-- Membros -->
 			<h2>Membros</h2>
+
 			<!-- Botão adicionar membro -->
 			<div id="add-membro"></div>
 			<p class='clear'></p>
 
 			<p id="membros"></p>
 			<p class='clear'></p>
-
 
 			<h2>Discussões</h2>
 			<!-- Pesquisa de discussões -->
@@ -360,10 +340,8 @@
 			</div>
 			<p class='clear'></p>
 
-
 			<!-- Discussões -->
 			<div id="discussoes"></div>
-
 
 			<!--Adicionar discussão -->
 			<a href='#editarDiscussaoModal' rel='modal:open' id="add-disc-link"><button class='editDiscBtn' onclick='editarDiscussaoModal(0)'><i class="fas fa-comments"></i>Adicionar discussão</button></a>
@@ -390,7 +368,6 @@
 				</form>
 			</div>
 
-
 			<div id="addMembroModal" class="modal">
 				<h2>Enviar convite</h2>
 				<label for="emailAddMembro">E-mail do convidado:</label>
@@ -402,27 +379,32 @@
 		<footer></footer>
 	</body>
 	<script>
+
+		/* Gets the html segment from de .load parameter */
 		$( "footer" ).load( "footerLogin.html footer" );
 		$( "header" ).load( "menuNavegação.html header" );
+
 		/* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
+		toggle between hiding and showing the dropdown content */
+		function showDropdown() {
+		  document.getElementById("myDropdown").classList.toggle("show");
+		}
 
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
+		// Close the dropdown if the user clicks outside of it
+		window.onclick = function(event) {
+		  if (!event.target.matches('.dropbtn')) {
 
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
+		    var dropdowns = document.getElementsByClassName("dropdown-content");
+		    var i;
+		    for (i = 0; i < dropdowns.length; i++) {
+		      var openDropdown = dropdowns[i];
+		      if (openDropdown.classList.contains('show')) {
+		        openDropdown.classList.remove('show');
+		      }
+		    }
+		  }
+		}
+
+
 	</script>
 </html>

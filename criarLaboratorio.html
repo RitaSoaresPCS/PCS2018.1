@@ -1,91 +1,104 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset= 'utf-8'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset= 'utf-8'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
   <link rel="stylesheet" type="text/css" href="Assets/CSS/criarLaboratorio.css">
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="AcessoDados/Base.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <script src="AcessoDados/Base.js"></script>
 
-    <!-- Carregar apenas se necessário na página: -->
-    <script src="AcessoDados/Comunidade.js"></script>
-    <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
+  <!-- Carregar apenas se necessário na página: -->
+  <script src="AcessoDados/Comunidade.js"></script>
+  <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
 
-   <script type= 'text/javascript'>
-   $(document).ready(function(){
-	  $('#btn-criar-lab').click(function(){
-		var nome = $('#nome').val();
-		var descricao = $('#descricao').val();
-		var tema = $('#tema').val();
-		var userAdmin = $('#userAdmin').val();
+  <script type= 'text/javascript'>
+  $(document).ready(function(){
+    $('#btn-criar-lab').click(function(){
+      var nome = $('#nome').val();
+      var descricao = $('#descricao').val();
+      var tema = $('#tema').val();
+      var userAdmin = $('#userAdmin').val();
 
-		Comunidade.adicionar(nome, descricao, tema, userAdmin, function(data) {
-			if (data.erro == true) {
-				alert(data.mensagem);
-			} else {
-				alert("Adicionado com sucesso.");
-				window.location.assign('laboratorios.html');
-			}
-		});
-	  });
-	});
-
- </script>
-
-
-
-  </head>
-  <body>
-  <header></header>
-  <main id="content">
-  <div class="container">
-    <div class="center">
-      <h2>Novo laboratório</h2>
-    	<form>
-    		Nome:<br>
-    		<input type="text" name="nome" id="nome"><br>
-        <br>
-    		Descrição:<br>
-    		<input type="text" name="descricao" id="descricao"><br>
-        <br>
-    		Tema:<br>
-    		<input type="text" name="tema" id="tema"><br>
-        <br>
-    		Usuário do administrador:<br>
-    		<input type="text" name="userAdmin" id="userAdmin"><br><br>
-
-    		<button id= 'btn-criar-lab' type= 'button'>Criar</button>
-    	</form>
-    </div>
-  </div>
-  </main>
-	<footer></footer>
-  </body>
-	<script>
-		$( "footer" ).load( "footerLogin.html footer" );
-    $( "header" ).load( "menuNavegação.html header" );
-    /* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
+      Comunidade.adicionar(nome, descricao, tema, userAdmin, function(data) {
+        if (data.erro == true) {
+          alert(data.mensagem);
+        } else {
+          alert("Adicionado com sucesso.");
+          window.location.assign('laboratorios.html');
         }
+      });
+    });
+  });
+
+  </script>
+</head>
+
+<body>
+
+  <!-- Barra de navegação com botão pro perfil -->
+  <header></header>
+
+  <main id="content">
+    <div class="container">
+      <div class="center">
+
+        <!--  título do formulario-->
+        <h2>Novo laboratório</h2>
+
+        <!--  Campos de preenchimento para cadastro de um Laboratorio novo-->
+        <form>
+          Nome:<br>
+          <input type="text" name="nome" id="nome"><br>
+          <br>
+          Descrição:<br>
+          <input type="text" name="descricao" id="descricao"><br>
+          <br>
+          Tema:<br>
+          <input type="text" name="tema" id="tema"><br>
+          <br>
+          Usuário do administrador:<br>
+          <input type="text" name="userAdmin" id="userAdmin"><br><br>
+
+          <button id= 'btn-criar-lab' type= 'button'>Criar</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!--  Rodapé da página-->
+  <footer></footer>
+
+</body>
+
+<script>
+/* Gets the html segment from de .load parameter */
+$( "footer" ).load( "footerLogin.html footer" );
+$( "header" ).load( "menuNavegação.html header" );
+
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function showDropdown() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
     }
-	</script>
+  }
+}
+
+</script>
 </html>

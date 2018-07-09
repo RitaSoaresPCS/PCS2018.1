@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/anexoDiscussao.css">
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/anexoDiscussao.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
 
-    <script src="AcessoDados/Base.js"></script>
-    <script src="AcessoDados/Discussao.js"></script>
-    <script src="AcessoDados/Comunidade.js"></script>
-	<script src="AcessoDados/Anexo.js"></script>
+  <script src="AcessoDados/Base.js"></script>
+  <script src="AcessoDados/Discussao.js"></script>
+  <script src="AcessoDados/Comunidade.js"></script>
+  <script src="AcessoDados/Anexo.js"></script>
   <link rel="stylesheet" type="text/css" href="media-player-start/style.css">
   <script type= 'text/javascript' src='media-player-start/custom-player.js'></script>
   <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
-	<script type= 'text/javascript'>
+  <script type= 'text/javascript'>
 
 		$(document).ready(function(){
 			Discussao.getById(Base.getUrlParameter("id"), function(dataDisc) {
@@ -28,15 +28,12 @@
 
 					document.getElementById("nomeDisc").innerHTML = '<a href="discussao.html?id=' + dataDisc.id + '" title="' + dataDisc.titulo + '">' + dataDisc.titulo + '</a>';
 
-
 					Anexo.getAnexoByIdDiscussao(dataDisc.id, function(dataAnex) {
 						anexos = "";
 						if (dataAnex.length == 0) {
 							anexos = "Não há anexos nesta discussão.";
 						}
-
 						for (var i = 0; i < dataAnex.length; i++) {
-
 							anexos += '<div class="anexo-disc">';
 
 							// Se tiver permissão para remover:
@@ -85,8 +82,6 @@
                   .attr('aria-label', 'fast forward')
                   .appendTo(divControls);
                 anexos+= divVideo.html();
-
-
               }else{
                 anexos += '<img class="anexo-disc-img" src="Assets/Imagens/file.png" title="Imagem de arquivo">';
 
@@ -101,23 +96,15 @@
   									"/Assets/Uploads/" +
   									dataAnex[i].titulo.substring(18);
   								anexos += '<p><a href="' + url + '" title="' + dataAnex[i].titulo.substring(18) + '" target="_blank">' + dataAnex[i].titulo.substring(18) + '</a></p>';
-
   							} else {
   								anexos += '<p><a href="' + dataAnex[i].titulo.substring(3) + '" title="' + dataAnex[i].titulo.substring(18) + '" download>' + dataAnex[i].titulo.substring(18) + '</a></p>';
   							}
               }
-
-
 							anexos += '</div>';
-
 						}
 						document.getElementById("anexos").innerHTML = anexos;
             videoPlayer();
 					});
-
-
-
-
 				});
 			});
 
@@ -137,41 +124,43 @@
 			});
 
 		});
-
 	</script>
-
   </head>
+
   <body>
 
-	<!-- Barra de navegação com botão pro perfil -->
-  <header></header>
+  	<!-- Barra de navegação com botão pro perfil -->
+    <header></header>
 
-	<!-- Nome do laboratório e link -->
+  	<!-- Nome do laboratório e link -->
     <h1 id="nomeLab"></h1>
-	<p class='clear'></p>
+  	<p class='clear'></p>
 
-	<!-- Nome da discussão e link -->
-	<h2 id="nomeDisc"></h2>
-	<p class='clear'></p>
+  	<!-- Nome da discussão e link -->
+  	<h2 id="nomeDisc"></h2>
+  	<p class='clear'></p>
 
-	<!-- Anexos da discussão -->
-	<h3>Anexos</h3>
-	<input type="file" name="fileToUpload" id="fileToUpload">
-	<button class= 'btn-btnanexo' type='button' id='btn-upload'>Anexar</button><br>
-	<p class='clear'></p>
+  	<!-- Anexos da discussão -->
+  	<h3>Anexos</h3>
+  	<input type="file" name="fileToUpload" id="fileToUpload">
+  	<button class= 'btn-btnanexo' type='button' id='btn-upload'>Anexar</button><br>
+  	<p class='clear'></p>
 
-	<div id="anexos"></div>
-	<p class='clear'></p>
+  	<div id="anexos"></div>
+  	<p class='clear'></p>
 
-	<footer></footer>
+  	<footer></footer>
   </body>
 	<script>
+
+    /* Gets the html segment from de .load parameter */
 		$( "footer" ).load( "footerLogin.html footer" );
     $( "header" ).load( "menuNavegação.html header" );
+
     /* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
+    function showDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
     }
 
     // Close the dropdown if the user clicks outside of it
@@ -188,5 +177,6 @@
         }
       }
     }
+
 	</script>
 </html>

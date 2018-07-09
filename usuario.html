@@ -1,102 +1,125 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset= 'utf-8'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<script src="AcessoDados/Base.js"></script>
-	<script src="AcessoDados/Usuario.js"></script>
-	<script src="AcessoDados/Comunidade.js"></script>
-	<script src="AcessoDados/UsuarioAmizadeUsuario.js"></script>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset= 'utf-8'>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+  <script src="AcessoDados/Base.js"></script>
+  <script src="AcessoDados/Usuario.js"></script>
+  <script src="AcessoDados/Comunidade.js"></script>
+  <script src="AcessoDados/UsuarioAmizadeUsuario.js"></script>
   <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/usuario.css">
 
-    <script type= 'text/javascript'>
-		$(document).ready(function(){
-			var userId = Base.getUrlParameter("id");
-			if (userId == localStorage.userId) {
-				window.location.assign("perfil.html");
-			} else {
-				Usuario.getById(Base.getUrlParameter("id"), function(data) {
-					data = JSON.parse(data);
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/usuario.css">
 
-					Comunidade.getById(data.idComunidadePertence, function(dataCom) {
-						dataCom = JSON.parse(dataCom);
+  <script type= 'text/javascript'>
 
-						conteudo = "";
+  $(document).ready(function(){
+    var userId = Base.getUrlParameter("id");
+    if (userId == localStorage.userId) {
+      window.location.assign("perfil.html");
+    } else {
+      Usuario.getById(Base.getUrlParameter("id"), function(data) {
+        data = JSON.parse(data);
+        Comunidade.getById(data.idComunidadePertence, function(dataCom) {
+          dataCom = JSON.parse(dataCom);
+          conteudo = "";
+          if (data.urlImagemPerfil == "") {
+            data.urlImagemPerfil = "Assets\\Imagens\\avatar round.png";
+          }
 
-						if (data.urlImagemPerfil == "") {
-							data.urlImagemPerfil = "Assets\\Imagens\\avatar round.png";
-						}
+          conteudo += '<img id="imgPerfilUser" src="' + data.urlImagemPerfil + '" title="Imagem de perfil" alt="Imagem de perfil"><br><br>';
+          conteudo += '<p>' + data.username + '</p>';
+          conteudo += '<p>Laboratório: ' + dataCom.nome + '</p><br>';
 
-						conteudo += '<img id="imgPerfilUser" src="' + data.urlImagemPerfil + '" title="Imagem de perfil" alt="Imagem de perfil"><br><br>';
-						conteudo += '<p>' + data.username + '</p>';
-						conteudo += '<p>Laboratório: ' + dataCom.nome + '</p><br>';
-
-						conteudo += '<div class="menu-left" id="discussoes-user-' + data.id + '"><a href="#" title="Discussões">Discussões</a></div>';
-						conteudo += '<div class="menu-left" id="repositorio-user-' + data.id + '"><a href="#" title="Repositório">Repositório</a></div>';
-						document.getElementById('dados-left').innerHTML = conteudo;
-
-					});
+          conteudo += '<div class="menu-left" id="discussoes-user-' + data.id + '"><a href="#" title="Discussões">Discussões</a></div>';
+          conteudo += '<div class="menu-left" id="repositorio-user-' + data.id + '"><a href="#" title="Repositório">Repositório</a></div>';
+          document.getElementById('dados-left').innerHTML = conteudo;
+        });
 
 
-					UsuarioAmizadeUsuario.getAmizade(localStorage.userId, userId, function(dataAmigo) {
-						botao = document.getElementById("botaoAmizade");
-						if (dataAmigo.length > 0) {
-							amigo = dataAmigo[0];
-							botao.innerHTML = "<i class='fas fa-user-times'></i>Remover amigo";
-							botao.onclick = function(){
-								UsuarioAmizadeUsuario.remover(localStorage.userId, userId, function(resposta) {
-									if (resposta.erro == false) {
-										location.reload();
-									}
-								});
-							}
-							botao.style.backgroundColor = "#CF2A27";
-						} else {
-							botao.onclick = function(){
-								UsuarioAmizadeUsuario.adicionar(localStorage.userId, userId, function(resposta) {
-									if (resposta.erro == false) {
-										location.reload();
-									}
-								});
-							}
-						}
+        UsuarioAmizadeUsuario.getAmizade(localStorage.userId, userId, function(dataAmigo) {
+          botao = document.getElementById("botaoAmizade");
+          if (dataAmigo.length > 0) {
+            amigo = dataAmigo[0];
+            botao.innerHTML = "<i class='fas fa-user-times'></i>Remover amigo";
+            botao.onclick = function(){
+              UsuarioAmizadeUsuario.remover(localStorage.userId, userId, function(resposta) {
+                if (resposta.erro == false) {
+                  location.reload();
+                }
+              });
+            }
+            botao.style.backgroundColor = "#CF2A27";
+          } else {
+            botao.onclick = function(){
+              UsuarioAmizadeUsuario.adicionar(localStorage.userId, userId, function(resposta) {
+                if (resposta.erro == false) {
+                  location.reload();
+                }
+              });
+            }
+          }
+        });
+        // Preenchimento do mural fora do escopo.
+      });
+    }
+  });
+  </script>
+
+</head>
+<body>
+
+  <!-- Barra de navegação com botão pro perfil -->
+  <header></header>
+
+  <main id="conteudo">
+    <div id="dados-usuario">
+      <div id="dados-left"></div>
+      <div id="dados-right"><button id='botaoAmizade' type='button'><i class="fas fa-user-plus"></i>Adicionar amigo</button></div>
+    </div>
+    <p class="clear"></p>
+  </main>
+
+  <!--  Rodapé do site-->
+  <footer></footer>
+
+</body>
+<script>
+/* Gets the html segment from de .load parameter */
+$( "footer" ).load( "footerLogin.html footer" );
+$( "header" ).load( "menuNavegação.html header" );
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function showDropdown() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 
 
-					});
-
-
-					// Preenchimento do mural fora do escopo.
-
-				});
-
-
-			}
-
-		});
-    </script>
-
-  </head>
-  <body>
-    <header></header>
-    <main id="conteudo">
-		<div id="dados-usuario">
-			<div id="dados-left"></div>
-			<div id="dados-right"><button id='botaoAmizade' type='button'><i class="fas fa-user-plus"></i>Adicionar amigo</button></div>
-		</div>
-		<p class="clear"></p>
-    </main>
-    <footer></footer>
-  </body>
-  <script>
-		$( "footer" ).load( "footerLogin.html footer" );
-		$( "header" ).load( "menuNavegação.html header" );
-	</script>
+</script>
 </html>

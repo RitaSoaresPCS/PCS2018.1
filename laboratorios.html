@@ -1,128 +1,135 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset= 'utf-8'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
-  	<link rel="stylesheet" type="text/css" href="Assets/CSS/laboratorios.css">
-  	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset= 'utf-8'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/laboratorios.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
 
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="AcessoDados/Base.js"></script>
-    <!-- Carregar apenas se necessário na página: -->
-    <script src="AcessoDados/Comunidade.js"></script>
-    <script src="AcessoDados/Usuario.js"></script>
-    <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
+  <script src="AcessoDados/Base.js"></script>
 
+  <!-- Carregar apenas se necessário na página: -->
+  <script src="AcessoDados/Comunidade.js"></script>
+  <script src="AcessoDados/Usuario.js"></script>
+  <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
 
-	<script type= 'text/javascript'>
-		$(document).ready(function(){
-			Comunidade.listar(function(data) {
-				conteudo = "";
+  <script type= 'text/javascript'>
+  $(document).ready(function(){
+    Comunidade.listar(function(data) {
+      conteudo = "";
+      for (i = 0; i < data.length; i++) {
 
-				for (i = 0; i < data.length; i++) {
-					// [dataCriacao, descricao, id, nome, tema]
-					conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
-					conteudo += "<button class='inativar' type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'><i class='fas fa-power-off'></i>Desativar</button><p class='clear-float'></p>";
-					conteudo += "Criada em: " + moment(data[i]["dataCriacao"].substring(0,10)).format('DD/MM/YY') + "<br>";
-					conteudo += "Tema: " + data[i]["tema"] + "<br><br>";
-					conteudo += "<div class='descricao'>" + data[i]["descricao"] + "</div><br>";
+        // [dataCriacao, descricao, id, nome, tema]
+        conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
+        conteudo += "<button class='inativar' type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'><i class='fas fa-power-off'></i>Desativar</button><p class='clear-float'></p>";
+        conteudo += "Criada em: " + moment(data[i]["dataCriacao"].substring(0,10)).format('DD/MM/YY') + "<br>";
+        conteudo += "Tema: " + data[i]["tema"] + "<br><br>";
+        conteudo += "<div class='descricao'>" + data[i]["descricao"] + "</div><br>";
+        conteudo += "</div>";
+      }
 
-					conteudo += "</div>";
-				}
-
-				document.getElementById("conteudo").innerHTML = conteudo;
-      });
-      $('#btn-search').click(function(){
-		  var searchTxt= $('#search-labs').val();
-		  Comunidade.getByNomeOuDescricao(searchTxt, searchTxt, function(data){
-			if (data.erro== true)
-			{
-			  alert(data.mensagem);
-			}else{
-			  if (data[0]== null)
-			  {
-				alert('nenhum resultado encontrado');
-			  }else{
-				var divConteudo= $('#conteudo');
-				divConteudo.empty();
-				var dataSize= data.length;
-				conteudo = "";
-
-						for (i = 0; i < dataSize; i++) {
-							// [dataCriacao, descricao, id, nome, tema]
-							conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
-							conteudo += "<button class='inativar' type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'><i class='fas fa-power-off'></i>Desativar</button><p class='clear-float'></p>";
-							conteudo += "Criada em: " + moment(data[i]["dataCriacao"].substring(0,10)).format('DD/MM/YY') + "<br>";
-							conteudo += "Tema: " + data[i]["tema"] + "<br><br>";
-							conteudo += "<div class='descricao'>" + data[i]["descricao"] + "</div><br>";
-
-							conteudo += "</div>";
-						}
-
-						document.getElementById("conteudo").innerHTML = conteudo;
-			  }
-			}
-		  });
-      });
-
-
-		// Submete a pesquisa quando o usuário pressiona ENTER.
-		$('#search-labs').on('keyup', function(e) {
-			if (e.keyCode === 13) {
-				$('#btn-search').click();
-			}
-		});
-
-
+      document.getElementById("conteudo").innerHTML = conteudo;
     });
+    $('#btn-search').click(function(){
+      var searchTxt= $('#search-labs').val();
+      Comunidade.getByNomeOuDescricao(searchTxt, searchTxt, function(data){
+        if (data.erro== true)
+        {
+          alert(data.mensagem);
+        }else{
+          if (data[0]== null)
+          {
+            alert('nenhum resultado encontrado');
+          }else{
+            var divConteudo= $('#conteudo');
+            divConteudo.empty();
+            var dataSize= data.length;
+            conteudo = "";
+            for (i = 0; i < dataSize; i++) {
 
-	</script>
-
-  </head>
-  <body>
-
-    <header></header>
-
-	<main id="content">
-		<div id="topo-labs">
-			<button id="btn-create-lab" type="button" onclick="window.location.assign('criarLaboratorio.html')"><i class="fas fa-plus"></i>Criar laboratório</button>
-
-			<div id="search-box">
-				<i class="fas fa-search"></i>
-				<input type= 'text' id= 'search-labs' placeholder='pesquisar por nome'></input>
-				<button type= 'button' id= 'btn-search'>search</button>
-			</div>
-		</div>
-		<p class="clear"></p>
-
-		<div id="conteudo"></div>
-	</main>
-	<footer></footer>
-  </body>
-  <script>
-		$( "footer" ).load( "footerLogin.html footer" );
-		$( "header" ).load( "menuNavegação.html header" );
-
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
+              // [dataCriacao, descricao, id, nome, tema]
+              conteudo += "<div class='comunidade'><h3><a href=laboratorio.html?id=" + data[i]["id"] + ">" + data[i]["nome"] + "</a></h3>";
+              conteudo += "<button class='inativar' type='button' onclick='Comunidade.desativarLaboratorio(" + data[i]["id"] + ")'><i class='fas fa-power-off'></i>Desativar</button><p class='clear-float'></p>";
+              conteudo += "Criada em: " + moment(data[i]["dataCriacao"].substring(0,10)).format('DD/MM/YY') + "<br>";
+              conteudo += "Tema: " + data[i]["tema"] + "<br><br>";
+              conteudo += "<div class='descricao'>" + data[i]["descricao"] + "</div><br>";
+              conteudo += "</div>";
+            }
+            document.getElementById("conteudo").innerHTML = conteudo;
           }
         }
+      });
+    });
+
+    // Submete a pesquisa quando o usuário pressiona ENTER.
+    $('#search-labs').on('keyup', function(e) {
+      if (e.keyCode === 13) {
+        $('#btn-search').click();
+      }
+    });
+  });
+  </script>
+
+</head>
+<body>
+  <!-- Barra de navegação com botão pro perfil -->
+  <header></header>
+
+  <!-- Conteúdo principal da página -->
+  <main id="content">
+
+    <div id="topo-labs">
+
+      <button id="btn-create-lab" type="button" onclick="window.location.assign('criarLaboratorio.html')"><i class="fas fa-plus"></i>Criar laboratório</button>
+
+      <div id="search-box">
+        <i class="fas fa-search"></i>
+        <input type= 'text' id= 'search-labs' placeholder='pesquisar por nome'></input>
+        <button type= 'button' id= 'btn-search'>search</button>
+      </div>
+
+    </div>
+
+    <p class="clear"></p>
+    <div id="conteudo"></div>
+
+  </main>
+
+  <!--  Rodapé do site-->
+  <footer></footer>
+
+</body>
+<script>
+
+/* Gets the html segment from de .load parameter */
+$( "footer" ).load( "footerLogin.html footer" );
+$( "header" ).load( "menuNavegação.html header" );
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function showDropdown() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
     }
-	</script>
+  }
+}
+
+
+</script>
 </html>

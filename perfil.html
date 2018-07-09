@@ -1,87 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset= 'utf-8'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="http://momentjs.com/downloads/moment.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="AcessoDados/Base.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="Assets/CSS/perfil.css">
-    <link rel="stylesheet" type="text/css" href="Assets/CSS/aside.css">
-    <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
-  	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
-    <!-- Carregar apenas se necessário na página: -->
-    <script src="AcessoDados/Comunidade.js"></script>
-    <script src="AcessoDados/Usuario.js"></script>
-    <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
-    <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset= 'utf-8'>
 
-  </head>
-  <body style="margin:0;">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="http://momentjs.com/downloads/moment.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="AcessoDados/Base.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/perfil.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/aside.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
+
+  <!-- Carregar apenas se necessário na página: -->
+  <script src="AcessoDados/Comunidade.js"></script>
+  <script src="AcessoDados/Usuario.js"></script>
+  <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+
+</head>
+
+<body style="margin:0;">
+
+  <!-- Barra de navegação com botão pro perfil -->
   <header></header>
-    <main>
 
-      <div class="container" style="color: white; background-color:#6259C6;">
+  <main>
+    <div class="container" style="color: white; background-color:#6259C6;">
 
-        <!-- float left com foto e nome -->
-  			<div style="float: left; height:100px; margin-left:3%; margin-top:3%; text-align: center;">
-          <div id="user-picture" style="height: 200px; width: 200px; border-radius:100%; border-style:solid; border-width:2px; background-color:white; display:block;"></div>
-          <br><a align="center">Mudar Foto</a>
-    		  <br>
-    		  <div id="user-name" align="center" style="display:block;"><h3></h3></div>
-          <div id="user-lab" align="center" style="display:block;"><h3></h3></div><br>
-  			</div>
-
-        <!-- float right painel -->
-
-          <div style="display: block; float: right; background-color: white; height:88%; width: 70%;margin-right:57px; margin-top:3%; color: Black;">
-            <div>
-              <ul id="nav-perfil" style="list-style-type: none;margin: 0;padding: 0;width:100%; background-Color:white">
-                <li style=""><a href="#home">Mural</a></li>
-                <li style=""><a href="#news">Dados</a></li>
-                <li style=""><a href="#contact">Amigos</a></li>
-                <li style=""><a href="#about">Notificações</a></li>
-                <li style=""><a href="#about">Mensagens</a></li>
-                <li style=""><a href="#about">Arquivos</a></li>
-            </ul>
-            </div>
-            <div id= 'discussoes'>
-            </div>
-          </div>
-
-
+      <!-- float left com foto e nome -->
+      <div style="float: left; height:100px; margin-left:3%; margin-top:3%; text-align: center;">
+        <div id="user-picture" style="height: 200px; width: 200px; border-radius:100%; border-style:solid; border-width:2px; background-color:white; display:block;"></div>
+        <br><a align="center">Mudar Foto</a>
+        <br>
+        <div id="user-name" align="center" style="display:block;"><h3></h3></div>
+        <div id="user-lab" align="center" style="display:block;"><h3></h3></div><br>
       </div>
 
+      <!-- float right painel -->
+      <div style="display: block; float: right; background-color: white; height:88%; width: 70%;margin-right:57px; margin-top:3%; color: Black;">
+        <div>
+          <ul id="nav-perfil" style="list-style-type: none;margin: 0;padding: 0;width:100%; background-Color:white">
+            <li style=""><a href="#home">Mural</a></li>
+            <li style=""><a href="#news">Dados</a></li>
+            <li style=""><a href="#contact">Amigos</a></li>
+            <li style=""><a href="#about">Notificações</a></li>
+            <li style=""><a href="#about">Mensagens</a></li>
+            <li style=""><a href="#about">Arquivos</a></li>
+          </ul>
+        </div>
+        <div id= 'discussoes'>
+        </div>
+      </div>
+    </div>
+  </main>
 
-    </main>
-    <footer>
-    </footer>
-  </body>
-  <script>
-    $( "footer" ).load( "footerLogin.html footer" );
-    $( "header" ).load( "menuNavegação.html header" );
+  <!--  Rodapé do site-->
+  <footer></footer>
 
-    /* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
+</body>
+<script>
+/* Gets the html segment from de .load parameter */
+$( "footer" ).load( "footerLogin.html footer" );
+$( "header" ).load( "menuNavegação.html header" );
 
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function showDropdown() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
 
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
     }
-  </script>
+  }
+}
+
+
+</script>
 </html>

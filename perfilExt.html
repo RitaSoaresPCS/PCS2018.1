@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset= 'utf-8'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="http://momentjs.com/downloads/moment.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="AcessoDados/Base.js"></script>
-    <link rel="stylesheet" type="text/css" href="Assets/CSS/perfil.css">
-    <link rel="stylesheet" type="text/css" href="Assets/CSS/aside.css">
-    <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
-	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
-    <!-- Carregar apenas se necessário na página: -->
-    <script src="AcessoDados/Comunidade.js"></script>
-    <script src="AcessoDados/Usuario.js"></script>
-    <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset= 'utf-8'>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="http://momentjs.com/downloads/moment.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+  <script src="AcessoDados/Base.js"></script>
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/perfil.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/aside.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
 
+  <!-- Carregar apenas se necessário na página: -->
+  <script src="AcessoDados/Comunidade.js"></script>
+  <script src="AcessoDados/Usuario.js"></script>
+  <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
+  <link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css">
   </head>
-  <style>
-.dropbtn {
+
+<style>
+  .dropbtn {
     background-color: #3498DB;
     color: white;
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-}
+  }
 
-.dropbtn:hover, .dropbtn:focus {
+  .dropbtn:hover, .dropbtn:focus {
     background-color: #2980B9;
-}
+  }
 
-.dropdown {
+  .dropdown {
     position: relative;
     display: inline-block;
-}
+  }
 
-.dropdown-content {
+  .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
@@ -52,101 +53,106 @@
     margin-right: 15px;
     margin-left: 91.3%;
     margin-top:-21px
-}
+  }
 
-.dropdown-content a {
+  .dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+  }
+
+  .dropdown a:hover {background-color: #ddd;}
+
+  .show {display: block;}
+</style>
+
+<body style="margin:0;">
+  <!-- Barra de navegação com botão pro perfil -->
+  <header></header>
+
+  <main>
+    <div class="container" style="color: white; background-color:#6259C6;">
+
+      <!-- float left com foto e nome -->
+      <div style="float: left; height:100px; margin-left:5%; margin-top:3%;">
+        <div id="user-picture" style="height: 200px; width: 200px; border-radius:100%; border-style:solid; border-width:2px; background-color:white; display:block;"></div>
+        <br>
+        <div id="user-name" align="center" style="display:block;"><h3>Nome</h3></div>
+        <div id="user-lab" align="center" style="display:block;"><h3>Membro do Lab A</h3></div><br>
+        <a><h3>Discussões</h3></a><hr>
+        <a><h3>Repositório</h3></a><hr>
+      </div>
+
+      <!-- float right painel -->
+      <div style="display: block; float: right; background-color: white; height:88%; width: 70%;margin-right:57px; margin-top:3%;">
+        <h1>TITULO</h1>
+      </div>
+    </div>
+
+    <div id='discussoes'></div>
+  </main>
+
+  <footer>
+  </footer>
+</body>
+
+<style>
+  nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #6259C6;
+  }
+
+  li {
+    float: left;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  li a:hover:not(.active) {
+    background-color: #736AD7;
+  }
+
+  .active {
+    background-color: #736AD7;
+  }
+</style>
+
+<script>
+
+/* Gets the html segment from de .load parameter */
+$( "footer" ).load( "footerLogin.html footer" );
+$( "header" ).load( "menuNavegação.html header" );
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function showDropdown() {
+  document.getElementById("myDropdown").classList.toggle("show");
 }
 
-.dropdown a:hover {background-color: #ddd;}
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
 
-.show {display: block;}
-</style>
-  <body style="margin:0;">
-    <header></header>
-
-	<main>
-
-      <div class="container" style="color: white; background-color:#6259C6;">
-
-        <!-- float left com foto e nome -->
-  			<div style="float: left; height:100px; margin-left:5%; margin-top:3%;">
-          <div id="user-picture" style="height: 200px; width: 200px; border-radius:100%; border-style:solid; border-width:2px; background-color:white; display:block;"></div>
-    		  <br>
-    		  <div id="user-name" align="center" style="display:block;"><h3>Nome</h3></div>
-          <div id="user-lab" align="center" style="display:block;"><h3>Membro do Lab A</h3></div><br>
-         <a><h3>Discussões</h3></a><hr>
-         <a><h3>Repositório</h3></a><hr>
-  			</div>
-
-        <!-- float right painel -->
-        <div style="display: block; float: right; background-color: white; height:88%; width: 70%;margin-right:57px; margin-top:3%;">
-            <h1>TITULO</h1>
-        </div>
-
-      </div>
-
-      <div id='discussoes'>
-      </div>
-    </main>
-    <footer>
-    </footer>
-  </body>
-  <style>
-    nav {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: #6259C6;
-    }
-
-    li {
-        float: left;
-    }
-
-    li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-
-    li a:hover:not(.active) {
-        background-color: #736AD7;
-    }
-
-    .active {
-        background-color: #736AD7;
-    }
-</style>
-  <script>
-    $( "footer" ).load( "footerLogin.html footer" );
-    $( "header" ).load( "menuNavegação.html header" );
-
-    /* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
     }
-  </script>
+  }
+}
+
+</script>
 </html>

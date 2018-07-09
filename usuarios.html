@@ -1,290 +1,296 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta charset= 'utf-8'>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<!--link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css"-->
-		<link rel="stylesheet" type="text/css" href="Assets/CSS/usuarios.css">
-		<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-		<script src="AcessoDados/Base.js"></script>
-		<script src="AcessoDados/Usuario.js"></script>
-		<script src="AcessoDados/Comunidade.js"></script>
-		<script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
-		<script type= 'text/javascript'>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset= 'utf-8'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-			function preencherInformacoesUsuarios(usuarios, divUsuarios) {
-				usuariosSize = usuarios.length;
+	<!--link rel="stylesheet" type="text/css" href="Assets/CSS/geral.css"-->
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/usuarios.css">
+	<link rel="stylesheet" type="text/css" href="Assets/CSS/menuNavegacao.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<script src="AcessoDados/Base.js"></script>
 
-				var pastaServidor = window.location.pathname.split("/")[1];
-				var url =
-					window.location.origin +
-					"/" + pastaServidor;
 
-				for (var iterator = 0; iterator < usuariosSize; iterator++)
+	<script src="AcessoDados/Usuario.js"></script>
+	<script src="AcessoDados/Comunidade.js"></script>
+	<script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
+	<script type= 'text/javascript' src= 'AcessoDados/menuNavegacao.js'></script>
+	<script type= 'text/javascript'>
+
+	function preencherInformacoesUsuarios(usuarios, divUsuarios) {
+		usuariosSize = usuarios.length;
+
+		var pastaServidor = window.location.pathname.split("/")[1];
+		var url =
+		window.location.origin +
+		"/" + pastaServidor;
+
+		for (var iterator = 0; iterator < usuariosSize; iterator++)
+		{
+			var currentUser = usuarios[iterator];
+
+			var divUserInfo = $('<div class="usuario-container"></div>').appendTo(divUsuarios);
+			var userUsername = currentUser["username"];
+			var userPicture = currentUser["urlImagemPerfil"];
+			var userInstit = currentUser["instituicaoOrigem"];
+			var userTtl = currentUser["titulo"];
+			var userName = currentUser["nome"];
+
+			if (userPicture == "") {
+				userPicture = "Assets/Imagens/avatar round.png";
+			}
+			var userLab = currentUser["nomeComunidade"];
+			var userPermission= currentUser['isAdm'];
+			var divUserPicnName = $('<div class="PicnName"><div>').appendTo(divUserInfo);
+			$('<img />')
+			.attr('src', userPicture)
+			.attr('alt', 'Photo of '+userName)
+			.appendTo(divUserPicnName);
+
+			$('<a href="' + url + '/usuario.html?id=' + usuarios[iterator].id + '">' + userUsername + '</a>').appendTo(divUserPicnName);
+
+			var divUserMainInfo= $('<div class="MainInfo"></div>').appendTo(divUserInfo);
+			$('<p />')
+			.text(userName)
+			.appendTo(divUserMainInfo);
+			$('<p />')
+			.text('Laboratório: '+userLab)
+			.appendTo(divUserMainInfo);
+			$('<p />')
+			.text('Título: '+userTtl)
+			.appendTo(divUserMainInfo);
+			$('<p />')
+			.text('Instituição: '+userInstit)
+			.appendTo(divUserMainInfo);
+			if(userPermission != -1){
+				var divPermission= $('<div />').attr('class', 'div-permission').appendTo(divUsuarios);
+				if(userPermission == 1)
 				{
-					var currentUser = usuarios[iterator];
-
-					var divUserInfo = $('<div class="usuario-container"></div>').appendTo(divUsuarios);
-					var userUsername = currentUser["username"];
-					var userPicture = currentUser["urlImagemPerfil"];
-					var userInstit = currentUser["instituicaoOrigem"];
-					var userTtl = currentUser["titulo"];
-					var userName = currentUser["nome"];
-
-					if (userPicture == "") {
-						userPicture = "Assets/Imagens/avatar round.png";
-					}
-					var userLab = currentUser["nomeComunidade"];
-					var userPermission= currentUser['isAdm'];
-					var divUserPicnName = $('<div class="PicnName"><div>').appendTo(divUserInfo);
-					$('<img />')
-						.attr('src', userPicture)
-						.attr('alt', 'Photo of '+userName)
-						.appendTo(divUserPicnName);
-
-					$('<a href="' + url + '/usuario.html?id=' + usuarios[iterator].id + '">' + userUsername + '</a>').appendTo(divUserPicnName);
-
-					var divUserMainInfo= $('<div class="MainInfo"></div>').appendTo(divUserInfo);
-					 $('<p />')
-						.text(userName)
-						.appendTo(divUserMainInfo);
 					$('<p />')
-						.text('Laboratório: '+userLab)
-						.appendTo(divUserMainInfo);
+					.text('Retirar permissão de administrador')
+					.attr('id', 'remove-adm-'+currentUser["id"])
+					.appendTo(divPermission);
+				}else{
 					$('<p />')
-						.text('Título: '+userTtl)
-						.appendTo(divUserMainInfo);
-					$('<p />')
-						.text('Instituição: '+userInstit)
-						.appendTo(divUserMainInfo);
-					if(userPermission != -1){
-						var divPermission= $('<div />').attr('class', 'div-permission').appendTo(divUsuarios);
-						if(userPermission == 1)
-						{
-							$('<p />')
-								.text('Retirar permissão de administrador')
-								.attr('id', 'remove-adm-'+currentUser["id"])
-								.appendTo(divPermission);
-						}else{
-							$('<p />')
-								.text('Tornar administrador de laboratório')
-								.attr('id', 'new-adm-'+currentUser["id"])
-								.attr('data-toggle', 'modal')
-								.attr('data-target', '#modalAddAdm')
-								.appendTo(divPermission);
-						}
-					}
-
-
-					var divUserDetails= $('<div />').attr('class', 'div-user-details').appendTo(divUserInfo);
-					var button = $('<button />')
-						.attr('type', 'button')
-						.attr('id', 'btn-edit-'+currentUser["id"])
-						.attr('data-toggle', 'modal')
-						.attr('data-target', '#my-modal')
-						.appendTo(divUserDetails);
-
-					button.append('<i class="fas fa-search"></i>');
-					button.append('<p>Detalhes</p>');
-					divUsuarios.append('<p class="clear"></p>');
+					.text('Tornar administrador de laboratório')
+					.attr('id', 'new-adm-'+currentUser["id"])
+					.attr('data-toggle', 'modal')
+					.attr('data-target', '#modalAddAdm')
+					.appendTo(divPermission);
 				}
-
-
 			}
 
-			$(document).ready(function(){
-				var bool = 0;
-				function acao(userUsername, userMail, userInstit, userTtl, userCpf, userName){
-					if (bool == 0)
-					{
-						Usuario.adicionar(userUsername, userMail, userInstit, userTtl, userCpf, userName, 1, function(data)
-						{
-							if (data.erro == true) {
-								alert(data.mensagem);
-							} else {
-								alert("Adicionado com sucesso.");
-								window.location.assign('usuarios.html');
-							}
-						}
-						);
-					} else{
-						var userId = $('#user-id').val();
-						var userIdComunidadePertence = $('#user-idComunidade').val();
-						Usuario.editar(userId, userUsername, userMail, userInstit, userTtl, userCpf, userName, userIdComunidadePertence, function(data) {
-							if (data.erro == true) {
-								alert(data.mensagem);
-							} else {
-								alert("Editado com sucesso.");
-								window.location.assign('usuarios.html');
-							}
-						});
+
+			var divUserDetails= $('<div />').attr('class', 'div-user-details').appendTo(divUserInfo);
+			var button = $('<button />')
+			.attr('type', 'button')
+			.attr('id', 'btn-edit-'+currentUser["id"])
+			.attr('data-toggle', 'modal')
+			.attr('data-target', '#my-modal')
+			.appendTo(divUserDetails);
+
+			button.append('<i class="fas fa-search"></i>');
+			button.append('<p>Detalhes</p>');
+			divUsuarios.append('<p class="clear"></p>');
+		}
+
+
+	}
+
+	$(document).ready(function(){
+		var bool = 0;
+		function acao(userUsername, userMail, userInstit, userTtl, userCpf, userName){
+			if (bool == 0)
+			{
+				Usuario.adicionar(userUsername, userMail, userInstit, userTtl, userCpf, userName, 1, function(data)
+				{
+					if (data.erro == true) {
+						alert(data.mensagem);
+					} else {
+						alert("Adicionado com sucesso.");
+						window.location.assign('usuarios.html');
 					}
 				}
-				$('#confirm-adm').click(function(){
-					var selectedLab= $('#select-lab').val();
-					var idUsuario= localStorage.getItem('userIdAdm');
-					Comunidade.setAdm(selectedLab, idUsuario, function(data){
-						if (data.erro== true)
-						{
-							alert(data.mensagem);
-						}else{
-							alert('Administrador adicionado com sucesso.');
-							window.location.assign('usuarios.html');
-						}
-					});
-				});
-				$('body').on('click', 'p[id^="remove-adm-"]', function(){
-					var idUsuario= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
-					var confirmar= confirm('deseja remover a permissão do usuário?');
-					if (confirmar){
-						Comunidade.removeAdm(idUsuario, function(result){
-							if(result.erro== true)
-							{
-								alert(result.mensagem);
-							}else{
-								alert('Permissão removida.');
-								window.location.assign('usuarios.html');
-							}
-						});
-					}
-				});
-				$('body').on('click', 'p[id^="new-adm-"]', function(){
-					var idUsuario= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
-					localStorage.setItem('userIdAdm', idUsuario);
-					Comunidade.getLabsDisponiveis(function(labs){
-						if (labs.erro== true)
-						{
-							alert(data.mensagem);
-						}else{
-							var labsSize= labs.length;
-							var selectLab= $('#select-lab');
-				selectLab.html("");
-
-							for (var iterador= 0; iterador< labsSize; iterador++)
-							{
-								var currentLab= labs[iterador];
-								$('<option>'+ currentLab['name'] + '</option>')
-									.attr('value', currentLab['name'])
-									.appendTo(selectLab);
-							}
-						}
-					});
-				});
-
-				$('#btn-save-user').click(function(){
-					//username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence
-					var userUsername= $('#user-username').val();
-					var userMail= $('#user-email').val();
-					var userInstit= $('#user-instit').val();
-					var userTtl= $('#selected-title').val();
-					var userCpf= $('#user-cpf').val();
-					var userName= $('#user-name').val();
-					acao(userUsername, userMail, userInstit, userTtl, userCpf, userName);
-				});
-				$('body').on('click', 'button[id^="btn-edit-"]', function () {
-					bool= 1;
-					$('#btn-delete-user').removeAttr('style');
-					var idUsuario= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
-					Usuario.getById(idUsuario, function(data) {
-						data = JSON.parse(data);
-						$('#user-id').val(data.id);
-						$('#user-idComunidade').val(data.idComunidadePertence);
-						$('#user-username').val(data.username);
-						$('#user-email').val(data.email);
-						$('#user-instit').val(data.instituicaoOrigem);
-						$('#selected-title').val(data.titulo);
-						$('#user-cpf').val(data.cpf);
-						$('#user-name').val(data.nome);
-						$('#user-lab').val(data.nomeComunidade);
-					});
-				});
-				$('#btn-delete-user').click(function(){
-					var userId= $('#user-id').val();
-					Usuario.remover(userId, function(data) {
-						if (data.erro != true) {
-							alert('Usuário deletado');
-							$('#user-username').val('');
-							$('#user-email').val('');
-							$('#selected-title').val('Professor');
-							$('#user-instit').val('');
-							$('#user-cpf').val('');
-							$('#user-name').val('');
-							$('#user-lab').val('');
-							window.location.assign('usuarios.html');
-						} else {
-							alert(data.mensagem);
-						}
-					});
-				});
-				$('#btn-create-user').click(function(){
-					bool= 0;
-					$('#btn-delete-user').attr('style','display:none;');
-					$('#user-username').val('');
-					$('#user-email').val('');
-					$('#selected-title').val('Professor');
-					$('#user-instit').val('');
-					$('#user-cpf').val('');
-					$('#user-name').val('');
-					$('#user-lab').val('');
-				});
-
-		Usuario.listarUsuariosPermissao(function(usuarios){
-			var divUsuarios = $('#usuarios');
-			preencherInformacoesUsuarios(usuarios, divUsuarios);
-
-		});
-
-		$('#btn-search').click(function(){
-			var searchTxt= $('#search-users').val();
-			Usuario.getByNome(searchTxt, function(result){
-				if (result.erro== true) {
-					alert(result.mensagem);
+			);
+		} else{
+			var userId = $('#user-id').val();
+			var userIdComunidadePertence = $('#user-idComunidade').val();
+			Usuario.editar(userId, userUsername, userMail, userInstit, userTtl, userCpf, userName, userIdComunidadePertence, function(data) {
+				if (data.erro == true) {
+					alert(data.mensagem);
 				} else {
-					if (result[0]== null) {
-						alert('usuário não encontrado.');
-					} else {
-						var divUsuarios = $('#usuarios');
-						divUsuarios.empty();
-						preencherInformacoesUsuarios(result, divUsuarios);
-					}
+					alert("Editado com sucesso.");
+					window.location.assign('usuarios.html');
 				}
 			});
-		});
-
-		// Submete a pesquisa quando o usuário pressiona ENTER.
-		$('#search-users').on('keyup', function(e) {
-			if (e.keyCode === 13) {
-				$('#btn-search').click();
+		}
+	}
+	$('#confirm-adm').click(function(){
+		var selectedLab= $('#select-lab').val();
+		var idUsuario= localStorage.getItem('userIdAdm');
+		Comunidade.setAdm(selectedLab, idUsuario, function(data){
+			if (data.erro== true)
+			{
+				alert(data.mensagem);
+			}else{
+				alert('Administrador adicionado com sucesso.');
+				window.location.assign('usuarios.html');
 			}
 		});
+	});
+	$('body').on('click', 'p[id^="remove-adm-"]', function(){
+		var idUsuario= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
+		var confirmar= confirm('deseja remover a permissão do usuário?');
+		if (confirmar){
+			Comunidade.removeAdm(idUsuario, function(result){
+				if(result.erro== true)
+				{
+					alert(result.mensagem);
+				}else{
+					alert('Permissão removida.');
+					window.location.assign('usuarios.html');
+				}
+			});
+		}
+	});
+	$('body').on('click', 'p[id^="new-adm-"]', function(){
+		var idUsuario= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
+		localStorage.setItem('userIdAdm', idUsuario);
+		Comunidade.getLabsDisponiveis(function(labs){
+			if (labs.erro== true)
+			{
+				alert(data.mensagem);
+			}else{
+				var labsSize= labs.length;
+				var selectLab= $('#select-lab');
+				selectLab.html("");
 
+				for (var iterador= 0; iterador< labsSize; iterador++)
+				{
+					var currentLab= labs[iterador];
+					$('<option>'+ currentLab['name'] + '</option>')
+					.attr('value', currentLab['name'])
+					.appendTo(selectLab);
+				}
+			}
 		});
-		</script>
+	});
 
-	</head>
-	<body>
-		<header style="position: fixed; top: 0;width: 100%; height: 60px;">
-		  <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
-		  <nav id="barra-navegacao" style="text-align: center;">
-		    <ul>
-		      <li><a style="color:white;" href="inicio.html" title="Início">Início</a></li>
-		      <li><a style="color:white;" href="laboratorios.html" title="Início">Laboratórios</a></li>
-		      <li><a style="color:white;" href="usuarios.html" title="Início">Usuários</a></li>
-		    </ul>
-		    <h1 id='titulo' align="center" style="font-size: 190%;margin-top:0;padding-top:15px;position: static;">Academiq</h1>
-		    <div id="dropdown">
-		      <div id="user-picture" onclick="myFunction()" class="dropbtn" style="margin-left: 47.5px;width: 64px;Height: 64px;"></div>
-		      <div id="myDropdown" class="dropdown-content" style="text-align:center; padding-top:17px;"><br>
-		        <a href="Perfil.html">Perfil</a>
-		        <a id="logout" href="#">Logout</a>
-		      </div>
-		  </nav>
+	$('#btn-save-user').click(function(){
+		//username, email, instituicaoOrigem, titulo, cpf, nome, idComunidadePertence
+		var userUsername= $('#user-username').val();
+		var userMail= $('#user-email').val();
+		var userInstit= $('#user-instit').val();
+		var userTtl= $('#selected-title').val();
+		var userCpf= $('#user-cpf').val();
+		var userName= $('#user-name').val();
+		acao(userUsername, userMail, userInstit, userTtl, userCpf, userName);
+	});
+	$('body').on('click', 'button[id^="btn-edit-"]', function () {
+		bool= 1;
+		$('#btn-delete-user').removeAttr('style');
+		var idUsuario= this.id.substr(this.id.lastIndexOf('-')+1, this.id.length);
+		Usuario.getById(idUsuario, function(data) {
+			data = JSON.parse(data);
+			$('#user-id').val(data.id);
+			$('#user-idComunidade').val(data.idComunidadePertence);
+			$('#user-username').val(data.username);
+			$('#user-email').val(data.email);
+			$('#user-instit').val(data.instituicaoOrigem);
+			$('#selected-title').val(data.titulo);
+			$('#user-cpf').val(data.cpf);
+			$('#user-name').val(data.nome);
+			$('#user-lab').val(data.nomeComunidade);
+		});
+	});
+	$('#btn-delete-user').click(function(){
+		var userId= $('#user-id').val();
+		Usuario.remover(userId, function(data) {
+			if (data.erro != true) {
+				alert('Usuário deletado');
+				$('#user-username').val('');
+				$('#user-email').val('');
+				$('#selected-title').val('Professor');
+				$('#user-instit').val('');
+				$('#user-cpf').val('');
+				$('#user-name').val('');
+				$('#user-lab').val('');
+				window.location.assign('usuarios.html');
+			} else {
+				alert(data.mensagem);
+			}
+		});
+	});
+	$('#btn-create-user').click(function(){
+		bool= 0;
+		$('#btn-delete-user').attr('style','display:none;');
+		$('#user-username').val('');
+		$('#user-email').val('');
+		$('#selected-title').val('Professor');
+		$('#user-instit').val('');
+		$('#user-cpf').val('');
+		$('#user-name').val('');
+		$('#user-lab').val('');
+	});
+
+	Usuario.listarUsuariosPermissao(function(usuarios){
+		var divUsuarios = $('#usuarios');
+		preencherInformacoesUsuarios(usuarios, divUsuarios);
+
+	});
+
+	$('#btn-search').click(function(){
+		var searchTxt= $('#search-users').val();
+		Usuario.getByNome(searchTxt, function(result){
+			if (result.erro== true) {
+				alert(result.mensagem);
+			} else {
+				if (result[0]== null) {
+					alert('usuário não encontrado.');
+				} else {
+					var divUsuarios = $('#usuarios');
+					divUsuarios.empty();
+					preencherInformacoesUsuarios(result, divUsuarios);
+				}
+			}
+		});
+	});
+
+	// Submete a pesquisa quando o usuário pressiona ENTER.
+	$('#search-users').on('keyup', function(e) {
+		if (e.keyCode === 13) {
+			$('#btn-search').click();
+		}
+	});
+
+});
+</script>
+
+</head>
+<body>
+	<header style="position: fixed; top: 0;width: 100%; height: 60px;">
+		<script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
+		<nav id="barra-navegacao" style="text-align: center;">
+			<ul>
+				<li><a style="color:white;" href="inicio.html" title="Início">Início</a></li>
+				<li><a style="color:white;" href="laboratorios.html" title="Início">Laboratórios</a></li>
+				<li><a style="color:white;" href="usuarios.html" title="Início">Usuários</a></li>
+			</ul>
+			<h1 id='titulo' align="center" style="font-size: 190%;margin-top:0;padding-top:15px;position: static;">Academiq</h1>
+			<div id="dropdown">
+				<div id="user-picture" onclick="myFunction()" class="dropbtn" style="margin-left: 47.5px;width: 64px;Height: 64px;"></div>
+				<div id="myDropdown" class="dropdown-content" style="text-align:center; padding-top:17px;"><br>
+					<a href="Perfil.html">Perfil</a>
+					<a id="logout" href="#">Logout</a>
+				</div>
+			</nav>
 		</header>
+
+
 		<main id="conteudo">
 
 			<div id="topo-usuarios">
@@ -305,7 +311,7 @@
 			<div class="modal fade" id="modalAddAdm" role="dialog">
 				<div class="modal-dialog">
 
-				<!-- Modal content-->
+					<!-- Modal content-->
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -359,27 +365,27 @@
 	</body>
 
 	<script>
-		$( "footer" ).load( "footerLogin.html footer" );
+	$( "footer" ).load( "footerLogin.html footer" );
 
-		/* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
+	/* When the user clicks on the button,
+	toggle between hiding and showing the dropdown content */
+	function showDropdown() {
+	  document.getElementById("myDropdown").classList.toggle("show");
+	}
 
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function(event) {
+	  if (!event.target.matches('.dropbtn')) {
 
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
+	    var dropdowns = document.getElementsByClassName("dropdown-content");
+	    var i;
+	    for (i = 0; i < dropdowns.length; i++) {
+	      var openDropdown = dropdowns[i];
+	      if (openDropdown.classList.contains('show')) {
+	        openDropdown.classList.remove('show');
+	      }
+	    }
+	  }
+	}
 	</script>
-</html>
+	</html>
