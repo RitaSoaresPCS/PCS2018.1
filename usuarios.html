@@ -268,7 +268,23 @@
 
 	</head>
 	<body>
-		<header></header>
+		<header style="position: fixed; top: 0;width: 100%; height: 60px;">
+		  <script type= 'text/javascript' src= 'AcessoDados/Perfil.js'></script>
+		  <nav id="barra-navegacao" style="text-align: center;">
+		    <ul>
+		      <li><a style="color:white;" href="inicio.html" title="Início">Início</a></li>
+		      <li><a style="color:white;" href="laboratorios.html" title="Início">Laboratórios</a></li>
+		      <li><a style="color:white;" href="usuarios.html" title="Início">Usuários</a></li>
+		    </ul>
+		    <h1 id='titulo' align="center" style="font-size: 190%;margin-top:0;padding-top:15px;position: static;">Academiq</h1>
+		    <div id="dropdown">
+		      <div id="user-picture" onclick="myFunction()" class="dropbtn" style="margin-left: 47.5px;width: 64px;Height: 64px;"></div>
+		      <div id="myDropdown" class="dropdown-content" style="text-align:center; padding-top:17px;"><br>
+		        <a href="Perfil.html">Perfil</a>
+		        <a id="logout" href="#">Logout</a>
+		      </div>
+		  </nav>
+		</header>
 		<main id="conteudo">
 
 			<div id="topo-usuarios">
@@ -344,7 +360,6 @@
 
 	<script>
 		$( "footer" ).load( "footerLogin.html footer" );
-		$( "header" ).load( "menuNavegação.html header" );
 
 		/* When the user clicks on the button,
     toggle between hiding and showing the dropdown content */
